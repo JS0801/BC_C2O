@@ -86,7 +86,7 @@
 			</#if>
 			}
 			table {
-				font-size: 10pt;
+				font-size: 9pt;
 				table-layout: fixed;
 			}
             th {
