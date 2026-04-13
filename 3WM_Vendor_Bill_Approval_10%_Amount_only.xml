@@ -1,0 +1,3102 @@
+<workflow scriptid="customworkflow_3way_match_vb_approv_2">
+  <description></description>
+  <initcontexts>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</initcontexts>
+  <initeventtypes></initeventtypes>
+  <initlocalizationcontext></initlocalizationcontext>
+  <initoncreate>T</initoncreate>
+  <initonvieworupdate>F</initonvieworupdate>
+  <initsavedsearchcondition></initsavedsearchcondition>
+  <inittriggertype></inittriggertype>
+  <isinactive>F</isinactive>
+  <islogenabled>T</islogenabled>
+  <keephistory>ALWAYS</keephistory>
+  <name>3WM Vendor Bill Approval 10% Amount only</name>
+  <recordtypes>VENDORBILL</recordtypes>
+  <releasestatus>RELEASED</releasestatus>
+  <runasadmin>T</runasadmin>
+  <initcondition>
+    <formula></formula>
+    <type>VISUAL_BUILDER</type>
+  </initcondition>
+  <workflowcustomfields>
+    <workflowcustomfield scriptid="custworkflow_3way_vbir_qtydif_s_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-IR: Subsidiary Qty Difference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbir_qtydif_i_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-IR: Item Qty Difference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbir_qtydif_v_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-IR: Vendor Qty Difference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbir_qtytol_s_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-IR: Subsidiary Qty Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbir_qtytol_i_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-IR: Item Qty Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbir_qtytol_v_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-IR: Vendor Qty Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_qtydif_s_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Subsidiary Qty Difference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_qtydif_i_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Item Qty Difference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_qtydif_v_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Vendor Qty Difference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_qtytol_i_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Item Qty Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_qtytol_v_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Vendor Qty Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_amttol_s_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Subsidiary Amt Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_amttol_i_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Item Amt Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_amttol_v_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Vendor Amt Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpoamt_less_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB Amt Less Than PO Amt</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpoamt_more_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB Amt Greater Than PO Amt</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpoqty_less_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB Qty Less Than PO Qty</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpoqty_more_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB Qty Greater Than PO Qty</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_standalone_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB Standalone</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_location_f_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Location</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_vbpo_qtytol_s_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Subsidiary Qty Tolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_itemreceived_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] Receipt of Item</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_terms_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>T</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[SS] VB-PO: Terms</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_iramount_s_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Subs iramount</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_irdifference_s_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Subs irdifference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_irtolerance_s_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Subs irtolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_poamount_s_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Subs poamount</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_podifference_s_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Subs podifference</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_potolerance_s_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Subs potolerance</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_subsidiary_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Subsidiary Status</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_location_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Location Feature Status</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_landedcost_f_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Landed Cost</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_excrec_id_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Exception Record Id</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_exception_flag_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>CHECKBOX</fieldtype>
+      <help></help>
+      <label>[3WAY] Exception Status</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_bill_creator_2">
+      <aidescription></aidescription>
+      <applyformatting>F</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>SELECT</fieldtype>
+      <help></help>
+      <label>[3WAY] Bill Creator</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype>-4</selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_adv_rcv_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Advanced Receiving Status</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+    <workflowcustomfield scriptid="custworkflow_3way_bill_inadvance_2">
+      <aidescription></aidescription>
+      <applyformatting>T</applyformatting>
+      <defaultchecked>F</defaultchecked>
+      <defaultselection></defaultselection>
+      <defaultvalue></defaultvalue>
+      <description></description>
+      <displaytype>NORMAL</displaytype>
+      <dynamicdefault></dynamicdefault>
+      <fieldtype>INTEGER</fieldtype>
+      <help></help>
+      <label>[3WAY] Advanced Receiving Bill Status</label>
+      <linktext></linktext>
+      <maxvalue></maxvalue>
+      <minvalue></minvalue>
+      <selectrecordtype></selectrecordtype>
+      <storevalue>T</storevalue>
+    </workflowcustomfield>
+  </workflowcustomfields>
+  <workflowstates>
+    <workflowstate scriptid="workflowstate_3way_routing_check">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Approval Routing Feature Check</name>
+      <positionx>203</positionx>
+      <positiony>93</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <customaction scriptid="workflowaction_3way_routingcheck_getpref">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_routing_check.custwfstate_3way_approval_rout_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_naw_ws_get_user_pref]</scripttype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_get_user_pref.custscript_naw_pref_type]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>accountingpreferences</valuetext>
+            </parametersetting>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_get_user_pref.custscript_naw_pref_id]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>CUSTOMAPPROVALVENDORBILL</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <setfieldvalueaction scriptid="workflowaction927">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes>COPY|CREATE</eventtypes>
+          <field>STDBODYPAYMENTHOLD</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>T</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula><![CDATA["Subsidiary (Main):Region" IN ("Region1")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Subsidiary (Main):Region</name>
+                <value>STDBODYSUBSIDIARY:[scriptid=custrecord_c2o_region]</value>
+              </parameter>
+              <parameter>
+                <name>Region1</name>
+                <selectrecordtype>[scriptid=customlist_c2o_region]</selectrecordtype>
+                <value>[scriptid=customlist_c2o_region.val_39756_9873410_532]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
+      <workflowactions triggertype="BEFORELOAD">
+        <setdisplaytypeaction scriptid="workflowaction744">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <displaytype>INLINE</displaytype>
+          <eventtypes></eventtypes>
+          <field>STDBODYAPPROVALSTATUS</field>
+          <isinactive>F</isinactive>
+          <issublistfield>F</issublistfield>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setdisplaytypeaction>
+        <setfieldvalueaction scriptid="workflowaction745">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYNEXTAPPROVER</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield>STDENTITYSUPERVISOR</valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield>STDUSERUSER</valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>FIELD</valuetype>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Created By") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Created By</name>
+                <value>[scriptid=custbody_c2o_created_by]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction747">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYNEXTAPPROVER</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield>STDENTITYSUPERVISOR</valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield>[scriptid=custbody_c2o_created_by]</valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>FIELD</valuetype>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Created By") = 'F']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Created By</name>
+                <value>[scriptid=custbody_c2o_created_by]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldmandatoryaction scriptid="workflowaction757">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYNEXTAPPROVER</field>
+          <isinactive>F</isinactive>
+          <ismandatory>T</ismandatory>
+          <issublistfield>F</issublistfield>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldmandatoryaction>
+        <addbuttonaction scriptid="workflowaction941">
+          <checkconditionbeforeexecution>T</checkconditionbeforeexecution>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <label>Submit for Approval</label>
+          <saverecordfirst>T</saverecordfirst>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </addbuttonaction>
+      </workflowactions>
+      <workflowactions triggertype="BEFOREUSERSUBMIT">
+        <showmessageaction scriptid="workflowaction1031">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <isinactive>T</isinactive>
+          <messagetext>Non-PO Bills need either a Blue Collar Project or a Department at the header wf411</messagetext>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Created From") = 'T' AND isEmpty("Department (Main)") = 'T' AND isEmpty("Blue Collar Project") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Created From</name>
+                <value>STDBODYCREATEDFROM</value>
+              </parameter>
+              <parameter>
+                <name>Department (Main)</name>
+                <value>STDBODYDEPARTMENT</value>
+              </parameter>
+              <parameter>
+                <name>Blue Collar Project</name>
+                <value>[type=transactionbodycustomfield, scriptid=cseg_bc_project]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </showmessageaction>
+        <returnusererroraction scriptid="workflowaction1032">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <errortext>non-po bills need either the bcp or department at header populated</errortext>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Created From") = 'T' AND isEmpty("Department (Main)") = 'T' AND isEmpty("Blue Collar Project") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Created From</name>
+                <value>STDBODYCREATEDFROM</value>
+              </parameter>
+              <parameter>
+                <name>Department (Main)</name>
+                <value>STDBODYDEPARTMENT</value>
+              </parameter>
+              <parameter>
+                <name>Blue Collar Project</name>
+                <value>[type=transactionbodycustomfield, scriptid=cseg_bc_project]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </returnusererroraction>
+      </workflowactions>
+      <workflowactions triggertype="AFTERSUBMIT">
+        <setfieldvalueaction scriptid="workflowaction928">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes>CREATE</eventtypes>
+          <field>STDBODYPAYMENTHOLD</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>T</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula><![CDATA["Subsidiary (Main):Region" IN ("Region1","Region2")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Subsidiary (Main):Region</name>
+                <value>STDBODYSUBSIDIARY:[scriptid=custrecord_c2o_region]</value>
+              </parameter>
+              <parameter>
+                <name>Region1</name>
+                <selectrecordtype>[scriptid=customlist_c2o_region]</selectrecordtype>
+                <value>[scriptid=customlist_c2o_region.val_39756_9873410_532]</value>
+              </parameter>
+              <parameter>
+                <name>Region2</name>
+                <selectrecordtype>[scriptid=customlist_c2o_region]</selectrecordtype>
+                <value>[scriptid=customlist_c2o_region.val_39757_9873410_454]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
+      <workflowstatecustomfields>
+        <workflowstatecustomfield scriptid="custwfstate_3way_approval_rout_2">
+          <aidescription></aidescription>
+          <applyformatting>T</applyformatting>
+          <defaultchecked>F</defaultchecked>
+          <defaultselection></defaultselection>
+          <defaultvalue></defaultvalue>
+          <description></description>
+          <displaytype>NORMAL</displaytype>
+          <dynamicdefault></dynamicdefault>
+          <fieldtype>INTEGER</fieldtype>
+          <help></help>
+          <label>approval routing</label>
+          <linktext></linktext>
+          <maxvalue></maxvalue>
+          <minvalue></minvalue>
+          <selectrecordtype></selectrecordtype>
+          <storevalue>T</storevalue>
+        </workflowstatecustomfield>
+      </workflowstatecustomfields>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition39">
+          <buttonaction>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_routing_check.workflowaction941]</buttonaction>
+          <conditionsavedsearch>[scriptid=customsearch_c2o_bills_from_pos]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_billval]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition468">
+          <buttonaction>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_routing_check.workflowaction941]</buttonaction>
+          <conditionsavedsearch>[scriptid=customsearch_c2o_bills_not_from_pos]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate78]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate_3way_billval">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Bill Validation</name>
+      <positionx>103</positionx>
+      <positiony>183</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <setfieldvalueaction scriptid="workflowaction_3way_billval_setappstat">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYAPPROVALSTATUS</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect>1</valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_billval_setexcstat">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_vb_set_expid">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_billval_setcreator">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield>STDUSERUSER</valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>FIELD</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
+      <workflowactions triggertype="AFTERSUBMIT">
+        <customaction scriptid="workflowaction_3way_check_locfeat">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_location_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_naw_ws_check_feature]</scripttype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_check_feature.custscript_naw_feature_name]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>LOCATIONS</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_check_subfeat">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_subsidiary_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_naw_ws_check_feature]</scripttype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_check_feature.custscript_naw_feature_name]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>SUBSIDIARIES</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_subs_potolerance">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_potolerance_s_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_3way_ws_checksubsmatchfield]</scripttype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Subsidiary Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Subsidiary Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_subsidiary_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_3way_ws_checksubsmatchfield.custscript_3way_ws_matchfield]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>purchaseorderquantity</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_subs_podiff">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_podifference_s_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_3way_ws_checksubsmatchfield]</scripttype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Subsidiary Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Subsidiary Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_subsidiary_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_3way_ws_checksubsmatchfield.custscript_3way_ws_matchfield]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>purchaseorderquantitydiff</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_subs_poamount">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_poamount_s_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_3way_ws_checksubsmatchfield]</scripttype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Subsidiary Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Subsidiary Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_subsidiary_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_3way_ws_checksubsmatchfield.custscript_3way_ws_matchfield]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>purchaseorderamount</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_subs_irtolerance">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_irtolerance_s_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_3way_ws_checksubsmatchfield]</scripttype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Subsidiary Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Subsidiary Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_subsidiary_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_3way_ws_checksubsmatchfield.custscript_3way_ws_matchfield]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>receiptquantity</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_subs_irdiff">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_irdifference_s_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_3way_ws_checksubsmatchfield]</scripttype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Subsidiary Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Subsidiary Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_subsidiary_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_3way_ws_checksubsmatchfield.custscript_3way_ws_matchfield]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>receiptquantitydiff</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_subs_iramount">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_iramount_s_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_3way_ws_checksubsmatchfield]</scripttype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Subsidiary Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Subsidiary Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_subsidiary_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_3way_ws_checksubsmatchfield.custscript_3way_ws_matchfield]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>receiptamount</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <workflowactiongroup scriptid="workflowaction_3way_termsval">
+          <conditionsavedsearch>[scriptid=customsearch_3way_vb_term_check]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula><![CDATA[isChecked("Workflow:[SS] VB-PO: Terms") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[SS] VB-PO: Terms</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_terms_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <setfieldvalueaction scriptid="workflowaction_3way_terms_setstat">
+            <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</field>
+            <isinactive>T</isinactive>
+            <valuechecked>T</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect></valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+          <customaction scriptid="workflowaction_3way_terms_setexc">
+            <isinactive>T</isinactive>
+            <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</resultfield>
+            <scripttype>[scriptid=customscript_naw_ws_create_exceptionrec]</scripttype>
+            <parametersettings>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exception]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield></valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext>Discrepancy between Terms on Bill and PO</valuetext>
+              </parametersetting>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exceptionrec_id]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext></valuetext>
+              </parametersetting>
+            </parametersettings>
+          </customaction>
+          <setfieldvalueaction scriptid="workflowaction967">
+            <field>[scriptid=custbody_bill_exception_reason]</field>
+            <isinactive>T</isinactive>
+            <valuechecked>F</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310236_9873410_172]</valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+        </workflowactiongroup>
+        <workflowactiongroup scriptid="workflowaction_3way_itemreceipt">
+          <conditionsavedsearch>[scriptid=customsearch_3way_vb_itemreceipt_check]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula><![CDATA[isChecked("Workflow:[SS] Receipt of Item") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[SS] Receipt of Item</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_itemreceived_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <setfieldvalueaction scriptid="workflowaction_3way_noitems_setstat">
+            <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</field>
+            <isinactive>F</isinactive>
+            <valuechecked>T</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect></valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+          <customaction scriptid="workflowaction_3way_noitems_setexc">
+            <isinactive>F</isinactive>
+            <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</resultfield>
+            <scripttype>[scriptid=customscript_naw_ws_create_exceptionrec]</scripttype>
+            <parametersettings>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exception]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield></valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext>Items are not yet received</valuetext>
+              </parametersetting>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exceptionrec_id]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext></valuetext>
+              </parametersetting>
+            </parametersettings>
+          </customaction>
+          <setfieldvalueaction scriptid="workflowaction968">
+            <field>[scriptid=custbody_bill_exception_reason]</field>
+            <isinactive>F</isinactive>
+            <valuechecked>F</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310230_9873410_511]</valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+        </workflowactiongroup>
+        <workflowactiongroup scriptid="workflowaction_3way_locationcheck">
+          <conditionsavedsearch>[scriptid=customsearch_3way_vb_location_check]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula><![CDATA[isChecked("Workflow:[SS] VB-PO: Location") = 'T' AND "Workflow:[3WAY] Location Feature Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[SS] VB-PO: Location</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_location_f_2]</value>
+              </parameter>
+              <parameter>
+                <name>Workflow:[3WAY] Location Feature Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_location_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <setfieldvalueaction scriptid="workflowaction_3way_loc_setstat">
+            <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</field>
+            <isinactive>T</isinactive>
+            <valuechecked>T</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect></valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+          <customaction scriptid="workflowaction_3way_location_setexc">
+            <isinactive>T</isinactive>
+            <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</resultfield>
+            <scripttype>[scriptid=customscript_naw_ws_create_exceptionrec]</scripttype>
+            <parametersettings>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exception]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield></valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext>Discrepancy between Location on Bill and PO</valuetext>
+              </parametersetting>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exceptionrec_id]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext></valuetext>
+              </parametersetting>
+            </parametersettings>
+          </customaction>
+          <setfieldvalueaction scriptid="workflowaction969">
+            <field>[scriptid=custbody_bill_exception_reason]</field>
+            <isinactive>T</isinactive>
+            <valuechecked>F</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310237_9873410_173]</valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+        </workflowactiongroup>
+        <workflowactiongroup scriptid="workflowaction_3way_standalone">
+          <conditionsavedsearch>[scriptid=customsearch_vb_standalone_rule]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>T</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula><![CDATA[isChecked("Workflow:[SS] VB Standalone") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[SS] VB Standalone</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_standalone_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <setfieldvalueaction scriptid="workflowaction_3way_standalone_setstat">
+            <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</field>
+            <isinactive>T</isinactive>
+            <valuechecked>T</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect></valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+          <customaction scriptid="workflowaction_3way_standalone_setexc">
+            <isinactive>T</isinactive>
+            <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</resultfield>
+            <scripttype>[scriptid=customscript_naw_ws_create_exceptionrec]</scripttype>
+            <parametersettings>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exception]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield></valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext>No matching PO can be found for the Vendor Bill</valuetext>
+              </parametersetting>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exceptionrec_id]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext></valuetext>
+              </parametersetting>
+            </parametersettings>
+          </customaction>
+          <setfieldvalueaction scriptid="workflowaction970">
+            <field>[scriptid=custbody_bill_exception_reason]</field>
+            <isinactive>T</isinactive>
+            <valuechecked>F</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310233_9873410_167]</valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+        </workflowactiongroup>
+      </workflowactions>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition88">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_qtytolval]</tostate>
+          <triggertype>AFTERSUBMIT</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate_3way_qtytolval">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Quantity Tolerance Validation</name>
+      <positionx>273</positionx>
+      <positiony>183</positiony>
+      <workflowactions triggertype="AFTERSUBMIT">
+        <customaction scriptid="workflowaction_3way_check_advrec_feat">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WEBAPPLICATION|WEBSTORE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_adv_rcv_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_naw_ws_check_feature]</scripttype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_check_feature.custscript_naw_feature_name]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>ADVRECEIVING</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <customaction scriptid="workflowaction_3way_get_unrecbills_pref">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_inadvance_2]</resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_naw_ws_get_user_pref]</scripttype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Advanced Receiving Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Advanced Receiving Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_adv_rcv_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_get_user_pref.custscript_naw_pref_type]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>accountingpreferences</valuetext>
+            </parametersetting>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_get_user_pref.custscript_naw_pref_id]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext>UNRECEIVEDBILLS</valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_advrec_setflag">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_adv_rcv_2]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext>0</valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula><![CDATA["Workflow:[3WAY] Advanced Receiving Bill Status" = 1]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Advanced Receiving Bill Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_inadvance_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+        <workflowactiongroup scriptid="workflowaction_3way_vbir_qtytol_i">
+          <conditionsavedsearch>[scriptid=customsearch_3way_vb_item_recpt_qty_to_2]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <setfieldvalueaction scriptid="workflowaction_3way_vbiriqt_setstat">
+            <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</field>
+            <isinactive>F</isinactive>
+            <valuechecked>T</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect></valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+          <customaction scriptid="workflowaction_3way_vbiriqt_setexc">
+            <isinactive>F</isinactive>
+            <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</resultfield>
+            <scripttype>[scriptid=customscript_naw_ws_create_exceptionrec]</scripttype>
+            <parametersettings>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exception]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield></valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext>Difference of Quantity on Bill and Item Receipt Greater than 10%</valuetext>
+              </parametersetting>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exceptionrec_id]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext></valuetext>
+              </parametersetting>
+            </parametersettings>
+          </customaction>
+          <setfieldvalueaction scriptid="workflowaction971">
+            <field>[scriptid=custbody_bill_exception_reason]</field>
+            <isinactive>F</isinactive>
+            <valuechecked>F</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310229_9873410_360]</valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+        </workflowactiongroup>
+      </workflowactions>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition356">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_amountval]</tostate>
+          <triggertype>AFTERSUBMIT</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate_3way_amountval">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Amount Validation</name>
+      <positionx>203</positionx>
+      <positiony>273</positiony>
+      <workflowactions triggertype="AFTERSUBMIT">
+        <workflowactiongroup scriptid="workflowaction_3way_vbpo_amttol_s">
+          <conditionsavedsearch>[scriptid=customsearch_3way_vb_amt_subs_toleranc_2]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <setfieldvalueaction scriptid="workflowaction_3way_vbposamt_setstat">
+            <field>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</field>
+            <isinactive>F</isinactive>
+            <valuechecked>T</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect></valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+          <customaction scriptid="workflowaction_3way_vbposamt_setexc">
+            <isinactive>F</isinactive>
+            <resultfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</resultfield>
+            <scripttype>[scriptid=customscript_naw_ws_create_exceptionrec]</scripttype>
+            <parametersettings>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exception]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield></valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext>Bill over 10% amount variance threshold</valuetext>
+              </parametersetting>
+              <parametersetting>
+                <targetparameter>[scriptid=customscript_naw_ws_create_exceptionrec.custscript_naw_exceptionrec_id]</targetparameter>
+                <valuechecked></valuechecked>
+                <valuedate></valuedate>
+                <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+                <valueformula></valueformula>
+                <valuejoinfield></valuejoinfield>
+                <valueselect></valueselect>
+                <valuetext></valuetext>
+              </parametersetting>
+            </parametersettings>
+          </customaction>
+          <setfieldvalueaction scriptid="workflowaction972">
+            <field>[scriptid=custbody_bill_exception_reason]</field>
+            <isinactive>F</isinactive>
+            <valuechecked>F</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310228_9873410_954]</valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+        </workflowactiongroup>
+        <workflowactiongroup scriptid="workflowaction989">
+          <conditionsavedsearch>[scriptid=customsearch_c2o_bills_from_pos_2]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <setfieldvalueaction scriptid="workflowaction990">
+            <field>[scriptid=custbody_bill_exception_reason]</field>
+            <isinactive>F</isinactive>
+            <valuechecked>F</valuechecked>
+            <valuedate></valuedate>
+            <valuefield></valuefield>
+            <valueformula></valueformula>
+            <valuejoinfield></valuejoinfield>
+            <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310231_9873410_990]</valueselect>
+            <valuetext></valuetext>
+            <valuetype>STATIC</valuetype>
+          </setfieldvalueaction>
+        </workflowactiongroup>
+      </workflowactions>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition59">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending]</tostate>
+          <triggertype>AFTERSUBMIT</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula><![CDATA[isChecked("Workflow:[3WAY] Exception Status") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Exception Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition60">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch>[scriptid=customsearch_c2o_bills_from_pos]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_approved]</tostate>
+          <triggertype>AFTERSUBMIT</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula><![CDATA[isChecked("Workflow:[3WAY] Exception Status") = 'F']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Exception Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition433">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch>[scriptid=customsearch_c2o_bills_not_from_pos]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending]</tostate>
+          <triggertype>AFTERSUBMIT</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate_3way_pending">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Pending Approval</name>
+      <positionx>203</positionx>
+      <positiony>363</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <setfieldvalueaction scriptid="workflowaction_3way_set_bill_creator">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending.custwfstate_billcreator_2]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]</valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>FIELD</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_set_pending_approval">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYAPPROVALSTATUS</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect>1</valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <sendemailaction scriptid="workflowaction_3way_send_email_approver">
+          <attachmentfield></attachmentfield>
+          <attachmentfile></attachmentfile>
+          <attachmentjoinfield></attachmentjoinfield>
+          <attachmenttype>SPECIFIC</attachmenttype>
+          <body>&lt;span style=&quot;font-size:10.0pt;line-height:115%;
+font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:
+Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;
+mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;color:#333333;background:#FEFEEE;
+mso-ansi-language:EN-PH;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;&amp;lt;br&amp;gt;You
+have a new Vendor Bill {transactionnumber} &lt;span style=&quot;mso-spacerun:yes&quot;&gt;&amp;nbsp;&lt;/span&gt;to review and approve. &amp;lt;br&amp;gt;&lt;/span&gt;&lt;span style=&quot;font-size:10.0pt;line-height:115%;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:Calibri;mso-fareast-theme-font:
+minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;
+color:#333333;mso-ansi-language:EN-PH;mso-fareast-language:EN-US;mso-bidi-language:
+AR-SA&quot;&gt;&lt;br&gt;
+&lt;br&gt;
+&lt;span style=&quot;background:#FEFEEE&quot;&gt;Kindly log in to your NetSuite account at&lt;span class=&quot;apple-converted-space&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;font-size:
+11.0pt;line-height:115%;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;mso-ascii-theme-font:
+minor-latin;mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-PH;mso-fareast-language:
+EN-US;mso-bidi-language:AR-SA&quot;&gt;&lt;a href=&quot;http://www.netsuite.com/&quot;&gt;&lt;span style=&quot;font-size:10.0pt;line-height:115%;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;&quot;&gt;http://www.netsuite.com&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;</body>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes>CREATE</eventtypes>
+          <includeformat></includeformat>
+          <includerecordlink>T</includerecordlink>
+          <includetransaction>F</includetransaction>
+          <isinactive>F</isinactive>
+          <recipientbccemail></recipientbccemail>
+          <recipientccemail></recipientccemail>
+          <recipientemail></recipientemail>
+          <recipientfield>STDBODYNEXTAPPROVER</recipientfield>
+          <recipientjoinfield></recipientjoinfield>
+          <recipienttype>FIELD</recipienttype>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <senderfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]</senderfield>
+          <senderjoinfield></senderjoinfield>
+          <sendertype>FIELD</sendertype>
+          <subject>Vendor Bill {transactionnumber} for Approval</subject>
+          <template></template>
+          <usetemplate>F</usetemplate>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Next Approver") = 'F' AND isEmpty("Next Approver:E-mail") = 'F']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Next Approver</name>
+                <value>STDBODYNEXTAPPROVER</value>
+              </parameter>
+              <parameter>
+                <name>Next Approver:E-mail</name>
+                <value>STDBODYNEXTAPPROVER:STDENTITYEMAIL</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </sendemailaction>
+      </workflowactions>
+      <workflowactions triggertype="BEFORELOAD">
+        <addbuttonaction scriptid="workflowaction_3way_approve_billl">
+          <checkconditionbeforeexecution>T</checkconditionbeforeexecution>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <label>Approve Bill</label>
+          <saverecordfirst>F</saverecordfirst>
+          <initcondition>
+            <formula><![CDATA["User" IN ("Next Approver") OR "User Role" IN ("Role1")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>User</name>
+                <value>STDUSERUSER</value>
+              </parameter>
+              <parameter>
+                <name>Next Approver</name>
+                <value>STDBODYNEXTAPPROVER</value>
+              </parameter>
+              <parameter>
+                <name>User Role</name>
+                <value>STDUSERROLE</value>
+              </parameter>
+              <parameter>
+                <name>Role1</name>
+                <selectrecordtype>-118</selectrecordtype>
+                <value>ADMINISTRATOR</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </addbuttonaction>
+        <addbuttonaction scriptid="workflowaction_3way_reject_billl">
+          <checkconditionbeforeexecution>T</checkconditionbeforeexecution>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <label>Reject Bill</label>
+          <saverecordfirst>F</saverecordfirst>
+          <initcondition>
+            <formula><![CDATA["User" IN ("Next Approver") OR "User Role" IN ("Role1")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>User</name>
+                <value>STDUSERUSER</value>
+              </parameter>
+              <parameter>
+                <name>Next Approver</name>
+                <value>STDBODYNEXTAPPROVER</value>
+              </parameter>
+              <parameter>
+                <name>User Role</name>
+                <value>STDUSERROLE</value>
+              </parameter>
+              <parameter>
+                <name>Role1</name>
+                <selectrecordtype>-118</selectrecordtype>
+                <value>ADMINISTRATOR</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </addbuttonaction>
+        <addbuttonaction scriptid="workflowaction_3way_bill_exception">
+          <checkconditionbeforeexecution>T</checkconditionbeforeexecution>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>USERINTERFACE</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <label>Bill Exception</label>
+          <saverecordfirst>F</saverecordfirst>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </addbuttonaction>
+        <setdisplaytypeaction scriptid="workflowaction871">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <displaytype>INLINE</displaytype>
+          <eventtypes></eventtypes>
+          <field>STDBODYAPPROVALSTATUS</field>
+          <isinactive>F</isinactive>
+          <issublistfield>F</issublistfield>
+          <initcondition>
+            <formula><![CDATA["User Role" NOT IN ("Role1")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>User Role</name>
+                <value>STDUSERROLE</value>
+              </parameter>
+              <parameter>
+                <name>Role1</name>
+                <selectrecordtype>-118</selectrecordtype>
+                <value>ADMINISTRATOR</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setdisplaytypeaction>
+      </workflowactions>
+      <workflowactions triggertype="AFTERSUBMIT">
+        <sendemailaction scriptid="workflowaction1003">
+          <attachmentfield></attachmentfield>
+          <attachmentfile></attachmentfile>
+          <attachmentjoinfield></attachmentjoinfield>
+          <attachmenttype>SPECIFIC</attachmenttype>
+          <body>&lt;span style=&quot;font-size:10.0pt;line-height:115%;&#xd;
+font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;mso-ascii-theme-font:minor-latin;mso-fareast-font-family:&#xd;
+Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;&#xd;
+mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;color:#333333;background:#FEFEEE;&#xd;
+mso-ansi-language:EN-PH;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;&amp;lt;br&amp;gt;You&#xd;
+have a new Vendor Bill {transactionnumber} &lt;span style=&quot;mso-spacerun:yes&quot;&gt;&amp;nbsp;&lt;/span&gt;to review and approve. &amp;lt;br&amp;gt;&lt;/span&gt;&lt;span style=&quot;font-size:10.0pt;line-height:115%;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;&#xd;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:Calibri;mso-fareast-theme-font:&#xd;
+minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;&#xd;
+color:#333333;mso-ansi-language:EN-PH;mso-fareast-language:EN-US;mso-bidi-language:&#xd;
+AR-SA&quot;&gt;&lt;br&gt;&#xd;
+&lt;br&gt;&#xd;
+&lt;span style=&quot;background:#FEFEEE&quot;&gt;Kindly log in to your NetSuite account at&lt;span class=&quot;apple-converted-space&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;font-size:&#xd;
+11.0pt;line-height:115%;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;mso-ascii-theme-font:&#xd;
+minor-latin;mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;&#xd;
+mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;&#xd;
+mso-bidi-theme-font:minor-bidi;mso-ansi-language:EN-PH;mso-fareast-language:&#xd;
+EN-US;mso-bidi-language:AR-SA&quot;&gt;&lt;a href=&quot;http://www.netsuite.com/&quot;&gt;&lt;span style=&quot;font-size:10.0pt;line-height:115%;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;&quot;&gt;http://www.netsuite.com&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;</body>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <includeformat></includeformat>
+          <includerecordlink>T</includerecordlink>
+          <includetransaction>F</includetransaction>
+          <isinactive>F</isinactive>
+          <recipientbccemail></recipientbccemail>
+          <recipientccemail></recipientccemail>
+          <recipientemail></recipientemail>
+          <recipientfield>STDBODYNEXTAPPROVER</recipientfield>
+          <recipientjoinfield></recipientjoinfield>
+          <recipienttype>FIELD</recipienttype>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <senderfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]</senderfield>
+          <senderjoinfield></senderjoinfield>
+          <sendertype>FIELD</sendertype>
+          <subject>Vendor Bill {transactionnumber} for Approval</subject>
+          <template></template>
+          <usetemplate>F</usetemplate>
+          <initcondition>
+            <formula><![CDATA["Old Record:Next Approver" NOT IN ("Next Approver") AND isEmpty("Next Approver:E-mail") = 'F']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Old Record:Next Approver</name>
+                <value>@OLDRECORD@:STDBODYNEXTAPPROVER</value>
+              </parameter>
+              <parameter>
+                <name>Next Approver</name>
+                <value>STDBODYNEXTAPPROVER</value>
+              </parameter>
+              <parameter>
+                <name>Next Approver:E-mail</name>
+                <value>STDBODYNEXTAPPROVER:STDENTITYEMAIL</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </sendemailaction>
+      </workflowactions>
+      <workflowstatecustomfields>
+        <workflowstatecustomfield scriptid="custwfstate_billcreator_2">
+          <aidescription></aidescription>
+          <applyformatting>F</applyformatting>
+          <defaultchecked>F</defaultchecked>
+          <defaultselection></defaultselection>
+          <defaultvalue></defaultvalue>
+          <description></description>
+          <displaytype>NORMAL</displaytype>
+          <dynamicdefault></dynamicdefault>
+          <fieldtype>TEXT</fieldtype>
+          <help></help>
+          <label>Bill Creator</label>
+          <linktext></linktext>
+          <maxvalue></maxvalue>
+          <minvalue></minvalue>
+          <selectrecordtype></selectrecordtype>
+          <storevalue>T</storevalue>
+        </workflowstatecustomfield>
+      </workflowstatecustomfields>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition92">
+          <buttonaction>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending.workflowaction_3way_approve_billl]</buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_approved]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition93">
+          <buttonaction>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending.workflowaction_3way_reject_billl]</buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_rejected]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition94">
+          <buttonaction>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending.workflowaction_3way_bill_exception]</buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_showexcept]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition342">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes>EDIT</eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_billval]</tostate>
+          <triggertype>BEFORESUBMIT</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition463">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay>1</scheduledelay>
+          <scheduletimeunit>DAY</scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate75]</tostate>
+          <triggertype>SCHEDULED</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula><![CDATA["Bill Exception Reason" IN (" Bill Exception Reason List1"," Bill Exception Reason List2")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Bill Exception Reason</name>
+                <value>[scriptid=custbody_bill_exception_reason]</value>
+              </parameter>
+              <parameter>
+                <name> Bill Exception Reason List1</name>
+                <selectrecordtype>[scriptid=customlist_bill_exception_reason_list]</selectrecordtype>
+                <value>[scriptid=customlist_bill_exception_reason_list.val_310230_9873410_511]</value>
+              </parameter>
+              <parameter>
+                <name> Bill Exception Reason List2</name>
+                <selectrecordtype>[scriptid=customlist_bill_exception_reason_list]</selectrecordtype>
+                <value>[scriptid=customlist_bill_exception_reason_list.val_310231_9873410_990]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate_3way_rejected">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Rejected</name>
+      <positionx>203</positionx>
+      <positiony>453</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <customaction scriptid="workflowaction_3way_rej_delete_exp">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield></resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_naw_ws_delete_exceptionrec]</scripttype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_delete_exceptionrec.custscript_naw_recid_target]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext></valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <sendemailaction scriptid="workflowaction_3way_send_email_rejected">
+          <attachmentfield></attachmentfield>
+          <attachmentfile></attachmentfile>
+          <attachmentjoinfield></attachmentjoinfield>
+          <attachmenttype>SPECIFIC</attachmenttype>
+          <body>&lt;span style=&quot;font-size:10.0pt;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;
+mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:minor-latin;color:#333333;
+background:#FEFEEE&quot;&gt;&amp;lt;br&amp;gt;The Vendor Bill {transactionnumber} has been
+rejected by {nextapprover}.&amp;lt;br&amp;gt;&lt;/span&gt;&lt;span style=&quot;font-size:10.0pt;
+font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;mso-ascii-theme-font:minor-latin;mso-hansi-theme-font:
+minor-latin&quot;&gt;&lt;/span&gt;
+
+&lt;span style=&quot;font-size:10.0pt;line-height:115%;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:Calibri;mso-fareast-theme-font:
+minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;
+mso-bidi-theme-font:minor-bidi;color:#333333;background:#FEFEEE;mso-ansi-language:
+EN-PH;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;To view the Vendor
+Bill, kindly log in to your NetSuite account at&lt;span class=&quot;apple-converted-space&quot;&gt;&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;span style=&quot;font-size:11.0pt;
+line-height:115%;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;mso-ascii-theme-font:minor-latin;
+mso-fareast-font-family:Calibri;mso-fareast-theme-font:minor-latin;mso-hansi-theme-font:
+minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-theme-font:minor-bidi;
+mso-ansi-language:EN-PH;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;&lt;a href=&quot;http://www.netsuite.com/&quot;&gt;&lt;span style=&quot;font-size:10.0pt;line-height:115%&quot;&gt;http://www.netsuite.com&lt;/span&gt;&lt;/a&gt;&lt;/span&gt;&lt;span style=&quot;font-size:10.0pt;line-height:115%;font-family:&amp;quot;Calibri&amp;quot;,&amp;quot;sans-serif&amp;quot;;
+mso-ascii-theme-font:minor-latin;mso-fareast-font-family:Calibri;mso-fareast-theme-font:
+minor-latin;mso-hansi-theme-font:minor-latin;mso-bidi-font-family:&amp;quot;Times New Roman&amp;quot;;
+mso-bidi-theme-font:minor-bidi;color:#333333;background:#FEFEEE;mso-ansi-language:
+EN-PH;mso-fareast-language:EN-US;mso-bidi-language:AR-SA&quot;&gt;.&lt;/span&gt;</body>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <includeformat></includeformat>
+          <includerecordlink>T</includerecordlink>
+          <includetransaction>F</includetransaction>
+          <isinactive>F</isinactive>
+          <recipientbccemail></recipientbccemail>
+          <recipientccemail></recipientccemail>
+          <recipientemail></recipientemail>
+          <recipientfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]</recipientfield>
+          <recipientjoinfield></recipientjoinfield>
+          <recipienttype>FIELD</recipienttype>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <senderfield>STDUSERUSER</senderfield>
+          <senderjoinfield></senderjoinfield>
+          <sendertype>FIELD</sendertype>
+          <subject>Your Vendor Bill {transactionnumber} is Rejected</subject>
+          <template></template>
+          <usetemplate>F</usetemplate>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Workflow:[3WAY] Bill Creator:E-mail") = 'F']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Bill Creator:E-mail</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]:STDENTITYEMAIL</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </sendemailaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_rej_setstat">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYAPPROVALSTATUS</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect>3</valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <gotorecordaction scriptid="workflowaction951">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <ineditmode>F</ineditmode>
+          <isinactive>F</isinactive>
+          <recordidfield></recordidfield>
+          <recordidjoinfield></recordidjoinfield>
+          <recordtype>[scriptid=customrecord_c2o_rej_notes]</recordtype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <fieldsettings>
+            <fieldsetting>
+              <targetfield>[scriptid=customrecord_c2o_rej_notes.custrecord_rej_notes_trans]</targetfield>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield></valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect>@CURRENT@</valueselect>
+              <valuetext></valuetext>
+            </fieldsetting>
+          </fieldsettings>
+        </gotorecordaction>
+      </workflowactions>
+      <workflowactions triggertype="BEFORELOAD">
+        <addbuttonaction scriptid="workflowaction_3way_resubmit">
+          <checkconditionbeforeexecution>T</checkconditionbeforeexecution>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <label>Re-submit for Approvals</label>
+          <saverecordfirst>F</saverecordfirst>
+          <initcondition>
+            <formula><![CDATA["User" NOT IN ("Next Approver")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>User</name>
+                <value>STDUSERUSER</value>
+              </parameter>
+              <parameter>
+                <name>Next Approver</name>
+                <value>STDBODYNEXTAPPROVER</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </addbuttonaction>
+      </workflowactions>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition106">
+          <buttonaction>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_rejected.workflowaction_3way_resubmit]</buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_routing_check]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate_3way_approved">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Approved</name>
+      <positionx>203</positionx>
+      <positiony>543</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <customaction scriptid="workflowaction_3way_app_delete_exp">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield></resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_naw_ws_delete_exceptionrec]</scripttype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_naw_ws_delete_exceptionrec.custscript_naw_recid_target]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext></valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+        <sendemailaction scriptid="workflowaction_3way_send_email_approved">
+          <attachmentfield></attachmentfield>
+          <attachmentfile></attachmentfile>
+          <attachmentjoinfield></attachmentjoinfield>
+          <attachmenttype>SPECIFIC</attachmenttype>
+          <body>&lt;span style=&quot;font-size:10.0pt;mso-fareast-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-font-family:
+&amp;quot;Times New Roman&amp;quot;;color:#333333;background:#FEFEEE;mso-fareast-language:EN-PH&quot;&gt;&amp;lt;br&amp;gt;The
+Vendor Bill {transactionnumber} has been approved by {nextapprover}.&amp;lt;br&amp;gt;&lt;/span&gt;&lt;span style=&quot;font-size:10.0pt;mso-fareast-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-font-family:
+&amp;quot;Times New Roman&amp;quot;;color:#333333;mso-fareast-language:EN-PH&quot;&gt;&lt;span style=&quot;background:#FEFEEE&quot;&gt;To view the Vendor Bill, kindly log in to your
+NetSuite account at&amp;nbsp;&lt;/span&gt;&lt;/span&gt;&lt;a href=&quot;http://www.netsuite.com/&quot;&gt;&lt;span style=&quot;font-size:10.0pt;mso-fareast-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-font-family:
+&amp;quot;Times New Roman&amp;quot;;color:blue;mso-fareast-language:EN-PH&quot;&gt;http://www.netsuite.com&lt;/span&gt;&lt;/a&gt;&lt;span style=&quot;font-size:10.0pt;mso-fareast-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-font-family:
+&amp;quot;Times New Roman&amp;quot;;color:#333333;background:#FEFEEE;mso-fareast-language:EN-PH&quot;&gt;.&lt;/span&gt;&lt;span style=&quot;font-size:10.0pt;mso-fareast-font-family:&amp;quot;Times New Roman&amp;quot;;mso-bidi-font-family:
+&amp;quot;Times New Roman&amp;quot;;mso-fareast-language:EN-PH&quot;&gt;&lt;/span&gt;
+
+</body>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <includeformat></includeformat>
+          <includerecordlink>T</includerecordlink>
+          <includetransaction>F</includetransaction>
+          <isinactive>F</isinactive>
+          <recipientbccemail></recipientbccemail>
+          <recipientccemail></recipientccemail>
+          <recipientemail></recipientemail>
+          <recipientfield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]</recipientfield>
+          <recipientjoinfield></recipientjoinfield>
+          <recipienttype>FIELD</recipienttype>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <senderfield>STDUSERUSER</senderfield>
+          <senderjoinfield></senderjoinfield>
+          <sendertype>FIELD</sendertype>
+          <subject>Your Vendor Bill {transactionnumber} is Approved</subject>
+          <template></template>
+          <usetemplate>F</usetemplate>
+          <initcondition>
+            <formula><![CDATA[isChecked("Workflow:[3WAY] Exception Status") = 'T' AND isEmpty("Workflow:[3WAY] Bill Creator:E-mail") = 'F']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Workflow:[3WAY] Exception Status</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_exception_flag_2]</value>
+              </parameter>
+              <parameter>
+                <name>Workflow:[3WAY] Bill Creator:E-mail</name>
+                <value>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_bill_creator_2]:STDENTITYEMAIL</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </sendemailaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_approved_setstat">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYAPPROVALSTATUS</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect>2</valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction_3way_approved_setnxtapp">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYNEXTAPPROVER</field>
+          <isinactive>T</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
+      <workflowactions triggertype="BEFORELOAD">
+        <addbuttonaction scriptid="workflowaction950">
+          <checkconditionbeforeexecution>T</checkconditionbeforeexecution>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <label>Unapprove</label>
+          <saverecordfirst>F</saverecordfirst>
+          <initcondition>
+            <formula><![CDATA[( "User Role" IN ("Role1") OR "User" IN ("Next Approver") )]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>User Role</name>
+                <value>STDUSERROLE</value>
+              </parameter>
+              <parameter>
+                <name>Role1</name>
+                <selectrecordtype>-118</selectrecordtype>
+                <value>ADMINISTRATOR</value>
+              </parameter>
+              <parameter>
+                <name>User</name>
+                <value>STDUSERUSER</value>
+              </parameter>
+              <parameter>
+                <name>Next Approver</name>
+                <value>STDBODYNEXTAPPROVER</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </addbuttonaction>
+      </workflowactions>
+      <workflowactions triggertype="AFTERSUBMIT">
+        <setfieldvalueaction scriptid="workflowaction1014">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>STDBODYAPPROVALSTATUS</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect>2</valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition460">
+          <buttonaction>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_approved.workflowaction950]</buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate_3way_showexcept">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Show Exceptions</name>
+      <positionx>203</positionx>
+      <positiony>623</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <customaction scriptid="workflowaction_3way_show_exception">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <isinactive>F</isinactive>
+          <resultfield></resultfield>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <scripttype>[scriptid=customscript_ws_showexceptions]</scripttype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <parametersettings>
+            <parametersetting>
+              <targetparameter>[scriptid=customscript_ws_showexceptions.custscript_naw_exception_recid]</targetparameter>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield>[scriptid=customworkflow_3way_match_vb_approv_2.custworkflow_3way_excrec_id_2]</valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext></valuetext>
+            </parametersetting>
+          </parametersettings>
+        </customaction>
+      </workflowactions>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition117">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending]</tostate>
+          <triggertype></triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate75">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Check for PO Receipt</name>
+      <positionx>453</positionx>
+      <positiony>363</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <setfieldvalueaction scriptid="workflowaction991">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=custbody_bill_exception_reason]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction992">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch>[scriptid=customsearch_3way_vb_itemreceipt_check]</conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=custbody_bill_exception_reason]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect>[scriptid=customlist_bill_exception_reason_list.val_310230_9873410_511]</valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
+      <workflowtransitions>
+        <workflowtransition scriptid="workflowtransition464">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_pending]</tostate>
+          <triggertype>ONENTRY</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Bill Exception Reason") = 'F']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Bill Exception Reason</name>
+                <value>[scriptid=custbody_bill_exception_reason]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </workflowtransition>
+        <workflowtransition scriptid="workflowtransition465">
+          <buttonaction></buttonaction>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <scheduledelay></scheduledelay>
+          <scheduletimeunit></scheduletimeunit>
+          <tostate>[scriptid=customworkflow_3way_match_vb_approv_2.workflowstate_3way_approved]</tostate>
+          <triggertype>ONENTRY</triggertype>
+          <waitforworkflow></waitforworkflow>
+          <waitforworkflowstate></waitforworkflowstate>
+          <initcondition>
+            <formula><![CDATA[isEmpty("Bill Exception Reason") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Bill Exception Reason</name>
+                <value>[scriptid=custbody_bill_exception_reason]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </workflowtransition>
+      </workflowtransitions>
+    </workflowstate>
+    <workflowstate scriptid="workflowstate78">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>Initiate Non-PO Bills Workflow</name>
+      <positionx>483</positionx>
+      <positiony>93</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <initiateworkflowaction scriptid="workflowaction1030">
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <initiatedworkflow>[scriptid=customworkflow2_2]</initiatedworkflow>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+          <workflowfieldsettings>
+            <workflowfieldsetting>
+              <targetworkflowfield>[scriptid=customworkflow2_2.custworkflow_created_by_2]</targetworkflowfield>
+              <valuechecked></valuechecked>
+              <valuedate></valuedate>
+              <valuefield>STDUSERUSER</valuefield>
+              <valueformula></valueformula>
+              <valuejoinfield></valuejoinfield>
+              <valueselect></valueselect>
+              <valuetext></valuetext>
+            </workflowfieldsetting>
+          </workflowfieldsettings>
+        </initiateworkflowaction>
+      </workflowactions>
+    </workflowstate>
+  </workflowstates>
+</workflow>
