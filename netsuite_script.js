@@ -1,0 +1,250 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+	<link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}" src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+	<#if .locale == "zh_CN">
+		<link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}" src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2" />
+	<#elseif .locale == "zh_TW">
+		<link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}" src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2" />
+	<#elseif .locale == "ja_JP">
+		<link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}" src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2" />
+	<#elseif .locale == "ko_KR">
+		<link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}" src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2" />
+	<#elseif .locale == "th_TH">
+		<link name="NotoSansThai" type="font" subtype="opentype" src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2" />
+	</#if>
+    <macrolist>
+        <macro id="nlheader">
+            <table class="header" style="width: 100%;">
+                <tr>
+                    <td style="width: 45%; vertical-align: top;">
+                        <span class="title">Remittance Advice</span><br />
+                        <b>Date Paid:</b> ${record.trandate}<br />
+                    </td>
+                    <td style="width: 20%;">
+                    </td>
+ <td align="right" style="width: 35%;" valign="top">
+    <#-- Logo with aspect ratio preservation -->
+    <#if subsidiary.logo?has_content>
+        <#if subsidiary.internalid == "6">
+            <div style="width: 60px; height: 60px; overflow: hidden; display: inline-block; margin-top: -15px;">
+                <@filecabinet nstype="image" style="width: 60px; height: 60px; object-fit: contain;" src="${subsidiary.logo@url}" />
+            </div>
+        <#elseif subsidiary.internalid == "9">
+           <div style="width: 80px; height: 50px; overflow: hidden; display: inline-block; margin-top: -15px;">
+                <@filecabinet nstype="image" style="width: 100%;height: 100%; width: auto; height: auto; object-fit: contain;" src="${subsidiary.logo@url}" />
+            </div>
+        <#else>
+            <div style="width: 80px; height: 50px; overflow: hidden; display: inline-block; margin-top: -15px;">
+                <@filecabinet nstype="image" style="width: 80px;height: 60px; width: auto; height: auto; object-fit: contain;" src="${subsidiary.logo@url}" />
+            </div>
+        </#if>
+    <#elseif companyInformation.logoUrl?has_content>
+        <@filecabinet nstype="image" style="width: 100%;height: 100%; !important; max-height: 45px !important; object-fit: contain; margin-top: -15px;" src="${companyInformation.logoUrl}" />
+    </#if>
+    <#if record.subsidiary.internalid != "6">
+        <br />
+    </#if>
+    <span class="nameandaddress" style="font-size: 9pt;">${record.subsidiary.name?split(":")?last?trim}</span><br />
+    <span class="nameandaddress" style="font-size: 9pt;">
+        ${record.subsidiary.address1}<br />
+        <#if record.subsidiary.address2?has_content>${record.subsidiary.address2}<br /></#if>
+        ${record.subsidiary.city}, ${record.subsidiary.state} ${record.subsidiary.zip}
+    </span><br /><br />
+    <span class="info-label">
+        <#if record.currency == "US Dollar">Tax ID<#else>ABN: </#if>
+    </span> ${subsidiary.federalidnumber}   
+</td>
+                </tr>
+            </table>
+        </macro>
+        <macro id="nlfooter">
+            <table class="footer" style="width: 100%;">
+                <tr>
+                    <td align="right">
+                        <pagenumber/> of <totalpages/>
+                    </td>
+                </tr>
+            </table>
+        </macro>
+    </macrolist>
+    <style>
+			* {
+			<#if .locale == "zh_CN">
+				font-family: NotoSans, NotoSansCJKsc, sans-serif;
+			<#elseif .locale == "zh_TW">
+				font-family: NotoSans, NotoSansCJKtc, sans-serif;
+			<#elseif .locale == "ja_JP">
+				font-family: NotoSans, NotoSansCJKjp, sans-serif;
+			<#elseif .locale == "ko_KR">
+				font-family: NotoSans, NotoSansCJKkr, sans-serif;
+			<#elseif .locale == "th_TH">
+				font-family: NotoSans, NotoSansThai, sans-serif;
+			<#else>
+				font-family: NotoSans, sans-serif;
+			</#if>
+			}
+			table {
+				font-size: 9pt;
+				table-layout: fixed;
+			}
+            th {
+                font-weight: bold;
+                font-size: 8pt;
+                vertical-align: middle;
+                padding: 5px 6px 3px;
+                background-color: #e3e3e3;
+                color: #333333;
+            }
+            td {
+                padding: 4px 6px;
+            }
+			td p { align:left }
+            b {
+                font-weight: bold;
+                color: #333333;
+            }
+            table.header td {
+                padding: 0;
+                font-size: 10pt;
+            }
+            table.footer td {
+                padding: 0;
+                font-size: 8pt;
+            }
+            table.itemtable th {
+                padding-bottom: 10px;
+                padding-top: 10px;
+            }
+            table.body td {
+                padding-top: 2px;
+            }
+            table.total {
+                page-break-inside: avoid;
+            }
+            tr.totalrow {
+                background-color: #e3e3e3;
+                line-height: 200%;
+            }
+            td.totalboxtop {
+                font-size: 10pt;
+                background-color: #e3e3e3;
+            }
+            td.addressheader {
+                font-size: 8pt;
+                padding-top: 6px;
+                padding-bottom: 2px;
+            }
+            td.address {
+                padding-top: 0;
+            }
+            td.totalboxmid {
+                font-size: 16pt;
+                padding-top: 10px;
+                background-color: #e3e3e3;
+            }
+            span.title {
+                font-size: 28pt;
+            }
+            span.number {
+                font-size: 16pt;
+            }
+            hr {
+                width: 100%;
+                color: #d3d3d3;
+                background-color: #d3d3d3;
+                height: 1px;
+            }
+            .logo {
+                max-width: 120px;
+                max-height: 80px;
+                width: auto;
+                height: auto;
+            }
+        </style>
+</head>
+<body header="nlheader" header-height="15%" footer="nlfooter" footer-height="10pt" padding="0.5in 0.5in 0.5in 0.5in" size="Letter">
+    <table style="width: 100%; margin-top: 20px;">
+        <tr>
+            <td colspan="15" style="vertical-align: top; padding-top: 15px;">
+                <div class="addressheader">
+                <b>Vendor Address</b><br/>
+                <span style="font-weight: normal; font-size: 10pt;">${record.entity}</span><br/>
+                <span style="font-weight: normal; font-size: 9pt;">${record.entity.address}</span><br/><br/>
+                <span style="font-weight: normal; font-size: 9pt;">ABN: ${record.entity.vatregnumber}</span>
+                </div>
+            </td>
+            <td colspan="5" style="text-align: right; vertical-align: middle">
+                <div style="background-color: #e3e3e3; padding: 5px; text-align: center; font-size: 12pt; font-weight: bold; width: 100%;">
+                    <b>AMOUNT:</b> ${record.total}
+                </div>
+            </td>
+        </tr>
+    </table>
+    <#if record.apply?has_content>
+   
+    <table class="itemtable" style="width: 100%;">
+        <!-- start apply sublist -->
+        <#list record.apply as apply>
+            <#if apply_index==0>
+                <thead>
+                <tr>
+                    <th colspan="3" align="center">${apply.applydate@label}</th>
+                    <th colspan="3">${apply.type@label}</th>
+                    <th colspan="5">${apply.refnum@label}</th>
+                    <th colspan="3" align="right">${apply.total@label}</th>
+                    <th colspan="3" align="right">${apply.due@label}</th>
+                    <th colspan="4" align="right">${apply.amount@label}</th>
+                </tr>
+                </thead>
+            </#if>
+            <tr>
+                <td colspan="3" line-height="150%" align="center">${apply.applydate}</td>
+                <td colspan="3">${apply.type}</td>
+                <td colspan="5">${apply.refnum}</td>
+                <td colspan="3" align="right">${apply.total}</td>
+                <td colspan="3" align="right">${apply.due}</td>
+                <td colspan="4" align="right">${apply.amount}</td>
+            </tr>
+        </#list>
+        <!-- end apply -->
+    </table>
+    <hr />
+    </#if>
+    <#if record.credit?has_content>
+    <table class="itemtable" style="width: 100%; margin-top: 10px;">
+        <!-- start credit sublist -->
+        <#list record.credit as credit>
+            <#if credit_index==0>
+                <thead>
+                <tr>
+                    <th colspan="3" align="center">${credit.creditdate@label}</th>
+                    <th colspan="3">${credit.type@label}</th>
+                    <th colspan="3" align="right">${credit.refnum@label}</th>
+                    <th colspan="6" align="right">${credit.appliedto@label}</th>
+                    <th colspan="4" align="right">${credit.amount@label}</th>
+                </tr>
+                </thead>
+            </#if>
+            <tr>
+                <td colspan="3" align="center" line-height="150%">${credit.creditdate}</td>
+                <td colspan="5">${credit.type}</td>
+                <td colspan="3" align="right">${credit.refnum}</td>
+                <td colspan="6" align="right">${credit.appliedto}</td>
+                <td colspan="4" align="right">${credit.amount}</td>
+            </tr>
+        </#list>
+        <!-- end credit-->
+    </table>
+    <hr />
+    </#if>
+    <table class="total" style="width: 100%; margin-top: 10px;">
+        <tr class="totalrow">
+            <td background-color="#ffffff" colspan="4"></td>
+            <td align="right"><b>${record.total@label}</b></td>
+            <td align="right">${record.total}</td>
+        </tr>
+    </table>
+</body>
+</pdf>
