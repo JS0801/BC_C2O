@@ -11,7 +11,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
     var request = context.request;
     var recID   = request.parameters.recid;
     var subID   = request.parameters.subid || 1;
-    var outType = (request.parameters.type || '').toUpperCase(); // CSV to trigger Excel
+    var outType = (request.parameters.type || '').toUpperCase(); 
     var custID = request.parameters.custid;
     var projectnumber = [];
     var projectmanager = '';
