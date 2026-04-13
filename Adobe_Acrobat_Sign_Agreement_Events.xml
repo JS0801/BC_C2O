@@ -1,0 +1,170 @@
+<workflow scriptid="customworkflow_adobe_sign_agree_events">
+  <description></description>
+  <initcontexts>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</initcontexts>
+  <initeventtypes></initeventtypes>
+  <initlocalizationcontext></initlocalizationcontext>
+  <initoncreate>T</initoncreate>
+  <initonvieworupdate>T</initonvieworupdate>
+  <initsavedsearchcondition></initsavedsearchcondition>
+  <inittriggertype></inittriggertype>
+  <isinactive>F</isinactive>
+  <islogenabled>F</islogenabled>
+  <keephistory>ONLYWHENTESTING</keephistory>
+  <name>Adobe Acrobat Sign Agreement Events</name>
+  <recordtypes>[scriptid=customrecord_echosign_agreement]</recordtypes>
+  <releasestatus>RELEASED</releasestatus>
+  <runasadmin>F</runasadmin>
+  <initcondition>
+    <formula></formula>
+    <type>VISUAL_BUILDER</type>
+  </initcondition>
+  <workflowstates>
+    <workflowstate scriptid="workflowstate25">
+      <description></description>
+      <donotexitworkflow>F</donotexitworkflow>
+      <name>State 1</name>
+      <positionx>243</positionx>
+      <positiony>133</positiony>
+      <workflowactions triggertype="ONENTRY">
+        <setfieldvalueaction scriptid="workflowaction618">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=customrecord_echosign_agreement.custrecord_es_parent_tran]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula>{custrecord_echosign_parent_record}</valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>FORMULA</valuetype>
+          <initcondition>
+            <formula></formula>
+            <type>VISUAL_BUILDER</type>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction619">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes>CREATE</eventtypes>
+          <field>[scriptid=customrecord_echosign_agreement.custrecord_echosign_sender_signs]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>T</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula><![CDATA["Parent Transaction:Type" IN ("Transaction Type1")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Parent Transaction:Type</name>
+                <value>[scriptid=customrecord_echosign_agreement.custrecord_es_parent_tran]:STDBODYTRANTYPE</value>
+              </parameter>
+              <parameter>
+                <name>Transaction Type1</name>
+                <selectrecordtype>-100</selectrecordtype>
+                <value>SALESORDER</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction620">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes>CREATE</eventtypes>
+          <field>[scriptid=customrecord_echosign_agreement.custrecord_echosign_senddocinteractive]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>T</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula><![CDATA["Parent Transaction:Type" IN ("Transaction Type1","Transaction Type2")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Parent Transaction:Type</name>
+                <value>[scriptid=customrecord_echosign_agreement.custrecord_es_parent_tran]:STDBODYTRANTYPE</value>
+              </parameter>
+              <parameter>
+                <name>Transaction Type1</name>
+                <selectrecordtype>-100</selectrecordtype>
+                <value>PURCHASEORDER</value>
+              </parameter>
+              <parameter>
+                <name>Transaction Type2</name>
+                <selectrecordtype>-100</selectrecordtype>
+                <value>SALESORDER</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+        <setfieldvalueaction scriptid="workflowaction621">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes>CREATE</eventtypes>
+          <field>[scriptid=customrecord_echosign_agreement.custrecord_echosign_sign_order]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect>[scriptid=customlist_echosign_sign_order.value_1_t1332452_417]</valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula><![CDATA["Parent Transaction:Type" IN ("Transaction Type1")]]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Parent Transaction:Type</name>
+                <value>[scriptid=customrecord_echosign_agreement.custrecord_es_parent_tran]:STDBODYTRANTYPE</value>
+              </parameter>
+              <parameter>
+                <name>Transaction Type1</name>
+                <selectrecordtype>-100</selectrecordtype>
+                <value>SALESORDER</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
+    </workflowstate>
+  </workflowstates>
+</workflow>
