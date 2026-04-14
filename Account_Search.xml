@@ -1,8 +1,104 @@
-<!-- This XML must be system-generated. Do not edit it manually. !-->
-<savedsearch scriptid="customsearch2025">
-  <dependencies>
-    <dependency>[scriptid=customlist_fam_list_usedaccounts]</dependency>
-    <dependency>[scriptid=custrecord_fam_account_showinfixedasset]</dependency>
-  </dependencies>
-  <definition>05c79282d5bdefc8fd554e77cd299fe73f83595ec2de9a2052bacaae1912d2fc@GZC@2026.1.12@H4sIAAAAAAAA/+2da2/iuBrH36+036Gir09pSKY3UVYhMW22IeEkoZd9E2Ugs5NdLlUIM9v59Me5lUuBCcYQtOcvjdQhOI8d+3l+dmz/cf23f4aDk29+OAnGo9uKcHZeOfFHvXE/GP15W+k6rf9cVX5r/PpLfTSZjHs3th8G3iD44ffNz3/5vUgZjyIvGPnhCTUzmtwkqW4rX6Po9aZa/f79+9nIjybTIPLPeuNhddL76g+9STVJVjmZBv3byvXVpSgJ567dFG5s75vft30v7H296U0n0Xg4ST7UzmufboTLywtBuLgShWtJqszKfH4mVE6iYOhPIm/4Sp9hIV0jK/nQe32lxVy4q0HLFBdw4Pf/9ENawtA/SzOkf7IHDc/SO8/SYrWTD/XqvNE8i77/JRgFETXfqKep1bkrfX/SC4PXaEzThz7Nq++8vfonvYE3mdxW0vTW+/VKwyaypdy7xHCsl3p1dkej/s0bTP1Jo/4Y/z35EviD5IvcSCu/UEm/u608kBe3IysP8h2pnFS3vNFWLK3juJpaicv648dtZRKF1Dto7S21UL2aGN7CfksjuuqqpCV3dcc15DYtX99/9Ud96oNvD/7bbUUf97yBr75X3k1WL47m6OT0/EOh5F5vPB1FJ2mWrEXKM3npkHU5MJjW5Tu3023qmvJu9PN4PPC9UaURhVOf0aSu2c5Hg1+8wYTVYse0aO1yNtqWlXvNIHyNWqStGSqx+Fq1780nWq3GA+dqtUiLWBZR99Fk77b30ngz83tpxpn5lmm192XbIjbljM3X/KNGnlzZpsbjit+P7TtL7tzvy/Qc2blY7hq0nh1LUxzCz3JbfnYt88nerv9KyqNqttzUiatamq67qvlk8HvepLNQutS7DOXFtWSHZH3G1qW811TitjTdIRYtqdmJy8nPU+OOPO9mHfLsuGnJ0/w+9HC2I1uO/aQ594wuID/Kmp5UOvWwFuHoB0vmKS3SHtWmTLrjm8udbjZl3SWqxjmqFfuRr0HyrBCdMzTVFucoIW3aaG7LMttbRsfc3Xa3+TtRHHYDTVN9Yb9bMdttOh5niG6Kw7s7EvdBsk549xK2ck/Urn4Q47QJ2m3Z0gjnXtQmRlzLHedlP710WnhZ1+nAjnpR/FLT5DyGSbPQDEXvUpQn/Sv/IeQ9BapjOrLOuX7yYneIpZm0JWhrOJZs2LLiaCbHjigNp2ZXf3DNDg0oddu+cnZ/8macjBfpy60lt1nGBs0u7QHpw3N+PrPjaG3tD9qV026JhRdJOJiG2+2odEyxh5cbuUu7tbiJNX4dRzzIiO3SsdDH9/j5aR552g/oF/6N8J53MIoqjfP3PKv5HEd1ftrkSzCI/JBejT7MnJCBP/RH0cLUSTq6sevVaGHaJC9+bKtRf/VCel9uTBkPBn4vnrCpnIT+Fz+Mi3lbOTurJv+SlmScyKE+Sj32ntjUL/KR147zOunwNhl0am1CnUYxDc5Drbi/nh9vLQ4YuWRhmJy7LJNjAdNwtlxFl7s2rWJHdrozGva+emGlYbDaNbptVyctJ/UNe10wMFilw417zmazd5OVk3Sf++GNN3q7GU0Hg3XzZa5ma0bcnTwS5iJQ1nd1maXHaJuqRv9nsdwrO3T41uzOcTh/tBbrk6ycWKQjLeWhaT7/hIL5xW0g6D7Kepe8o3BmeBGGs+vvqJ1Mh0MvfGtth950lPiyjODqsjXvmxcMvM8DP72SVFfhTJax9IH0KYVZGL8F15dLsSPTbfLfOIKbc5RN4lZgxgFzwKbFYJ8VsR3ad9Cqid9Nfzarv1yLpzWGUVPLNLn3TqlNl3LH0WgPqyevn5szmEVR7oD/JkesleCI9M6S3FCEGx6nG4qHd0NVszu6/FKiN0rwxuP0Runw3hgPIUtyw09ww+N0Q+YtGDtAkaQbRDST+TV4R2+8gDcepzdeHN4bm7IuG0pZXLyEJx6nJ14e3hPviEEsWY+3BJTYU1/BI4/TI68O75GKbN+3dPOpZJe8hksep0teH94l45V4TdXkeIdzKc4onMMbj9MbBfb1rx0I6ZA703oRzq+v25qtlOWUApzySJ2yhFUYzc4W08ryRqzEHKs3lrAUs/si/q7uiBWZY3XHEpZkZEUxu4ajGXeKacQb28vySqzMHKtXlrA0o5uKrJcGSKzOHKsrlrA8k7hivOO01M08AtZojtUnS1ikmflkeTspBKzVHKtHlrBY8+6R5W/xEbBkc6yOWcKaTVPWaqal3WlqWe6I5ZpjdccS1mtid4wdir52O7RMZW0Nx6LNkfpkrYRFG60pGyX7I9ZrjtUf+a7XKMkPXqle5M25Q5L+NHYhiyimpbotuZ3PSyZaW81oac9ElW2bOKdFE34UhxW7r6wQ+FfNf86urNGnhX40DUf5p+iDx69Sq1nE6VpG+sMr5SjV5kuwq/I4FUbqmmwzUtugzWRQA8wD2/hnv545aeQKuv18BZ7Wtp1nTX9YLhNGMuW47SzaQo4Mv0uUim67RvIbEEz3sgt2s1tdYll70HOryW+xNF9yF66W1hMeU1DuMu2xIhyZl6eZgmPbCb3dw3HbmRqEI8LxwHrDFVHJvErPFCPbTh/tHJXitpMDiEpE5aF0lyvCkXl7AlNwbDtTsXs4brt7EOGIcDyw/nRFVDLv1GCKkW23NO4eldtO1yAqEZUH1OGuiEjmfSpM8XHwuR0RczuISMaI/BcvS6wAAfP2IKawPPiskohZJYBgn10zed7Dygvz1iimEDn4pJKESSUE5V5XXnbanb8iIJk3hzGFx8GnlSRMKyEg97o/YWed66r9Cczb45hi5ODTShKmlRCV+43KHX8LYVVQHnTXkHTwmSUJM0sHDcrZlcVdgn0/8oJB/in6EHqr9gyqxEkOzYrzn/2I/qKlyTiMaMhPh6Piv85vWo6rmHq3bZSzE3GuAByOtk2q57A7nvR3h9h9B2JyiAuxFWKoBc6w2+RwC65AkRBGNE3wGtCG3M7v0qOsLKJoHY0Yjr3sgattL15lzmxNLrPTKuZPVa5+PHo5v5J5QxBXzdK1t5MoaZNlcmZHUv/0zOE40XmlUV9OmD5yYz55/jR/+2/x2Svxn3oUeqPJwIuLS8tGny2kF1PXbAS0l3NoU6af6rH3JpzJUi0mDqeu1S2a2B+5cuHEUeg6VtHEQd+NZ5OKJX6N3GZhy9FXNz6EsljiL6HbKmz5L8/9vVM0cW/iKn8UTdz3aTgXTfyDPuBT4RacuPEZLsUSjwauoW9RdYpcNPHkm2sXfkBaZrlwo/Q9V30o7s9FU34L3EejcFUElHZbxNRds2jiv8fuQ+GqoJaLtwhN3J1zjOzv8lHo+ddrPVEpXEmjsWuY6xNXFwlX/cjJ6jKR1zI6PywuY/O6c+Ti74TKbPxSZDSSH1bH4xi23FZ8xmSmpiEW70Ms5/Mg7Y5uvhDeB3Eu5NGRLcfY72NYpr7qEaJwysX8Ix1VmTwfIH2FzbNYLH0+utw0WCvs90XHJqtOTooT1taPTz6q72ZjlBrGKBijYIyCMcqexyg/dbmjHIwwQ1lMoSyyQVkElAFlQBlQBpR5QllKoSyxQVkClAFlQBlQBpR5QvlTCuVPbFD+BCgDyoAyoAwo84TyRQrlCzYoXwDKgDKgDCgDyjyhfJlC+ZINypeAMqAMKAPKgDJPKF+lUL5ig/IVoAwoA8qAMqDME8rXKZSv2aB8DSgDyoAyoAwo84SykAmphA1Kqk1YFiCnApfBZXAZXObL5VxNJTByWQCXwWVwGVwGl7lyORP2CYzKPgHSPnAZXAaXwWW+XM60fQKjuE+Aug9cBpfBZXCZL5czeZ/AqO8TIPADl8FlcBlc5svlTOEnMEr8BGj8wGVwGVwGl/lyORP5CYwqPwEyP3AZXAaXwWW+XM50fgKj0E+A0g9cBpfBZXCZL5czqZ/AqPUTIPYDl8FlcBlc5svlTO0nMMr9BOj9wGVwGVwGl/meS5Lp/WqMer8a9H7gMrgMLoPLfLmc6f1qjHq/GvR+4DK4DC6Dy6u4rEwn0XioepH3gc2rvrpJT21PT5DUNdtxW3LbTf7TtYkqK4rZNRz79KcpMqjHYsFV+dCqSP6n9Rs/s0TrKU9a71MjyTGZSTHr1ffP9cl0OPRo5WUHK+Yf6yNv6BfIIklWr64u6iFq2yKKaalJ8bJSufa9+aQZLe2ZFtS2iXNaNGFW92Kxui9gkFMTFMopbYn0RFR1VuN7ddb8BNa5/Hb3BfYRUaYcqDEqB2pQDmBEhBERRkQYEe3CZYs4Xctw0z6mlqkGahtUA/M3LPAYigHwGDwGj8FjfjzO1AK1DWqBtTyGUgA8Bo/BY/CYH48zlUBtg0pgLY+hEACPwWPwGDzmx+NMHVDboA5Yy2MoA8Bj8Bg8Bo/58ThTBdQ2qALW8hiKAPAYPAaPwWNuPBYzNYC4QQ2wjscilADgMXgMHoPH/HicqQDEDSqAtTyGAgA8Bo/BY/CYH4+z037EDaf9rOUxTvoBj8Fj8Bg85sfj7JQfccMpP2t5jBN+wGPwGDwGj/nxONPoiRs0emt5DH0eeAweg8fgMT8eZ/o8kUGfJ0KfBx6Dx+AxeMyPx5k+T2TQ54nQ54HH4DF4DB7z43GmzxMZ9Hki9HngMXgMHoPH/Hic6fNEBn2eCH0eeAweg8fgMT8eZ/o8kUGfJ0KfBx6Dx+AxeMyNx1Kmz5MY9HkS9HngMXgMHoPH/Hic6fMkBn2eBH0eeAweg8fgMT8eZ/o8iUGfJ0GfBx6Dx+AxeMyPx5k+T2LQ50nQ54HH4DF4DB7z43Gmz5MY9HkS9HngMXgMHoPH/Hic6fMkBn2eBH0eeAweg8fgMT8eZ/o8iUGfJ0GfBx6Dx+Dx/zmPly8F/uT9ou2HgTcIfvh98/Nffi9SxqPIC0Z+2Pj1l/8BKF2Ky/V2AQA=</definition>
-</savedsearch>
+<!doctype html>
+
+<html>
+<head>
+	<title>NetSuite Login</title>
+
+<link rel="icon" type="image/png" href="/authentication/ui/loginpage/assets/icon/favicon-96x96.png" sizes="96x96" />
+<link rel="icon" type="image/svg+xml" href="/authentication/ui/loginpage/assets/icon/favicon.svg" />
+<link rel="shortcut icon" href="/authentication/ui/loginpage/assets/icon/favicon.ico" />
+<link rel="apple-touch-icon" sizes="180x180" href="/authentication/ui/loginpage/assets/icon/apple-touch-icon.png" />
+<link rel="manifest" href="/authentication/ui/loginpage/assets/icon/site.webmanifest" />	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="robots" content="noindex, nofollow"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" type="text/css" href="/assets/@uif-js/fonts/1.0.9/css/fonts.css?NS_VER=2026.1&amp;minver=12" />
+    <link rel="stylesheet" type="text/css" href="/assets/redwood_tokens/3366255335.css?NS_VER=2026.1&amp;minver=12" />
+    <link rel="stylesheet" type="text/css" href="/assets/loginpage_redwoodcommon/3247350347.css?NS_VER=2026.1&amp;minver=12" />
+    <link rel="stylesheet" type="text/css" href="/assets/loginpage_redwood/3726434582.css?NS_VER=2026.1&amp;minver=12" />
+    	<script type="text/javascript" nonce="WV4f/7Q90YQN1Ct6hRyyLF3wxB8Rev6JoCWEgMki4tw=" src="/javascript/NLPortal.jsp?JSP_VER=1&amp;NS_VER=2026.1&amp;minver=12&amp;buildver=30210"></script>
+    	<script type="text/javascript" nonce="WV4f/7Q90YQN1Ct6hRyyLF3wxB8Rev6JoCWEgMki4tw=" src="/assets/loginpage_redwoodcommon/1850496838.js?NS_VER=2026.1&amp;minver=12" integrity="sha512-SuSCUiNXWCMUY/5xUGP6eFE6lC0fbXJuf/xlTSk87NqQe49queCPdsc5l/gd/4BbWjTWCp0jz7UX1+7hj8FPIw=="></script>
+
+
+</head>
+<body>
+
+<div id="page-wrapper">
+	<div id='div__alert' class="text-align: center"></div>
+<div class="login-page-body" data-page-type="login">
+	<div class="login-page-main">
+		<div class="login-page-box">
+			<div class="login-page-box-logos">
+				<a class="login-page-box-logo-link" href="http://www.netsuite.com/portal/home.shtml?noredirect=T" tabindex="-1">
+					<img class="login-page-box-logo login-page-box-logo--ns"
+						src="/authentication/ui/loginpage/assets/logo/NetSuite-logo-mobius.svg" alt="Oracle NetSuite" />
+				</a>
+			</div>
+			<h2 class="login-page-box-title">Log In</h2>
+
+
+			<form method="post" id="login-form" class="login-page-form" data-validate data-cookie-prefill data-reset-rememberme>
+				<input type="hidden" name="jsenabled" value="F">
+
+					<input type="hidden" name="redirect" value="/app/suiteapp/devframework/xml/xmlexport.nl?recordtype=savedsearch&amp;id=2025">
+					<input type="hidden" name="c" value="9873410_SB1">
+
+				<div class="login-page-form-field">
+					<input type="text" name="email" id="email" required data-validate-on-blur
+						placeholder="Email address"/>
+					<label for="email">Email address</label>
+					<div class="validation-message">
+						<p>
+							<img src="/uiredwood/img/message/error.svg" alt="" />
+							<span>Valid email is required: name@company.com</span>
+						</p>
+					</div>
+				</div>
+
+				<div class="login-page-form-field">
+					<input type="password" name="password" id="password" autocomplete="off" required data-validate-on-blur
+						placeholder="Password"/>
+					<label for="password">Password</label>
+					<div class="validation-message">
+						<p>
+							<img src="/uiredwood/img/message/error.svg" alt="" />
+							<span>Password is required</span>
+						</p>
+					</div>
+				</div>
+
+				<div class="login-page-form-checkbox">
+					<input type="checkbox" name="rememberme" id="rememberme" class="login-checkbox"/>
+					<label for="rememberme">Remember Me</label>
+				</div>
+
+				<button class="login-page-form-submit" type="submit" name="submitButton" id="login-submit">
+					<svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+						<path d="M11.9982 4C14.2074 4 15.9982 5.79086 15.9982 8V11H7.99823V8C7.99823 5.79086 9.78909 4 11.9982 4ZM17.9982 11V8C17.9982 4.68629 15.3119 2 11.9982 2C8.68452 2 5.99823 4.68629 5.99823 8V11H1.99823V22H21.9982V11H17.9982ZM3.99823 13H19.9982V20H3.99823V13Z"></path>
+					</svg>
+					<span>Log In</span>
+				</button>
+
+
+				<a href="/app/login/preparepwdreset.nl?email=&"
+					class="login-page-form-forgot">Forgot your password?</a>
+
+			</form>
+
+			<div class="login-page-box-footer">
+				By clicking on the Log In button, you understand and agree to
+				<a href="https://www.oracle.com/us/legal/terms/index.html">Oracle Terms of Use</a>
+				and
+				<a href="https://www.oracle.com/us/legal/privacy/privacy-policy/index.html">Oracle Privacy Policy</a>
+			</div>
+		</div>
+
+		<div class="login-page-footer">
+			<a class="link" href="https://www.oracle.com/legal/copyright.html">© Oracle</a>
+			<span class="sep">|</span>
+			<a class="link" href="http://www.netsuite.com/portal/assets/pdf/oracle-terms-use-netsuite-support-portal.pdf">Oracle Terms of Use for NetSuite Support Portal</a>
+		</div>
+	</div>
+</div>
+</div> <!-- #page-wrapper -->
+<script type="text/javascript" nonce="b18e185c3ddd189bb372f9dd21cad57e" src="/7psT-tuCzz_N7AE2rfbgrrS0/aJEYhXrmu9rzXh3V1L/Bi1t/HGFhK/j5sUToB"></script></body>
+</html>
