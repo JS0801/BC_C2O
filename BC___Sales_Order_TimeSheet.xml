@@ -1,0 +1,386 @@
+<?xml version="1.0"?>
+<!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+<head>
+	<link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}" src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+	<#if .locale == "zh_CN">
+		<link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}" src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2" />
+	<#elseif .locale == "zh_TW">
+		<link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}" src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2" />
+	<#elseif .locale == "ja_JP">
+		<link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}" src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2" />
+	<#elseif .locale == "ko_KR">
+		<link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}" src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2" />
+	<#elseif .locale == "th_TH">
+		<link name="NotoSansThai" type="font" subtype="opentype" src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2" />
+	</#if>
+    <macrolist>
+        <macro id="nlheader">
+            
+<table style="font-size: 10pt; border-collapse: collapse;" width="100%"><tr>
+<td style="width: 30%;"><#if subsidiary.logo@url?has_content> <@filecabinet nstype="image" style="width: 150px; height: 70px;" src="${subsidiary.logo@url}" /> <#elseif companyInformation.logoUrl?length != 0> <@filecabinet nstype="image" style="width: 150px; height: 70px;" src="${companyInformation.logoUrl}" /> <#else> <@filecabinet nstype="image" style="width: 150px; height: 70px;" src="https://9873410-sb1.app.netsuite.com/core/media/media.nl?id=6602&c=9873410_SB1&h=R3DKmSPNysAlWsoMjrDKoblKq2Yc6K5CjcGxmqIAS72zqumQ" /> </#if></td>
+<td style="width: 40%; font-size: 16pt; font-weight: bold; padding-top: 27px;" align="center">Weekly Timesheet</td>
+<td style="width: 30%; font-size: 16pt; font-weight: bold; padding-top: 27px;">&nbsp;</td>
+</tr></table>
+
+        </macro>
+        <macro id="nlfooter">
+            &nbsp;
+        </macro>
+    </macrolist>
+    <style>
+		* {
+		<#if .locale == "zh_CN">
+			font-family: NotoSans, NotoSansCJKsc, sans-serif;
+		<#elseif .locale == "zh_TW">
+			font-family: NotoSans, NotoSansCJKtc, sans-serif;
+		<#elseif .locale == "ja_JP">
+			font-family: NotoSans, NotoSansCJKjp, sans-serif;
+		<#elseif .locale == "ko_KR">
+			font-family: NotoSans, NotoSansCJKkr, sans-serif;
+		<#elseif .locale == "th_TH">
+			font-family: NotoSans, NotoSansThai, sans-serif;
+		<#else>
+			font-family: NotoSans, sans-serif;
+		</#if>
+		}
+		table {
+			font-size: 5pt;
+			table-layout: fixed;
+		}
+        th {
+            font-weight: bold;
+            font-size: 8pt;
+            vertical-align: middle;
+            padding: 5px 6px 3px;
+            background-color: #e3e3e3;
+            color: #333333;
+        }
+        td {
+            padding: 4px 6px;
+        }
+		td p { align:left }
+ .outer-table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+
+  .bordered-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 5pt;
+  }
+
+  .bordered-table td {
+    border: 1px solid #000;
+    border-collapse: collapse;
+    padding: 5px 8px;
+    vertical-align: top;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    font-size: 5pt;
+  }
+
+  .header-label {
+    background-color: #009fe3;
+    color: #fff;
+    font-weight: bold;
+    width: 30%;
+    font-size: 5pt;
+  }
+
+  .value-cell {
+    width: 70%;
+    font-size: 5pt;
+    font-weight: bold;
+  }
+   .timesheet-table {
+    width: 100%;
+    border-collapse: collapse;
+    table-layout: fixed;
+    font-size: 5pt;
+  }
+
+  .timesheet-table th, .timesheet-table td {
+    padding: 4px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    text-align: center;
+    font-size: 5pt;
+  }
+
+  .timesheet-table th {
+    background-color: #3a4b87;
+    color: #fff;
+    font-weight: bold;
+    font-size: 5pt;
+  }
+
+  .timesheet-table .row-label {
+    background-color: #3a4b87;
+    color: #fff;
+    font-weight: bold;
+    font-size: 5pt;
+  }
+    </style>
+</head>
+<body header="nlheader" header-height="10%" footer="nlfooter" footer-height="20pt" padding="0.25in" size="Letter-LANDSCAPE">
+    <table class="outer-table"><tr><!-- Left Table -->
+<td style="width: 49%; vertical-align: top;">
+<table class="bordered-table"><tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">Client:</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.entity}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">Customer Ref #:</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.otherrefnum}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">Week-Ending:</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.trandate}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">C2O Project Manager:</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.cseg_bc_project.custrecord_bc_proj_manager}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">Description of Work:</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.memo}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-right: 0px;">Document #:</td>
+<td class="value-cell">${record.tranid}</td>
+</tr></table>
+</td>
+<td style="width: 2%;">&nbsp;</td>
+<!-- spacer --> <!-- Right Table -->
+<td style="width: 49%; vertical-align: top;">
+<table class="bordered-table"><tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">Project:</td>
+<td class="value-cell" style="border-bottom: 0px;" colspan="3">${record.cseg_bc_project.custrecord_bc_reporting_project}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">C2O Job:</td>
+<td class="value-cell" style="border-bottom: 0px;" colspan="3">${record.cseg_bc_project}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-right: 0px;">Supervisor:</td>
+<td class="value-cell" style="border-bottom: 0px;" colspan="3">${record.custbody_client_supervisor}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 0px; border-left: 1px; border-right: 0px;">Start Time: Monday – Friday</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.custbody_start_time}</td>
+<td class="header-label" style="border-bottom: 0px; border-left: 0px; border-right: 0px;">Finish Time:</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.custbody_end_time}</td>
+</tr>
+<tr style="line-height: 0.7px;">
+<td class="header-label" style="border-bottom: 1px; border-left: 1px; border-right: 0px;">Start Time: Weekend / Holiday</td>
+<td class="value-cell" style="border-bottom: 1px;">${record.custbody_start_time}</td>
+<td class="header-label" style="border-bottom: 1px; border-left: 0px; border-right: 0px;">Finish Time:</td>
+<td class="value-cell" style="border-bottom: 1px;">${record.custbody_end_time}</td>
+</tr></table>
+</td>
+</tr></table>
+<#import 'https://9873410-sb1.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1399&deploy=1&compid=9873410_SB1&ns-at=AAEJ7tMQ3ynL6W4Omndxs5dge6jTuUKEk5fBmI4olpZs_s_pwGM&tranid=' + record.id as linedetails> <#assign labelLabor = "Labor"> <#if subsidiary.country?string == "Australia"> <#assign labelLabor = "Labour"> </#if> <#if linedetails.ObjDetail?has_content> <#assign x = linedetails.ObjDetail /> <#if x.Labor?has_content>
+<table class="timesheet-table"><#list x.Labor as labor> <!-- Header Row 1 --> <#if labor?index == 0>
+<thead>
+<tr style="line-height: 0.7px;">
+<th style="border-top: 1px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000;" colspan="10"><strong>${labelLabor}</strong></th>
+<td style="border: 1px solid #000;" colspan="17" align="center"><strong>ALL HOURS SHOWN ARE HOURS WORKED</strong></td>
+</tr>
+<tr>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5" rowspan="2">${labor.employee}</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5" rowspan="2">${labor.role}</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Time<br />Type</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Shift<br />Type</th>
+<#list labor.days as datelist>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="1" align="center">${datelist.date?date('MM/dd/yyyy')?string('E')}</th>
+</#list>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">TOTAL<br />WEEK</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}" rowspan="2">${labor.notes}</th>
+</tr>
+<!-- Header Row 2 (Dates) -->
+<tr style="line-height: 0.7px;"><#list labor.days as datelist>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; font-size: 4pt;" align="center">${datelist.date?date('MM/dd/yyyy')?string('MM/dd/yy')}</th>
+</#list></tr>
+</thead>
+</#if> </#list><#list x.Labor as labor> <#if labor.employee != 'TOTAL' && labor?index != 0> <!-- Data Row -->
+<tr style="line-height: 5px;">
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.employee}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.role}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center"><#if labor.shiftType == 'Per Diem'> <span style="font-size: 4.8pt;">${labor.shiftType}</span><#else>${labor.shiftType}</#if></td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.shift}</td>
+<#list labor.days as datelist>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${datelist.hours}</td>
+</#list>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.totalWeek}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}">&nbsp;</td>
+</tr>
+<#elseif labor?index != 0>
+<tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="12" align="right"><strong>Total Hours:</strong></td>
+<#list labor.days as datelist>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="center">${datelist.hours}</td>
+</#list>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="center">${labor.totalWeek}</td>
+</tr>
+</#if> </#list><!-- Totals Row --></table>
+</#if> <#if x["Equipment / Vehicle Rental"]?has_content>
+<table class="timesheet-table" style="padding-top: 20px;"><#list x["Equipment / Vehicle Rental"] as labor> <!-- Header Row 1 --> <#if labor?index == 0>
+<thead>
+<tr style="line-height: 0.7px;">
+<th style="border: 1px solid #000;" colspan="6"><strong>Equipment / Vehicle Rental</strong></th>
+</tr>
+<tr>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="6" rowspan="2">${labor.role}</th>
+<#list labor.days as datelist>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="1" align="center">${datelist.date?date('MM/dd/yyyy')?string('E')}</th>
+</#list>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">TOTAL<br />WEEK</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}" rowspan="2">${labor.notes}</th>
+</tr>
+<!-- Header Row 2 (Dates) -->
+<tr style="line-height: 0.7px;"><#list labor.days as datelist>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${datelist.date?date('MM/dd/yyyy')?string('MM/dd/yy')}</th>
+</#list></tr>
+</thead>
+<#else> <#if labor.employee != 'TOTAL'> <!-- Data Row --><tr style="line-height: 0.7px;">
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="6">${labor.role}</td>
+<#list labor.days as datelist>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${datelist.hours}</td>
+</#list>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.totalWeek}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}">&nbsp;</td>
+</tr>
+<#else>
+<tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="6" align="right"><strong>Total Hours:</strong></td>
+<#list labor.days as datelist>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="center">${datelist.hours}</td>
+</#list>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="center">${labor.totalWeek}</td>
+</tr>
+</#if> </#if> </#list></table>
+</#if> <#if x.Materials?has_content>
+<table class="timesheet-table" style="padding-top: 20px;"><#list x.Materials as material> <!-- Header Row 1 --> <#if material?index == 0>
+<thead>
+<tr style="line-height: 0.7px;">
+<th style="border: 1px solid #000;" colspan="4"><strong>Materials</strong></th>
+</tr>
+<tr style="line-height: 0.7px;">
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;">Supplier Invoice #</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2">Supplier</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">C2O PO#</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4" align="center">Description</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">Total Cost</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="center">Rate (ex GST)</th>
+</tr>
+</thead>
+</#if> <#if material.documentNumber != 'TOTAL'> <!-- Data Row --><tr style="line-height: 0.7px;">
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;">${material.documentNumber}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2">${material.mainName}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${material.cleanedPO}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4">${material.memo}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="right">${material.cost}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.amount}</td>
+</tr>
+<#else>
+<tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Totals:</strong></td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.amount}</td>
+</tr>
+</#if> </#list></table>
+</#if> <#if x.Expenses?has_content>
+<table class="timesheet-table" style="padding-top: 20px;"><#list x.Expenses as material> <!-- Header Row 1 --> <#if material?index == 0>
+<thead>
+<tr style="line-height: 0.7px;">
+<th style="border: 1px solid #000;" colspan="4"><strong>Expenses</strong></th>
+</tr>
+<tr style="line-height: 0.7px;">
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">Supplier / Expense Category</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">C2O PO#</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4" align="center">Description</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">Total Cost</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="center">Rate (ex GST)</th>
+</tr>
+</thead>
+</#if> <#if material.documentNumber != 'TOTAL'> <!-- Data Row --><tr style="line-height: 0.7px;">
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">${material.expCat}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">${material.cleanedPO}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4">${material.memo}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="right">${material.cost}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.amount}</td>
+</tr>
+<#else>
+<tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Totals:</strong></td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.amount}</td>
+</tr>
+</#if> </#list></table>
+</#if>
+
+<#-- ==================== TIME TYPE LEGEND ==================== -->
+<#assign TIME_LEGEND_MAP = {"ST": "Standard Time", "OT": "Overtime", "DT": "Double Time", "PT": "Part Time", "PTO": "Paid Time Off", "Per Diem": "Per Diem Allowance", "DR1": "Drive Time 1", "DR2": "Drive Time 2", "DR3": "Drive Time 3"} />
+<#assign LEGEND_ORDER = ["ST", "OT", "DT", "PT", "PTO", "Per Diem", "DR1", "DR2", "DR3"] />
+<#assign seenTypes = {} />
+<#assign legendEntries = [] />
+<#if x.Labor?has_content>
+  <#list x.Labor as labor>
+    <#if labor.employee != 'TOTAL' && labor?index != 0 && labor.shiftType?has_content && labor.shiftType != ''>
+      <#if !seenTypes[labor.shiftType]??>
+        <#assign seenTypes = seenTypes + {labor.shiftType: true} />
+      </#if>
+    </#if>
+  </#list>
+</#if>
+<#list LEGEND_ORDER as key>
+  <#if seenTypes[key]??>
+    <#assign legendEntries = legendEntries + [{"abbr": key, "label": TIME_LEGEND_MAP[key]!key}] />
+  </#if>
+</#list>
+<#if legendEntries?has_content>
+<table style="width: 100%; font-size: 6pt; margin-top: 10px; border-top: 1px solid #000; page-break-inside: avoid;">
+  <tr>
+    <td style="padding-top: 5px; padding-bottom: 4px; font-size: 6pt;">
+      <strong>Time Type Legend:</strong>
+      <#list legendEntries as leg>
+        &nbsp;&nbsp;<strong>${leg.abbr}</strong> &#8211; ${leg.label}<#if leg?has_next> &nbsp;|</#if>
+      </#list>
+    </td>
+  </tr>
+</table>
+</#if>
+<#-- ==================== END LEGEND ==================== -->
+
+</#if>
+<table style="width: 100%; margin-top: 30px; page-break-inside: avoid;"><tr><!-- C2O APPROVAL -->
+<td style="width: 45%; vertical-align: top;">
+<table style="width: 101.473%; border: 1px solid rgb(0, 0, 0); border-collapse: separate; height: 47.3281px;"><tr style="height: 9.32812px;">
+<td  colspan = "5" style="background-color: rgb(58, 75, 135); color: rgb(255, 255, 255); font-weight: bold; padding: 6px; width: 42.9795%; height: 9.32812px; border: 1px;" align = "center">C2O APPROVAL</td>
+</tr>
+<tr style="height: 60px;">
+<td style="width: 21.4898%; background-color: rgb(58, 75, 135); color: rgb(255, 255, 255); font-weight: bold; padding: 6px; vertical-align: middle; height: 38px; border: 1px; border-top: 0px;">Signature:<br /><br />Name:<br /><br />Date:</td>
+<td style="width: 21.4898%; height: 38px; padding: 6px;">&nbsp;</td>
+<td style="width: 11.1834%; padding: 6px;">&nbsp;</td>
+<td style="width: 10.3063%; padding: 6px;">&nbsp;</td>
+</tr></table>
+</td>
+<td style="width: 10%;">&nbsp;</td>
+<!-- Spacer --> <!-- CLIENT APPROVAL -->
+<td style="width: 45%; vertical-align: top;">
+<table style="width: 101.473%; border: 1px solid rgb(0, 0, 0); border-collapse: separate; height: 47.3281px;"><tr style="height: 9.32812px;">
+<td  colspan = "5" style="background-color: rgb(58, 75, 135); color: rgb(255, 255, 255); font-weight: bold; padding: 6px; width: 42.9795%; height: 9.32812px; border: 1px;" align = "center">CLIENT APPROVAL</td>
+</tr>
+<tr style="height: 60px;">
+<td style="width: 21.4898%; background-color: rgb(58, 75, 135); color: rgb(255, 255, 255); font-weight: bold; padding: 6px; vertical-align: middle; height: 38px; border: 1px; border-top: 0px;">Signature:<br /><br />Name:<br /><br />Date:</td>
+<td style="width: 21.4898%; height: 38px; padding: 6px;">&nbsp;</td>
+<td style="width: 11.1834%; padding: 6px;">&nbsp;</td>
+<td style="width: 10.3063%; padding: 6px;">&nbsp;</td>
+</tr></table>
+</td>
+</tr></table>
+</body>
+</pdf>
