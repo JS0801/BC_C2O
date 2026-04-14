@@ -323,8 +323,8 @@
 </#if>
 
 <#-- ==================== TIME TYPE LEGEND ==================== -->
-<#assign TIME_LEGEND_MAP = {"ST": "Standard Time", "OT": "Overtime", "DT": "Double Time", "PT": "Part Time", "PTO": "Paid Time Off", "Per Diem": "Per Diem Allowance", "DR1": "Drive Time 1", "DR2": "Drive Time 2", "DR3": "Drive Time 3"} />
-<#assign LEGEND_ORDER = ["ST", "OT", "DT", "PT", "PTO", "Per Diem", "DR1", "DR2", "DR3"] />
+<#assign TIME_LEGEND_MAP = {"ST": "Standard Time", "OT": "Overtime", "DT": "Double Time", "PT": "Premium Time", "PTO": "Paid Time Off", "Per Diem": "Per Diem Allowance", "DR1": "Day Time 1", "DR2": "Day Time 2", "DR3": "Day Time 3", "DR1-OT": "Day Rate 1 Overtime", "DR2-OT": "Day Rate 2 Overtime"} />
+<#assign LEGEND_ORDER = ["ST", "OT", "DT", "PT", "PTO", "Per Diem", "DR1", "DR2", "DR3", "DR1-OT", "DR2-OT"] />
 <#assign seenTypes = {} />
 <#assign legendEntries = [] />
 <#if x.Labor?has_content>
