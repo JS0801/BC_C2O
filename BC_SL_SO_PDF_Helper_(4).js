@@ -147,7 +147,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           var weekStart = new Date(firstDate);
           weekStart.setDate(firstDate.getDate() + diffToMonday);
           
-          for (var i = 0; i < 15; i++) {
+          for (var i = 0; i < 7; i++) {
             var currentDate = new Date(weekStart);
             currentDate.setDate(weekStart.getDate() + i);
             fullWeekDates.push(formatDate(currentDate));
