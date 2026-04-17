@@ -563,8 +563,8 @@ define([
       employeeMap[empKey].totalWeek += hours;
       employeeMap[empKey].amt += amtTime;
       
-      if (note) {
-        employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
+      if (note && note != '- None -') {
+        employeeMap[empKey].notes = note;
       }
       
       return true;
@@ -1037,7 +1037,7 @@ define([
         html += '<td align = "center">' + labor[q].totalWeek + '</td>'
         + '<td style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + (labor[q].rate) + '</td>'
         + '<td style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + (labor[q].amt) + '</td>'
-        + '<td colspan="' + (12 - labor[q].days.length) + '"></td>'
+        + '<td colspan="' + (12 - labor[q].days.length) + '">' + (labor[q].notes) + '</td>'
         + '</tr>';
       }
       
