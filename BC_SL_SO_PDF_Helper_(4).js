@@ -114,7 +114,8 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           employeeMap[empKey].totalWeek += hours;
           
           if (note) {
-            employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
+           // employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
+            employeeMap[empKey].notes = note;
           }
           
           return true;
