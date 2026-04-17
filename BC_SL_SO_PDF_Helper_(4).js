@@ -97,6 +97,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           uniqueDates.add(dateStr);
           
           const empKey = empName + '_' + shiftType + '_' + role + '_' + groupType + '_' + shift;
+          log.debug('empKey', empKey)
           if (!employeeMap[empKey]) {
             employeeMap[empKey] = {
               employee: empNameArr[empName],
@@ -109,6 +110,8 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
               groupType: groupType
             };
           }
+
+          log.debug('empKey Map', employeeMap[empKey])
           
           employeeMap[empKey].dateMap[dateStr] = hours;
           employeeMap[empKey].totalWeek += hours;
