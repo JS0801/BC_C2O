@@ -110,7 +110,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
               groupType: groupType
             };
           }
-
+          log.debug('hours', hours)
           log.debug('empKey Map', employeeMap[empKey])
           
           employeeMap[empKey].dateMap[dateStr] = hours;
