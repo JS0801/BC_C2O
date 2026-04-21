@@ -64,12 +64,13 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         });
 
         log.audit('getInputData', 'TimeBill search built for ' + projectIds.length + ' project(s).');
-        return JSON.stringify(s);
+        return s;
     }
 
     // ─── Stage 2: map — group by employee|date|project ───────────
     function map(context) {
         try {
+          log.debug('context', context)
             var r = JSON.parse(context.value);
             log.debug('r', r)
 
