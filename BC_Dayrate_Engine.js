@@ -37,6 +37,8 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
 
     // ─── Stage 1: getInputData ───────────────────────────────────
     function getInputData() {
+
+      try {
         log.audit('getInputData', 'Start — loading enabled day-rate projects');
 
         var projects = loadEnabledProjects();
@@ -65,6 +67,12 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
 
         log.audit('getInputData', 'TimeBill search built for ' + projectIds.length + ' project(s).');
         return s;
+
+        
+        
+      } catch (error) {
+        log.error('Get-Error', error)
+      }
     }
 
     // ─── Stage 2: map — group by employee|date|project ───────────
