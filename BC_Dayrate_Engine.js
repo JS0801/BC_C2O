@@ -71,6 +71,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
     function map(context) {
         try {
             var r = JSON.parse(context.value);
+            log.debug('r', r)
 
             var v = {
                 tbId:      r.id,
