@@ -52,6 +52,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         var s = search.create({
             type: 'timebill',
             filters: [
+                ['datecreated',  'on',      'today'],                'AND',
                 [TB_PROJECT,     'anyof',   projectIds],             'AND',
                 [TB_TIME_TYPE,   'anyof',   [TT_ST, TT_OT, TT_DT]],  'AND',
                 [TB_BILLED_TRAN, 'isempty', ''],                     'AND',
@@ -220,9 +221,9 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         // Copy billing-relevant fields from the template source TB.
         // Add/remove fields here once the billing tool's required set is confirmed in sandbox (Risk #1).
         copyIfPresent(template, rec, [
-            'employee', 'trandate', 'customer', 'item', 'price',
+            'employee', 'trandate', 'customer', 'item', 'memo',
             'class', 'department', 'location', 'subsidiary',
-            'memo', TB_PROJECT
+            'custcol_bc_tm_billing_shift', 'cseg_bc_project', 'cseg_bc_cost_code'
         ]);
 
         rec.setValue({ fieldId: 'hours',       value: hours });
