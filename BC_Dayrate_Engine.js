@@ -51,7 +51,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
 
         var projectIds = projects.map(function (p) { return p.projectId; });
 
-        var s = search.create({
+        return search.create({
             type: 'timebill',
             filters: [
                 ['datecreated',  'on',      'today'],                'AND',
@@ -64,12 +64,6 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             ],
             columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'hours']
         });
-        log.debug('s', s)
-
-        log.audit('getInputData', 'TimeBill search built for ' + projectIds.length + ' project(s).');
-        return JSON.stringify(s);
-
-        
         
       } catch (error) {
         log.error('Get-Error', error)
@@ -104,6 +98,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
 
     // ─── Stage 3: reduce — aggregate each group ──────────────────
     function reduce(context) {
+        log.debug('Reduce context', context)
         var key = context.key;
         try {
             var entries = context.values.map(function (s) { return JSON.parse(s); });
