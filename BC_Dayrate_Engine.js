@@ -64,7 +64,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         });
 
         log.audit('getInputData', 'TimeBill search built for ' + projectIds.length + ' project(s).');
-        return s;
+        return JSON.stringify(s);
     }
 
     // ─── Stage 2: map — group by employee|date|project ───────────
