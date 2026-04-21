@@ -60,7 +60,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 [TB_SOURCE_IDS,  'isempty', ''],                     'AND',  // skip already-aggregated
                 [TB_AGG_BY,      'isempty', '']                              // skip already-consumed
             ],
-            columns: ['employee', 'date', TB_PROJECT, TB_TIME_TYPE, 'hours']
+            columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'hours']
         });
 
         log.audit('getInputData', 'TimeBill search built for ' + projectIds.length + ' project(s).');
@@ -76,7 +76,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 tbId:      r.id,
                 employee:  r.values.employee.value,
                 tranDate:  r.values.date,
-                projectId: r.values[TB_PROJECT].value,
+                projectId: r.values['line.cseg_bc_project'].value,
                 timeType:  r.values[TB_TIME_TYPE].value,
                 hours:     parseFloat(r.values.hours) || 0
             };
