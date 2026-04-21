@@ -64,9 +64,10 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             ],
             columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'hours']
         });
+        log.debug('s', s)
 
         log.audit('getInputData', 'TimeBill search built for ' + projectIds.length + ' project(s).');
-        return s;
+        return JSON.stringify(s);
 
         
         
