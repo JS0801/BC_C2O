@@ -61,7 +61,7 @@ define(['N/currentRecord', 'N/search', 'N/url'], function (currentRecord, search
                     filters: filters,
                     columns: [
                         search.createColumn({ name: 'internalid' }),
-                        search.createColumn({ name: 'name' })
+                        search.createColumn({ name: 'custrecord_bc_dayrate_project' })
                     ]
                 });
 
