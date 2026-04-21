@@ -53,7 +53,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             type: 'timebill',
             filters: [
                 ['datecreated',  'on',      'today'],                'AND',
-                [TB_PROJECT,     'anyof',   projectIds],             'AND',
+                ['line.cseg_bc_project','anyof',   projectIds],      'AND',
                 [TB_TIME_TYPE,   'anyof',   [TT_ST, TT_OT, TT_DT]],  'AND',
                 [TB_BILLED_TRAN, 'isempty', ''],                     'AND',
                 [TB_VIA_SFTP,    'is',      'T'],                    'AND',
