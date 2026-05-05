@@ -725,7 +725,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
                     html += `<td align="center">${((Math.round((day.hours || 0) * 10) / 10) === 0 ? '-' : (Math.round(day.hours * 10) / 10))}</td>`
                   }
                   html += `<td align = "center"> ${((Math.round((labor[q].totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(labor[q].totalWeek * 100) / 100))}</td>
-                  <td colspan="${12 - labor[q].days.length}"></td>
+                  <td colspan="${12 - labor[q].days.length}">${labor[q].notes}</td>
                   </tr>`
                 }
               }
