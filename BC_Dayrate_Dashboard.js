@@ -49,7 +49,7 @@ define([
     var MAX_GROUPS_SHOWN = 250;
 
     // Project column for line-level join (used in both filters and getValue)
-    var PROJECT_COL = { name: 'cseg_bc_project', join: 'line' };
+    var PROJECT_COL = { name: 'line.cseg_bc_project' };
 
     // ─── Entry point ─────────────────────────────────────────────────
     function onRequest(context) {
