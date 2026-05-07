@@ -63,7 +63,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 [TB_SOURCE_IDS,  'isempty', '']//,                     'AND',  // skip already-aggregated
               //  [TB_AGG_BY,      'isempty', '']                              // skip already-consumed
             ],
-            columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'hours']
+            columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'durationdecimal']
         });
         
       } catch (error) {
