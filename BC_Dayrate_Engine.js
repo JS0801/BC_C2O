@@ -237,7 +237,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
 
         rec.setValue({ fieldId: 'hours',       value: hours });
         rec.setValue({ fieldId: TB_TIME_TYPE,  value: timeType });
-      //  rec.setValue({ fieldId: 'isbillable',  value: true });
+        rec.setValue({ fieldId: 'isbillable',  value: true });
         rec.setValue({ fieldId: TB_SOURCE_IDS, value: sourceIds.join(',') });
 
         var id = rec.save({ ignoreMandatoryFields: true });
