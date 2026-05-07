@@ -233,6 +233,8 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             'class', 'department', 'location', 'subsidiary',
             'custcol_bc_tm_billing_shift', 'cseg_bc_project', 'cseg_bc_cost_code'
         ]);
+        hours = Math.round(hours * 100) / 100;
+      
 
         rec.setValue({ fieldId: 'hours',       value: hours });
         rec.setValue({ fieldId: TB_TIME_TYPE,  value: timeType });
