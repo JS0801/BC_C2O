@@ -54,14 +54,13 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         return search.create({
             type: 'timebill',
             filters: [
-                ['internalid',   'anyof',   [110965,110966,111046,111315]],  'AND',
-                ['datecreated',  'on', '4/23/2026'],                 'AND',
+                ['datecreated',  'on', 'today'],                     'AND',
                 ['line.cseg_bc_project','anyof',   projectIds],      'AND',
                 [TB_TIME_TYPE,   'anyof',   [TT_ST, TT_OT, TT_DT]],  'AND',
                 [TB_BILLED_TRAN, 'isempty', ''],                     'AND',
                 [TB_VIA_SFTP,    'is',      'T'],                    'AND',
-                [TB_SOURCE_IDS,  'isempty', '']//,                     'AND',  // skip already-aggregated
-              //  [TB_AGG_BY,      'isempty', '']                              // skip already-consumed
+                [TB_SOURCE_IDS,  'isempty', ''],                     'AND',  // skip already-aggregated
+                [TB_AGG_BY,      'isempty', '']                              // skip already-consumed
             ],
             columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'durationdecimal']
         });
