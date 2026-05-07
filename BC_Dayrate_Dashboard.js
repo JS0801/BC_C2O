@@ -172,7 +172,7 @@ define([
     // ─── Data loading ────────────────────────────────────────────────
     function loadReconciliationData(filters) {
         var sFilters = [
-            ['trandate', 'within', filters.dateFrom, filters.dateTo],
+            ['date', 'within', filters.dateFrom, filters.dateTo],
             'AND',
             [
                 [TB_SOURCE_IDS, 'isnotempty', ''],
