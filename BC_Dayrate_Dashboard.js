@@ -209,7 +209,7 @@ define([
                 type: 'timebill',
                 filters: sFilters,
                 columns: [
-                    'internalid', 'employee', 'trandate',
+                    'internalid', 'employee', 'date',
                     PROJECT_COL,
                     TB_TIME_TYPE, 'hours', 'isbillable',
                     TB_SOURCE_IDS, TB_AGG_BY, 'memo'
@@ -219,7 +219,7 @@ define([
                     id:           r.id,
                     employee:     r.getText({ name: 'employee' }) || '',
                     employeeId:   r.getValue({ name: 'employee' }) || '',
-                    tranDate:     r.getValue({ name: 'trandate' }),
+                    tranDate:     r.getValue({ name: 'date' }),
                     project:      r.getText(PROJECT_COL)  || '',
                     projectId:    r.getValue(PROJECT_COL) || '',
                     timeType:     r.getValue(TB_TIME_TYPE),
