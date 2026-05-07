@@ -54,7 +54,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         return search.create({
             type: 'timebill',
             filters: [
-                ['datecreated',  'on', 'today'],                     'AND',
+                ['datecreated',  'on', '04/23/2026'],                     'AND',
                 ['line.cseg_bc_project','anyof',   projectIds],      'AND',
                 [TB_TIME_TYPE,   'anyof',   [TT_ST, TT_OT, TT_DT]],  'AND',
                 [TB_BILLED_TRAN, 'isempty', ''],                     'AND',
