@@ -223,6 +223,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
     }
 
     function createAggregated(template, hours, timeType, sourceIds) {
+        log.debug('Time Entry Creation', {template, hours, timeType, sourceIds})
         var rec = record.create({ type: record.Type.TIME_BILL });
 
         // Copy billing-relevant fields from the template source TB.
