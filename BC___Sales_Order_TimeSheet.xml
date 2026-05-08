@@ -193,12 +193,12 @@
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5" rowspan="2">${labor.employee}</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5" rowspan="2">${labor.role}</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Time<br />Type</th>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Shift<br />Type</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center"  colspan="2">Shift<br />Type</th>
 <#list labor.days as datelist>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; " colspan = "1" align="center">${datelist.date?date('MM/dd/yyyy')?string('E')}</th>
 </#list>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Total<br />Week</th>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}" rowspan="2">${labor.notes}</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${13 - labor.days?size}" rowspan="2">${labor.notes}</th>
 </tr>
 <!-- Header Row 2 (Dates) -->
 <tr style="line-height: 0.7px;"><#list labor.days as datelist>
@@ -210,13 +210,13 @@
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.employee}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.role}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center"><#if labor.shiftType == 'Per Diem'> <span style="font-size: 4.8pt;">${labor.shiftType}</span><#else>${labor.shiftType}</#if></td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width: 35pt;" align="center">${labor.shift}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center" colspan="2">${labor.shift}</td>
 <#list labor.days as datelist>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.0"]}</#if></td>
 </#list>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.totalWeek}</td>
 <td style="border-top:0px solid #000; border-bottom:1px solid #000; border-left:1px solid #000; border-right:1px solid #000; padding:2px;"
-    colspan="${14 - labor.days?size}">${labor.notes}
+    colspan="${13 - labor.days?size}">${labor.notes}
   <!-- <input
     type="text"
     id="notes_${labor?index}"
