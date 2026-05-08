@@ -54,7 +54,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         return search.create({
             type: 'timebill',
             filters: [
-                ['internalid', 'anyof', [111200,111308,111309,111374]] 'AND',
+                ['internalid', 'anyof', [111200,111308,111309,111374]], 'AND',
                // ['datecreated',  'on', '03/24/2026'],                     'AND',
                 ['line.cseg_bc_project','anyof',   projectIds],      'AND',
                 [TB_TIME_TYPE,   'anyof',   [TT_ST, TT_OT, TT_DT]],  'AND',
