@@ -193,7 +193,7 @@
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5" rowspan="2">${labor.employee}</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5" rowspan="2">${labor.role}</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Time<br />Type</th>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center"  colspan="2">Shift<br />Type</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center"  colspan="2">Shift Type</th>
 <#list labor.days as datelist>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; " colspan = "1" align="center">${datelist.date?date('MM/dd/yyyy')?string('E')}</th>
 </#list>
