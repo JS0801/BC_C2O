@@ -210,7 +210,7 @@
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.employee}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.role}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center"><#if labor.shiftType == 'Per Diem'> <span style="font-size: 4.8pt;">${labor.shiftType}</span><#else>${labor.shiftType}</#if></td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.shift}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width: 35pt;" align="center">${labor.shift}</td>
 <#list labor.days as datelist>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.0"]}</#if></td>
 </#list>
