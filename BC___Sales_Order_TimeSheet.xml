@@ -227,7 +227,7 @@
 </tr>
 <#elseif labor?index != 0>
 <tr style="line-height: 0.7px;">
-<td style="border-right: 1px solid #000;" colspan="12" align="right"><strong>Total Hours:</strong></td>
+<td style="border-right: 1px solid #000;" colspan="13" align="right"><strong>Total Hours:</strong></td>
 <#list labor.days as datelist>
 <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.00"]}</#if></td>
 </#list>
