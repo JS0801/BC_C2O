@@ -87,7 +87,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 projectId: r.values['line.cseg_bc_project'].value,
                 timeType:  r.values[TB_TIME_TYPE].value,
                 hours:     parseFloat(r.values.durationdecimal) || 0,
-                custId:    r.values['line.cseg_bc_project.custrecord_bc_proj_customer'].value
+                custId:    r.values['custrecord_bc_proj_customer.line.cseg_bc_project'].value
             };
 
             var key = v.employee + '|' + v.tranDate + '|' + v.projectId;
