@@ -289,25 +289,13 @@
 </tr>
 </thead>
 </#if> <#if material.documentNumber != 'TOTAL'> <!-- Data Row -->
-  <tr style="line-height: 1px;">
+  <tr style="line-height: 0.7px;">
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;">${material.documentNumber}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2">${material.mainName}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${material.cleanedPO}</td>
-
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; padding-top: 1px; padding-bottom: 1px; vertical-align: top;" colspan="4">
-  <p style="margin: 0; padding: 0; font-size: 5pt; line-height: 6pt;">${material.memo}</p>
-</td>
-
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4">${material.memo}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
 </tr>
-
-  <!-- <tr style="line-height: 0.7px;">
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;">${material.documentNumber}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2">${material.mainName}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${material.cleanedPO}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; line-height: 10px;" colspan="4">${material.memo}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
-</tr> -->
 <#else>
 <tr style="line-height: 0.7px;">
 <td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Total:</strong></td>
@@ -342,7 +330,7 @@
 </#if> <#if material.documentNumber != 'TOTAL'> <!-- Data Row --><tr style="line-height: 0.7px;">
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">${material.expCat}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">${material.cleanedPO}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4">${material.memo}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; line-height: 10px;" colspan="4">${material.memo}</td>
 <!-- <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="right">${material.cost}</td> -->
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
 </tr>
