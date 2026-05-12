@@ -289,7 +289,7 @@
 </tr>
 </thead>
 </#if> <#if material.documentNumber != 'TOTAL'> <!-- Data Row -->
-  <tr>
+  <tr style="line-height: 1px;">
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;">${material.documentNumber}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2">${material.mainName}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${material.cleanedPO}</td>
