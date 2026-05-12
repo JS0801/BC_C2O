@@ -62,7 +62,9 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 [TB_SOURCE_IDS,  'isempty', ''],                     'AND',  // skip already-aggregated
                 [TB_AGG_BY,      'isempty', '']                              // skip already-consumed
             ],
-            columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'durationdecimal']
+            columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'durationdecimal',
+                       search.createColumn({name: "custrecord_bc_proj_customer",join: "line.cseg_bc_project"})
+                     ]
         });
         
       } catch (error) {
@@ -83,7 +85,8 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 tranDate:  r.values.date,
                 projectId: r.values['line.cseg_bc_project'].value,
                 timeType:  r.values[TB_TIME_TYPE].value,
-                hours:     parseFloat(r.values.durationdecimal) || 0
+                hours:     parseFloat(r.values.durationdecimal) || 0,
+                custId:    r.values['line.cseg_bc_project.custrecord_bc_proj_customer'].value
             };
 
             var key = v.employee + '|' + v.tranDate + '|' + v.projectId;
@@ -120,6 +123,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             });
 
             var projectId = entries[0].projectId;
+            var custId = entries[0].custId;
             var threshold = getThreshold(projectId);
             if (threshold === null) {
                 log.error('reduce', 'No threshold for project ' + projectId + ' — skipping ' + key);
@@ -141,8 +145,8 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             var template = record.load({ type: record.Type.TIME_BILL, id: sourceIds[0] });
 
             var newIds = [];
-            if (stHours > 0) newIds.push(createAggregated(template, stHours, TT_ST, sourceIds));
-            if (otHours > 0) newIds.push(createAggregated(template, otHours, TT_OT, sourceIds));
+            if (stHours > 0) newIds.push(createAggregated(template, stHours, TT_ST, sourceIds, custId));
+            if (otHours > 0) newIds.push(createAggregated(template, otHours, TT_OT, sourceIds, custId));
 
             // Back-link + mark originals non-billable
             var aggRef = newIds.join(',');
@@ -221,23 +225,24 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         return _thresholdCache.hasOwnProperty(projectId) ? _thresholdCache[projectId] : null;
     }
 
-    function createAggregated(template, hours, timeType, sourceIds) {
+    function createAggregated(template, hours, timeType, sourceIds, cust) {
         log.debug('Time Entry Creation', {template, hours, timeType, sourceIds})
         var rec = record.create({ type: record.Type.TIME_BILL });
+        
 
         // Copy billing-relevant fields from the template source TB.
         // Add/remove fields here once the billing tool's required set is confirmed in sandbox (Risk #1).
         copyIfPresent(template, rec, [
-            'employee', 'trandate', 'customer', 'item', 'memo',
+            'employee', 'trandate', 'item', 'memo',
             'class', 'department', 'location', 'subsidiary',
             'custcol_bc_tm_billing_shift', 'cseg_bc_project', 'cseg_bc_cost_code'
         ]);
         hours = Math.round(hours * 100) / 100;
       
-
+        rec.setValue({ fieldId: 'customer',    value: cust });
         rec.setValue({ fieldId: 'hours',       value: hours });
         rec.setValue({ fieldId: TB_TIME_TYPE,  value: timeType });
-       // rec.setValue({ fieldId: 'isbillable',  value: true });
+        rec.setValue({ fieldId: 'isbillable',  value: true });
         rec.setValue({ fieldId: TB_SOURCE_IDS, value: sourceIds.join(',') });
 
         var id = rec.save({ ignoreMandatoryFields: true });
