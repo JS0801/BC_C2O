@@ -1,0 +1,231 @@
+<?xml version="1.0"?><!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
+<pdf>
+  <head>
+    <link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}" src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
+    <#if .locale == "zh_CN">
+      <link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}" src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2" />
+      <#elseif .locale == "zh_TW">
+        <link name="NotoSansCJKtc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKtc_Regular}" src-bold="${nsfont.NotoSansCJKtc_Bold}" bytes="2" />
+        <#elseif .locale == "ja_JP">
+          <link name="NotoSansCJKjp" type="font" subtype="opentype" src="${nsfont.NotoSansCJKjp_Regular}" src-bold="${nsfont.NotoSansCJKjp_Bold}" bytes="2" />
+          <#elseif .locale == "ko_KR">
+            <link name="NotoSansCJKkr" type="font" subtype="opentype" src="${nsfont.NotoSansCJKkr_Regular}" src-bold="${nsfont.NotoSansCJKkr_Bold}" bytes="2" />
+            <#elseif .locale == "th_TH">
+              <link name="NotoSansThai" type="font" subtype="opentype" src="${nsfont.NotoSansThai_Regular}" src-bold="${nsfont.NotoSansThai_Bold}" bytes="2" />
+            </#if>
+            <style>
+              * {
+              <#if .locale == "zh_CN">
+                font-family: NotoSans, NotoSansCJKsc, sans-serif;
+                <#elseif .locale == "zh_TW">
+                  font-family: NotoSans, NotoSansCJKtc, sans-serif;
+                  <#elseif .locale == "ja_JP">
+                    font-family: NotoSans, NotoSansCJKjp, sans-serif;
+                    <#elseif .locale == "ko_KR">
+                      font-family: NotoSans, NotoSansCJKkr, sans-serif;
+                      <#elseif .locale == "th_TH">
+                        font-family: NotoSans, NotoSansThai, sans-serif;
+                        <#else>
+                          font-family: NotoSans, sans-serif;
+                        </#if>
+                        }
+                      </style>
+                    </head>
+                    <body header="nlheader" header-height="17%" padding="0.25in 0.25in 0.25in 0.25in" size="Letter">
+                      <table class="header" style="width: 100%; font-size:7pt;">
+                        <tr>
+                          
+                          <td colspan="1" style="width: 22%; border-bottom: 1px solid #000;" align = 'left'>
+                            <img src="${logoURL}" <#if subsidiary.internalid == '6'> style="width:110px; height: 110px;" <#else> style="width:130px; height: 55px;" </#if> />
+                          </td>
+                            <td style="border-bottom: 1px solid #000; padding-top: 10px;">${subsidiary.mainaddress_text}</td>
+                            <td colspan="2" style=" width: 50%; font-size:18pt; font-weight:bold; padding-bottom: 20px; border-bottom: 1px solid #000;"  align = 'right'>INVOICE #${record.id?c}</td>
+                          </tr>
+                          
+                          <tr margin-top = "15px">
+                            <td width="15%" align = 'right'><b>C2O Group Contact:</b></td>
+                            <td width="25%">${contactName}</td>
+                            <td width="25%" align = 'right'><b>Date:</b></td>
+                            <td width="25%">${record.trandate?string("dd-MMM-yyyy")}</td>
+                          </tr>
+                          <tr>
+                            <td width="15%" align = 'right'><b>Contact Email:</b></td>
+                            <td width="25%">${contactEmail}</td>
+                            <td width="25%" align = 'right'><b>Invoice No.:</b></td>
+                            <td width="25%">${record.id?c}</td>
+                          </tr>
+                          <tr>
+                            <td width="15%" align = 'right'><b>Contact Phone:</b></td>
+                            <td width="25%">${contactPhone}</td>
+                            <td width="25%" align = 'right'><b>Customer:</b></td>
+                            <td width="25%">${record.customername}</td>
+                          </tr>
+                          <tr>
+                            <td width="15%" align = 'right' style="border-bottom: 1px solid #000;"><b>Payment Terms:</b></td>
+                            <td width="25%" style="border-bottom: 1px solid #000;">${record.terms}</td>
+                            <td width="25%" align = 'right' style="border-bottom: 1px solid #000;"><b>Billling Period:</b></td>
+                            <td width="25%" style="border-bottom: 1px solid #000;">${record.custrecord2} - ${record.custrecord3}</td>
+                          </tr>
+                        </table>
+                        <table style="width:100%; font-size:7pt; table-layout:fixed; margin-top: 10px;">
+                          <tr >
+                            <!-- Column 1: To -->
+                            <td style="width:15%;" align = 'right' rowspan = "3"><b>To:</b></td>
+                            <td style="width:37%;" rowspan = "3">${record.billaddress}</td>
+                            <td style="width:25%; border-bottom: 1px solid #000;" align = 'center' colspan = "2"><b>Remittance Information</b></td>
+                          </tr>
+                          <tr>
+                            <td align = 'right'><b>Account Name:</b></td>
+                            <td>${subsidiary.custrecord_bc_account_name}</td>
+                          </tr>
+                          <tr>
+                            <td align = 'right'><b>Bank Name:</b></td>
+                            <td>${subsidiary.custrecord_bc_bank}</td>
+                          </tr>
+                          <tr>
+                            <td align = 'right'><b>Customer Contact:</b></td>
+                            <td>${record.custrecord_bc_customer_contact}</td>
+                            <td align = 'right'><b>Routing No.:</b></td>
+                            <td>${subsidiary.custrecord_bc_bsb}</td>
+                            
+                          </tr>  
+                          <tr>
+                            <td align = 'right'><b>Customer Ref#:</b></td>
+                            <td>${record.custrecord_cust_ref}</td>
+                            <td align = 'right' style = "border-bottom: 1px solid #000;"><b>Account No.:</b></td>
+                            <td style = "border-bottom: 1px solid #000;">${subsidiary.custrecord_bc_acc_num}</td>
+                          </tr>
+                          <tr>
+                            <td align = 'right'><b>Project:</b></td>
+                            <td>${projectnum}</td>
+                          </tr>  
+                          <tr>
+                            <td align = 'right'><b>Memo:</b></td>
+                            <td>${record.memo}</td>
+                          </tr> 
+                          <tr>
+                               <td align = 'right'><b>C2O Supervisor:</b></td>
+                            <td>${record.custrecord_bc_c2o_supervisor}</td>
+                          </tr>
+                        </table>
+                        <hr width = "100%"/>
+                        
+                        
+                        <#list item.result as line>
+                          <#if line.groupstart?has_content>
+                            <table style="width:100%; border: 1px solid #000; border:0; font-size:6pt;">
+                              <thead>
+                                <tr style="font-weight:bold; margin-top: 18px;">
+                                  <td style="width:50%; border:1px solid #000;">${line.groupstart}</td>
+                                </tr>
+                                
+                                <tr style="background-color:#3a4b87; color: #fff; font-weight:bold; text-align:center;">
+                                  <#if line.groupstart == 'Labor'  || line.groupstart == 'Labour'  || line.groupstart == 'Equipment / Vehicle Rental'> 
+                                    <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align = 'center'>Description</td>
+                                    <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align = 'center'>Time<br/>Type</td>
+                                    <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align = 'center'>Shift<br/>Type</td>
+                                    <#elseif line.groupstart == 'Expenses'>    
+                                      <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align = 'center' colspan = "3">Description</td>
+                                      <#else>    
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align = 'center' colspan = "2">Description</td>
+                                        
+                                      </#if>
+                                      <#if line.groupstart != 'Expenses'>
+                                        <#if line.groupstart == 'Materials'><td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align = 'center'>Unit</td></#if>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align = 'center'>Quantity</td>
+                                        
+                                        <#else>
+                                          <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'center'>Supplier /<br/>Category</td>
+                                        </#if>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width: 5%;" align = 'center'><#if line.groupstart != 'Expenses' && line.groupstart != 'Materials'>Unit Rate<#else>Cost</#if></td>
+                                        
+                                        
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align = 'center'><#if line.groupstart != 'Expenses' && line.groupstart != 'Materials'>Total Amount<#else>Amount with Markup</#if></td>
+                                      </tr>
+                                    </thead>
+
+                                    
+                                    <#elseif line.groupTotal?has_content>
+                                      <tr>
+                                        <#if line.group == 'Expenses' || line.group == 'Materials'><td colspan = "4"></td><#else><td colspan = "4"></td></#if>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'right' colspan = "1"><b>SubTotal</b></td>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; width:15%;" align = 'right'>$ ${line.groupSub}</td>
+                                      </tr>
+                                      <tr>
+                                        <#if line.group == 'Expenses' || line.group == 'Materials'><td colspan = "4"></td><#else><td colspan = "4"></td></#if>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'right' colspan = "1"><b>Sales Tax</b></td>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; width:15%;" align = 'right'>$ ${line.groupTax}</td>
+                                      </tr>
+                                      <tr>
+                                        <#if line.group == 'Expenses' || line.group == 'Materials'><td colspan = "4"></td><#else><td colspan = "4"></td></#if>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%; background-color:#3a4b87; color: #fff;" align = 'right' colspan = "1"><b>Total</b></td>
+                                        <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; width:15%; background-color:#3a4b87; color: #fff;" align = 'right'><b>$ ${line.groupTotal}</b></td>
+                                      </tr>
+                                    </table>
+
+                                      
+                                      <#elseif line.groupTotalFinal?has_content>
+                                        <table style="width:100%; border: 1px solid #000; border:0; font-size:7pt; page-break-inside: avoid;">
+                                          <tr margin-top = "20px">
+                                            <td colspan = "3"></td>
+                                            <td style="border: 1px solid #000; width:10%;  background-color:#3a4b87; color: #fff;" align = 'center' colspan = "2"><b>Total Summary</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan="3" align="center" style="font-size: 10pt;"><b>Payment Terms: </b>${record.terms}</td>
+                                            <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'right' colspan = "1"><b>SubTotal</b></td>
+                                            <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; width:15%;" align = 'right'><b>$ ${line.groupSubFinal}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan = "3"></td>
+                                            <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'right' colspan = "1"><b>Sales Tax</b></td>
+                                            <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; width:15%;" align = 'right'><b>$ ${line.groupTaxFinal}</b></td>
+                                          </tr>
+                                          <tr>
+                                            <td colspan = "3"></td>
+                                            <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%; background-color:#3a4b87; color: #fff;" align = 'right' colspan = "1"><b>Total</b></td>
+                                            <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; width:15%; background-color:#3a4b87; color: #fff;" align = 'right'><b>$ ${line.groupTotalFinal}</b></td>
+                                          </tr></table>
+                                          <#else>
+                                            <tr>
+                                              <#if line.category == 'Labor' || line.category == 'Labour' || line.category == 'Equipment / Vehicle Rental'>
+                                                <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:40%;" >${line.description}</td>
+                                                <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'center'>${line.unit}</td>
+                                                <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = "center">${line.shiftType}</td>
+                                                <#elseif line.category == 'Expenses'>
+                                                  <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:50%;" colspan = "3">${line.description}</td>
+                                                  <#else>
+                                                    <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:50%;" colspan = "2">${line.description}</td>
+                                                    
+                                                  </#if>
+                                                  <#if line.category != 'Expenses'>
+                                                    <#if line.category == 'Materials'><td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'center'>${line.unit}</td></#if>
+                                                    <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'center'>${line.quantity}</td>
+                                                    <#else>
+                                                      
+                                                      <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:10%;" align = 'center'>${line.expCat}</td>
+                                                    </#if>
+                                                    <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; width:5%;" align = 'right'>$ ${line.unitRate}</td>
+                                                    <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000; width:15%;" align = 'right'>$ ${line.lineSubtotal}</td>
+                                                  </tr>
+                                                </#if>
+                                                
+                                              </#list>
+
+
+                        <!-- TIME TYPE LEGEND -->
+                        <#if legend.result?has_content>
+                          <table style="width:100%; font-size:6pt; margin-top:14px; border-top: 1px solid #ccc;">
+                            <tr>
+                              <td style="padding-top:6px; padding-bottom:4px;">
+                                <b>Time Type Legend:&#160;</b>
+                                <#list legend.result as leg>
+                                  <b>${leg.abbr}</b>&#160;&#8211;&#160;${leg.label}<#if leg?has_next>&#160;&#160;|&#160;&#160;</#if>
+                                </#list>
+                              </td>
+                            </tr>
+                          </table>
+                        </#if>
+
+
+                            </body>
+                          </pdf>
