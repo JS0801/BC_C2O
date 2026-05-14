@@ -120,6 +120,12 @@
             summary: "SUM",
             formula: "CASE WHEN {custcol_invoicing_category} IN ('Equipment / Vehicle Rental', 'Labor') THEN ABS(NVL({taxamount},0)) ELSE NVL({taxamount},0) END",
             label: "Tax Amount"
+          }),
+          search.createColumn({
+            name: "formulanumericcost",
+            summary: "SUM",
+            formula: "CASE WHEN {custcol_invoicing_category} IN ('Equipment / Vehicle Rental', 'Labor') THEN ABS(NVL({rate},0)) ELSE NVL({custcol_bc_tm_source_transaction.amount},0) END",
+            label: "Tax Amount"
           })
         ]
       });
@@ -141,6 +147,7 @@
         var expCat = result.getValue({ name: 'formulatext4', summary: "GROUP" });
         // Get the tax amount from the new column
         var taxAmountFromSearch = parseFloat(result.getValue(invoiceSearchObj.columns[15])) || 0;
+        var maincost = parseFloat(result.getValue(invoiceSearchObj.columns[16])) || 0;
         
         ponum = result.getValue(invoiceSearchObj.columns[7]);
         if (projectnumber.indexOf(result.getText(invoiceSearchObj.columns[8])) == -1)
@@ -180,7 +187,7 @@
 
         log.debug('Tax Amount from Search', { category: category, taxAmountFromSearch: taxAmountFromSearch, total: total, lineSubtotalCalc: lineSubtotalCalc, lineTaxCalc: lineTaxCalc });
 
-        var finalRate = maxRate;
+        var finalRate = maincost;
         
         var obj = {
           description: key.replace(/&/g, '&amp;'),
