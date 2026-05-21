@@ -240,10 +240,10 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         ]);
         hours = Math.round(hours * 100) / 100;
       
-        rec.setValue({ fieldId: 'customer',    value: cust });
+       // rec.setValue({ fieldId: 'customer',    value: cust });
         rec.setValue({ fieldId: 'hours',       value: hours });
         rec.setValue({ fieldId: TB_TIME_TYPE,  value: timeType });
-        rec.setValue({ fieldId: 'isbillable',  value: true });
+        rec.setValue({ fieldId: 'custcol_bc_tm_line_non_billable',  value: false });
         rec.setValue({ fieldId: TB_SOURCE_IDS, value: sourceIds.join(',') });
 
         var id = rec.save({ ignoreMandatoryFields: true });
