@@ -205,7 +205,7 @@
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; font-size: 3pt;" colspan = "1" align="center">${datelist.date?date('MM/dd/yyyy')?string('dd-MMM-yyyy')}</th>
 </#list></tr>
 </thead>
-</#if> </#list><#list x.Labor as labor> <#if labor.employee != 'TOTAL' && labor?index != 0> <!-- Data Row -->
+</#if> </#list><#list x.Labor as labor> <#if labor.employee != 'TOTAL' && (labor.rowType!'') != 'perDiemTotal' && (labor.rowType!'') != 'nonPerDiemTotal' && labor?index != 0> <!-- Data Row -->
 <tr style="line-height: 5px;">
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.employee}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="5">${labor.role}</td>
@@ -227,7 +227,7 @@
 </tr>
 <#elseif labor?index != 0>
 <tr style="line-height: 0.7px;">
-<td style="border-right: 1px solid #000;" colspan="13" align="right"><strong>Total Hours:</strong></td>
+<td style="border-right: 1px solid #000;" colspan="13" align="right"><strong><#if labor.employee == 'TOTAL'>Total Hours:<#else>${labor.employee}</#if></strong></td>
 <#list labor.days as datelist>
 <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.00"]}</#if></td>
 </#list>
@@ -272,7 +272,8 @@
 </#list>
 <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="center">${labor.totalWeek}</td>
 </tr>
-</#if> </#if> </#list></table>
+</#if> </#if> </#list>
+</table>
 </#if> <#if x.Materials?has_content>
 <table class="timesheet-table" style="padding-top: 20px;"><#list x.Materials as material> <!-- Header Row 1 --> <#if material?index == 0>
 <thead>
