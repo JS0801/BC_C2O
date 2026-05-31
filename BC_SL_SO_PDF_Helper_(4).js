@@ -201,7 +201,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
         });
 
 
-        Object.keys(groupedFinalArray).forEach(group => {
+Object.keys(groupedFinalArray).forEach(group => {
   const header = groupedFinalArray[group].shift(); // remove header temporarily
 
   // Sort rows
@@ -214,29 +214,31 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
     return indexA - indexB;
   });
 
-  // Helper: does this shift type count as Per Diem?
   const isPerDiem = function (st) {
     return (st || '').toString().toLowerCase().indexOf('per diem') !== -1;
   };
   const hasPerDiem = sortedGroup.some(function (r) { return isPerDiem(r.shiftType); });
 
-  // Grand total row
+  // Grand total (stays as the single 'TOTAL' row -> highlighted "Total Hours:")
   const totalRow = {
     employee: "TOTAL", role: "", shiftType: "", shift: "",
     days: [], totalWeek: 0, notes: "", groupType: group, rowType: "total"
   };
-  // Per Diem hours only
+
+  // Per Diem hours only  (employee != 'TOTAL' -> renders via data branch, label shows in Name col)
   const perDiemTotalRow = {
-    employee: "PER DIEM TOTAL", role: "", shiftType: "", shift: "",
+    employee: "Per Diem Total", role: "", shiftType: "", shift: "",
     days: [], totalWeek: 0, notes: "", groupType: group, rowType: "perDiemTotal"
   };
+
   // Total hours minus Per Diem hours
   const nonPerDiemTotalRow = {
-    employee: "TOTAL LESS PER DIEM", role: "", shiftType: "", shift: "",
+    employee: "Total Less Per Diem", role: "", shiftType: "", shift: "",
     days: [], totalWeek: 0, notes: "", groupType: group, rowType: "nonPerDiemTotal"
   };
 
-  // Prepare totals per date
+  let grandWeek = 0, perDiemWeek = 0, nonPerDiemWeek = 0;
+
   sortedDates.forEach(date => {
     let dateSum = 0;
     let perDiemSum = 0;
@@ -251,17 +253,19 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
     const nonPerDiemSum = dateSum - perDiemSum;
 
     totalRow.days.push({ date: date, hours: dateSum });
-    totalRow.totalWeek = parseFloat(totalRow.totalWeek) + parseFloat(dateSum);
-
     perDiemTotalRow.days.push({ date: date, hours: perDiemSum });
-    perDiemTotalRow.totalWeek = parseFloat(perDiemTotalRow.totalWeek) + perDiemSum;
-
     nonPerDiemTotalRow.days.push({ date: date, hours: nonPerDiemSum });
-    nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemTotalRow.totalWeek) + nonPerDiemSum;
-  });
-  totalRow.totalWeek = parseFloat(totalRow.totalWeek);
 
-  // Insert the two subtotal rows just before the final total — only if Per Diem exists
+    grandWeek += dateSum;
+    perDiemWeek += perDiemSum;
+    nonPerDiemWeek += nonPerDiemSum;
+  });
+
+  totalRow.totalWeek = parseFloat(grandWeek);            // number -> template total branch uses ?string["0.00"]
+  perDiemTotalRow.totalWeek = perDiemWeek.toFixed(2);    // string -> data branch prints ${labor.totalWeek} as-is
+  nonPerDiemTotalRow.totalWeek = nonPerDiemWeek.toFixed(2);
+
+  // Insert the two subtotals just before the final total — only when Per Diem exists
   if (hasPerDiem) {
     groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow, totalRow];
   } else {
