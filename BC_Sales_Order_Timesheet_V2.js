@@ -674,39 +674,102 @@ define([
         return indexA - indexB;
       });
       
-      var totalRow = {
-        employee: 'TOTAL',
-        role: '',
-        shiftType: '',
-        shift: '',
-        days: [],
-        totalWeek: 0,
-        rate: '',
-        amt: (finalAmtByGroup[group] || 0),
-        notes: '',
-        groupType: group
-      };
+      // var totalRow = {
+      //   employee: 'TOTAL',
+      //   role: '',
+      //   shiftType: '',
+      //   shift: '',
+      //   days: [],
+      //   totalWeek: 0,
+      //   rate: '',
+      //   amt: (finalAmtByGroup[group] || 0),
+      //   notes: '',
+      //   groupType: group
+      // };
       
+      // for (var td = 0; td < sortedDates.length; td++) {
+      //   var date = sortedDates[td];
+      //   var dateSum = 0;
+        
+      //   for (var sr = 0; sr < sortedGroup.length; sr++) {
+      //     var rowData = sortedGroup[sr];
+      //     for (var dy = 0; dy < rowData.days.length; dy++) {
+      //       if (rowData.days[dy].date === date) {
+      //         dateSum += parseFloat(rowData.days[dy].hours || 0);
+      //         break;
+      //       }
+      //     }
+      //   }
+        
+      //   totalRow.days.push({ date: date, hours: dateSum });
+      //   totalRow.totalWeek = parseFloat(totalRow.totalWeek) + parseFloat(dateSum);
+      // }
+      
+      // totalRow.totalWeek = parseFloat(totalRow.totalWeek).toFixed(2);
+      // groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
+
+      var isPerDiem = function (st) {
+        return String(st || '').toLowerCase().indexOf('per diem') !== -1;
+      };
+      var hasPerDiem = false;
+      for (var hp = 0; hp < sortedGroup.length; hp++) {
+        if (isPerDiem(sortedGroup[hp].shiftType)) { hasPerDiem = true; break; }
+      }
+
+      var totalRow = {
+        employee: 'TOTAL', role: '', shiftType: '', shift: '',
+        days: [], totalWeek: 0, rate: '', amt: (finalAmtByGroup[group] || 0),
+        notes: '', groupType: group, rowType: 'total'
+      };
+      var perDiemTotalRow = {
+        employee: 'Per Diem Total', role: '', shiftType: '', shift: '',
+        days: [], totalWeek: 0, rate: '', amt: '',
+        notes: '', groupType: group, rowType: 'perDiemTotal'
+      };
+      var nonPerDiemTotalRow = {
+        employee: 'Total Less Per Diem', role: '', shiftType: '', shift: '',
+        days: [], totalWeek: 0, rate: '', amt: '',
+        notes: '', groupType: group, rowType: 'nonPerDiemTotal'
+      };
+
+      var grandWeek = 0, perDiemWeek = 0, nonPerDiemWeek = 0;
+
       for (var td = 0; td < sortedDates.length; td++) {
         var date = sortedDates[td];
         var dateSum = 0;
-        
+        var perDiemSum = 0;
+
         for (var sr = 0; sr < sortedGroup.length; sr++) {
           var rowData = sortedGroup[sr];
           for (var dy = 0; dy < rowData.days.length; dy++) {
             if (rowData.days[dy].date === date) {
-              dateSum += parseFloat(rowData.days[dy].hours || 0);
+              var h = parseFloat(rowData.days[dy].hours || 0);
+              dateSum += h;
+              if (isPerDiem(rowData.shiftType)) perDiemSum += h;
               break;
             }
           }
         }
-        
+        var nonPerDiemSum = dateSum - perDiemSum;
+
         totalRow.days.push({ date: date, hours: dateSum });
-        totalRow.totalWeek = parseFloat(totalRow.totalWeek) + parseFloat(dateSum);
+        perDiemTotalRow.days.push({ date: date, hours: perDiemSum });
+        nonPerDiemTotalRow.days.push({ date: date, hours: nonPerDiemSum });
+
+        grandWeek += dateSum;
+        perDiemWeek += perDiemSum;
+        nonPerDiemWeek += nonPerDiemSum;
       }
-      
-      totalRow.totalWeek = parseFloat(totalRow.totalWeek).toFixed(2);
-      groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
+
+      totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
+      perDiemTotalRow.totalWeek = parseFloat(perDiemWeek).toFixed(2);
+      nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemWeek).toFixed(2);
+
+      if (hasPerDiem) {
+        groupedFinalArray[group] = [header].concat(sortedGroup).concat([perDiemTotalRow, nonPerDiemTotalRow, totalRow]);
+      } else {
+        groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
+      }
     }
     
     if (replaceLabor) {
@@ -1021,44 +1084,92 @@ define([
       
       html += '</tr>';
       
-      for (var q = 1; q < labor.length - 1; q++) {
-        html += '<tr>'
-        + '<td colspan="2">' + labor[q].employee + '</td>'
-        + '<td colspan="2">' + labor[q].role + '</td>'
-        + '<td align = "center">' + labor[q].shiftType + '</td>'
-        + '<td align = "center">' + labor[q].shift + '</td>';
+      // for (var q = 1; q < labor.length - 1; q++) {
+      //   html += '<tr>'
+      //   + '<td colspan="2">' + labor[q].employee + '</td>'
+      //   + '<td colspan="2">' + labor[q].role + '</td>'
+      //   + '<td align = "center">' + labor[q].shiftType + '</td>'
+      //   + '<td align = "center">' + labor[q].shift + '</td>';
         
-        for (var w = 0; w < labor[q].days.length; w++) {
-          var hrs = labor[q].days[w].hours;
-          var hrsText = (hrs && parseFloat(hrs) !== 0) ? parseFloat(hrs).toFixed(2) : '-';
-          html += '<td align = "center" >' + hrsText + '</td>';
-        }
+      //   for (var w = 0; w < labor[q].days.length; w++) {
+      //     var hrs = labor[q].days[w].hours;
+      //     var hrsText = (hrs && parseFloat(hrs) !== 0) ? parseFloat(hrs).toFixed(2) : '-';
+      //     html += '<td align = "center" >' + hrsText + '</td>';
+      //   }
         
-        html += '<td align = "center">' + labor[q].totalWeek + '</td>'
-        + '<td style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + (labor[q].rate) + '</td>'
-        + '<td style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + (labor[q].amt) + '</td>'
-        + '<td colspan="' + (12 - labor[q].days.length) + '">' + (labor[q].notes) + '</td>'
-        + '</tr>';
-      }
+      //   html += '<td align = "center">' + labor[q].totalWeek + '</td>'
+      //   + '<td style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + (labor[q].rate) + '</td>'
+      //   + '<td style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + (labor[q].amt) + '</td>'
+      //   + '<td colspan="' + (12 - labor[q].days.length) + '">' + (labor[q].notes) + '</td>'
+      //   + '</tr>';
+      // }
       
-      // last element separate
-      if (labor.length > 1) {
-        var last = labor[labor.length - 1];
+      // // last element separate
+      // if (labor.length > 1) {
+      //   var last = labor[labor.length - 1];
         
-        html += '<tr>'
-        + '<td colspan="5" style="border-left: 0; border-bottom: 0;"></td>'
-        + '<td class="table-header" align = "center"><b>' + last.employee + '</b></td>';
+      //   html += '<tr>'
+      //   + '<td colspan="5" style="border-left: 0; border-bottom: 0;"></td>'
+      //   + '<td class="table-header" align = "center"><b>' + last.employee + '</b></td>';
         
-        for (var w = 0; w < last.days.length; w++) {
-          var hrs = last.days[w].hours;
-          var hrsText = (hrs && parseFloat(hrs) !== 0) ? parseFloat(hrs).toFixed(2) : '-';
-          html += '<td class="table-header" align = "center" ><b>' + hrsText + '</b></td>';
+      //   for (var w = 0; w < last.days.length; w++) {
+      //     var hrs = last.days[w].hours;
+      //     var hrsText = (hrs && parseFloat(hrs) !== 0) ? parseFloat(hrs).toFixed(2) : '-';
+      //     html += '<td class="table-header" align = "center" ><b>' + hrsText + '</b></td>';
+      //   }
+        
+      //   html += '<td class="table-header" align = "center"><b>' + last.totalWeek + '</b></td>'
+      //   + '<td class="table-header" style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + (last.rate) + '</b></td>'
+      //   + '<td class="table-header" style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + (last.amt) + '</b></td>'
+      //   + '</tr>';
+      // }
+
+      for (var q = 1; q < labor.length; q++) {
+        var lr = labor[q];
+
+        if (lr.rowType === 'perDiemTotal' || lr.rowType === 'nonPerDiemTotal') {
+          html += '<tr>'
+          + '<td colspan="5" style="border-left:0; border-bottom:0;"></td>'
+          + '<td class="row-label" align="center"><b>' + lr.employee + '</b></td>';
+          for (var w = 0; w < lr.days.length; w++) {
+            var hrs = lr.days[w].hours;
+            var hrsText = (hrs && parseFloat(hrs) !== 0) ? parseFloat(hrs).toFixed(2) : '-';
+            html += '<td class="row-label" align="center"><b>' + hrsText + '</b></td>';
+          }
+          html += '<td class="row-label" align="center"><b>' + lr.totalWeek + '</b></td>'
+          + '<td class="row-label"></td>'
+          + '<td class="row-label"></td>'
+          + '</tr>';
+        } else if (lr.rowType === 'total' || q === labor.length - 1) {
+          html += '<tr>'
+          + '<td colspan="5" style="border-left:0; border-bottom:0;"></td>'
+          + '<td class="table-header" align="center"><b>' + lr.employee + '</b></td>';
+          for (var w = 0; w < lr.days.length; w++) {
+            var hrs = lr.days[w].hours;
+            var hrsText = (hrs && parseFloat(hrs) !== 0) ? parseFloat(hrs).toFixed(2) : '-';
+            html += '<td class="table-header" align="center"><b>' + hrsText + '</b></td>';
+          }
+          html += '<td class="table-header" align="center"><b>' + lr.totalWeek + '</b></td>'
+          + '<td class="table-header" style="mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + lr.rate + '</b></td>'
+          + '<td class="table-header" style="mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + lr.amt + '</b></td>'
+          + '</tr>';
+        } else {
+          html += '<tr>'
+          + '<td colspan="2">' + lr.employee + '</td>'
+          + '<td colspan="2">' + lr.role + '</td>'
+          + '<td align="center">' + lr.shiftType + '</td>'
+          + '<td align="center">' + lr.shift + '</td>';
+          for (var w = 0; w < lr.days.length; w++) {
+            var hrs = lr.days[w].hours;
+            var hrsText = (hrs && parseFloat(hrs) !== 0) ? parseFloat(hrs).toFixed(2) : '-';
+            html += '<td align="center">' + hrsText + '</td>';
+          }
+          html += '<td align="center">' + lr.totalWeek + '</td>'
+          + '<td style="mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + lr.rate + '</td>'
+          + '<td style="mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;">' + lr.amt + '</td>'
+          + '<td colspan="' + (12 - lr.days.length) + '">' + lr.notes + '</td>'
+          + '</tr>';
         }
-        
-        html += '<td class="table-header" align = "center"><b>' + last.totalWeek + '</b></td>'
-        + '<td class="table-header" style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + (last.rate) + '</b></td>'
-        + '<td class="table-header" style = "mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + (last.amt) + '</b></td>'
-        + '</tr>';
       }
       html += '</table>';
     }
