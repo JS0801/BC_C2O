@@ -199,50 +199,119 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           
           groupedFinalArray[emp.groupType].push(row);
         });
-        
+
+
         Object.keys(groupedFinalArray).forEach(group => {
-          const header = groupedFinalArray[group].shift(); // remove header temporarily
+  const header = groupedFinalArray[group].shift(); // remove header temporarily
+
+  // Sort rows
+  const sortedGroup = groupedFinalArray[group].sort((a, b) => {
+    const empA = a.employee.toLowerCase();
+    const empB = b.employee.toLowerCase();
+    if (empA !== empB) return empA < empB ? -1 : 1;
+    const indexA = shiftSortOrder.indexOf(a.shiftType);
+    const indexB = shiftSortOrder.indexOf(b.shiftType);
+    return indexA - indexB;
+  });
+
+  // Helper: does this shift type count as Per Diem?
+  const isPerDiem = function (st) {
+    return (st || '').toString().toLowerCase().indexOf('per diem') !== -1;
+  };
+  const hasPerDiem = sortedGroup.some(function (r) { return isPerDiem(r.shiftType); });
+
+  // Grand total row
+  const totalRow = {
+    employee: "TOTAL", role: "", shiftType: "", shift: "",
+    days: [], totalWeek: 0, notes: "", groupType: group, rowType: "total"
+  };
+  // Per Diem hours only
+  const perDiemTotalRow = {
+    employee: "PER DIEM TOTAL", role: "", shiftType: "", shift: "",
+    days: [], totalWeek: 0, notes: "", groupType: group, rowType: "perDiemTotal"
+  };
+  // Total hours minus Per Diem hours
+  const nonPerDiemTotalRow = {
+    employee: "TOTAL LESS PER DIEM", role: "", shiftType: "", shift: "",
+    days: [], totalWeek: 0, notes: "", groupType: group, rowType: "nonPerDiemTotal"
+  };
+
+  // Prepare totals per date
+  sortedDates.forEach(date => {
+    let dateSum = 0;
+    let perDiemSum = 0;
+    sortedGroup.forEach(row => {
+      const day = row.days.find(d => d.date === date);
+      if (day) {
+        const h = parseFloat(day.hours || 0);
+        dateSum += h;
+        if (isPerDiem(row.shiftType)) perDiemSum += h;
+      }
+    });
+    const nonPerDiemSum = dateSum - perDiemSum;
+
+    totalRow.days.push({ date: date, hours: dateSum });
+    totalRow.totalWeek = parseFloat(totalRow.totalWeek) + parseFloat(dateSum);
+
+    perDiemTotalRow.days.push({ date: date, hours: perDiemSum });
+    perDiemTotalRow.totalWeek = parseFloat(perDiemTotalRow.totalWeek) + perDiemSum;
+
+    nonPerDiemTotalRow.days.push({ date: date, hours: nonPerDiemSum });
+    nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemTotalRow.totalWeek) + nonPerDiemSum;
+  });
+  totalRow.totalWeek = parseFloat(totalRow.totalWeek);
+
+  // Insert the two subtotal rows just before the final total — only if Per Diem exists
+  if (hasPerDiem) {
+    groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow, totalRow];
+  } else {
+    groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
+  }
+});
+        
+        // Object.keys(groupedFinalArray).forEach(group => {
+        //   const header = groupedFinalArray[group].shift(); // remove header temporarily
           
-          // Sort rows
-          const sortedGroup = groupedFinalArray[group].sort((a, b) => {
-            const empA = a.employee.toLowerCase();
-            const empB = b.employee.toLowerCase();
-            if (empA !== empB) return empA < empB ? -1 : 1;
+        //   // Sort rows
+        //   const sortedGroup = groupedFinalArray[group].sort((a, b) => {
+        //     const empA = a.employee.toLowerCase();
+        //     const empB = b.employee.toLowerCase();
+        //     if (empA !== empB) return empA < empB ? -1 : 1;
             
-            const indexA = shiftSortOrder.indexOf(a.shiftType);
-            const indexB = shiftSortOrder.indexOf(b.shiftType);
-            return indexA - indexB;
-          });
+        //     const indexA = shiftSortOrder.indexOf(a.shiftType);
+        //     const indexB = shiftSortOrder.indexOf(b.shiftType);
+        //     return indexA - indexB;
+        //   });
           
-          // Build totals row
-          const totalRow = {
-            employee: "TOTAL",
-            role: "",
-            shiftType: "",
-            shift: "",
-            days: [],
-            totalWeek: 0,
-            notes: "",
-            groupType: group
-          };
+        //   // Build totals row
+        //   const totalRow = {
+        //     employee: "TOTAL",
+        //     role: "",
+        //     shiftType: "",
+        //     shift: "",
+        //     days: [],
+        //     totalWeek: 0,
+        //     notes: "",
+        //     groupType: group
+        //   };
           
-          // Prepare totals per date
-          sortedDates.forEach(date => {
-            let dateSum = 0;
-            sortedGroup.forEach(row => {
-              const day = row.days.find(d => d.date === date);
-              if (day) {
-                dateSum += parseFloat(day.hours || 0)  ;
-              }
-            });
-            totalRow.days.push({ date: date, hours: dateSum });
-            totalRow.totalWeek = parseFloat(totalRow.totalWeek) + parseFloat(dateSum);
-          });
-          totalRow.totalWeek = parseFloat(totalRow.totalWeek)
+        //   // Prepare totals per date
+        //   sortedDates.forEach(date => {
+        //     let dateSum = 0;
+        //     sortedGroup.forEach(row => {
+        //       const day = row.days.find(d => d.date === date);
+        //       if (day) {
+        //         dateSum += parseFloat(day.hours || 0)  ;
+        //       }
+        //     });
+        //     totalRow.days.push({ date: date, hours: dateSum });
+        //     totalRow.totalWeek = parseFloat(totalRow.totalWeek) + parseFloat(dateSum);
+        //   });
+        //   totalRow.totalWeek = parseFloat(totalRow.totalWeek)
           
-          // Final group with header + sorted data + total row
-          groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
-        });
+        //   // Final group with header + sorted data + total row
+        //   groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
+        // });
         
         //************************************************************************************
         
