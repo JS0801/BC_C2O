@@ -761,9 +761,26 @@ define([
         nonPerDiemWeek += nonPerDiemSum;
       }
 
+      // totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
+      // perDiemTotalRow.totalWeek = parseFloat(perDiemWeek).toFixed(2);
+      // nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemWeek).toFixed(2);
+
+      // Split Claim Amount the same way as hours
+      var perDiemAmt = 0, nonPerDiemAmt = 0;
+      for (var ar = 0; ar < sortedGroup.length; ar++) {
+        var aRow = sortedGroup[ar];
+        var aVal = parseFloat(aRow.amt || 0) || 0;
+        if (isPerDiem(aRow.shiftType)) perDiemAmt += aVal;
+        else nonPerDiemAmt += aVal;
+      }
+
       totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
       perDiemTotalRow.totalWeek = parseFloat(perDiemWeek).toFixed(2);
       nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemWeek).toFixed(2);
+
+      perDiemTotalRow.amt = perDiemAmt.toFixed(2);
+      nonPerDiemTotalRow.amt = nonPerDiemAmt.toFixed(2);
+      // totalRow.amt stays finalAmtByGroup (already perDiemAmt + nonPerDiemAmt)
 
       if (hasPerDiem) {
         groupedFinalArray[group] = [header].concat(sortedGroup).concat([perDiemTotalRow, nonPerDiemTotalRow, totalRow]);
@@ -1129,7 +1146,7 @@ define([
 
         if (lr.rowType === 'perDiemTotal' || lr.rowType === 'nonPerDiemTotal') {
           html += '<tr>'
-          + '<td colspan="5" style="border-left:0; border-bottom:0;"></td>'
+          + '<td colspan="5" style="border-left:0; border-bottom:0; border-top:0;"></td>'
           + '<td class="row-label" align="center"><b>' + lr.employee + '</b></td>';
           for (var w = 0; w < lr.days.length; w++) {
             var hrs = lr.days[w].hours;
@@ -1137,12 +1154,12 @@ define([
             html += '<td class="row-label" align="center"><b>' + hrsText + '</b></td>';
           }
           html += '<td class="row-label" align="center"><b>' + lr.totalWeek + '</b></td>'
-          + '<td class="row-label"></td>'
-          + '<td class="row-label"></td>'
+          + '<td class="row-label" style="mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + lr.rate + '</b></td>'
+          + '<td class="row-label" style="mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;"><b>' + lr.amt + '</b></td>'
           + '</tr>';
         } else if (lr.rowType === 'total' || q === labor.length - 1) {
           html += '<tr>'
-          + '<td colspan="5" style="border-left:0; border-bottom:0;"></td>'
+          + '<td colspan="5" style="border-left:0; border-bottom:0; border-top:0;"></td>'
           + '<td class="table-header" align="center"><b>' + lr.employee + '</b></td>';
           for (var w = 0; w < lr.days.length; w++) {
             var hrs = lr.days[w].hours;
