@@ -716,11 +716,11 @@ define([
         if (isPerDiem(sortedGroup[hp].shiftType)) { hasPerDiem = true; break; }
       }
 
-      var totalRow = {
-        employee: 'TOTAL', role: '', shiftType: '', shift: '',
-        days: [], totalWeek: 0, rate: '', amt: (finalAmtByGroup[group] || 0),
-        notes: '', groupType: group, rowType: 'total'
-      };
+      // var totalRow = {
+      //   employee: 'TOTAL', role: '', shiftType: '', shift: '',
+      //   days: [], totalWeek: 0, rate: '', amt: (finalAmtByGroup[group] || 0),
+      //   notes: '', groupType: group, rowType: 'total'
+      // };
       var perDiemTotalRow = {
         employee: 'Total Per Diem', role: '', shiftType: '', shift: '',
         days: [], totalWeek: 0, rate: '', amt: '',
@@ -752,7 +752,7 @@ define([
         }
         var nonPerDiemSum = dateSum - perDiemSum;
 
-        totalRow.days.push({ date: date, hours: dateSum });
+     //   totalRow.days.push({ date: date, hours: dateSum });
         perDiemTotalRow.days.push({ date: date, hours: perDiemSum });
         nonPerDiemTotalRow.days.push({ date: date, hours: nonPerDiemSum });
 
@@ -760,6 +760,10 @@ define([
         perDiemWeek += perDiemSum;
         nonPerDiemWeek += nonPerDiemSum;
       }
+
+      // totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
+      // perDiemTotalRow.totalWeek = parseFloat(perDiemWeek).toFixed(2);
+      // nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemWeek).toFixed(2);
 
       // Split Claim Amount the same way as hours
       var perDiemAmt = 0, nonPerDiemAmt = 0;
@@ -770,18 +774,18 @@ define([
         else nonPerDiemAmt += aVal;
       }
 
-      totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
+    //  totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
       perDiemTotalRow.totalWeek = parseFloat(perDiemWeek).toFixed(2);
       nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemWeek).toFixed(2);
 
       perDiemTotalRow.amt = perDiemAmt.toFixed(2);
       nonPerDiemTotalRow.amt = nonPerDiemAmt.toFixed(2);
-      totalRow.amt stays finalAmtByGroup (already perDiemAmt + nonPerDiemAmt)
+      // totalRow.amt stays finalAmtByGroup (already perDiemAmt + nonPerDiemAmt)
 
       if (hasPerDiem) {
         groupedFinalArray[group] = [header].concat(sortedGroup).concat([perDiemTotalRow, nonPerDiemTotalRow]);
       } else {
-        groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
+     //   groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
       }
     }
     
