@@ -267,7 +267,7 @@ Object.keys(groupedFinalArray).forEach(group => {
 
   // Insert the two subtotals just before the final total — only when Per Diem exists
   if (hasPerDiem) {
-    groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow, totalRow];
+    groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow];
   } else {
    // groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
   }
