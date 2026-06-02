@@ -716,18 +716,18 @@ define([
         if (isPerDiem(sortedGroup[hp].shiftType)) { hasPerDiem = true; break; }
       }
 
-      var totalRow = {
-        employee: 'TOTAL', role: '', shiftType: '', shift: '',
-        days: [], totalWeek: 0, rate: '', amt: (finalAmtByGroup[group] || 0),
-        notes: '', groupType: group, rowType: 'total'
-      };
+      // var totalRow = {
+      //   employee: 'TOTAL', role: '', shiftType: '', shift: '',
+      //   days: [], totalWeek: 0, rate: '', amt: (finalAmtByGroup[group] || 0),
+      //   notes: '', groupType: group, rowType: 'total'
+      // };
       var perDiemTotalRow = {
-        employee: 'Per Diem Total', role: '', shiftType: '', shift: '',
+        employee: 'Total Per Diem', role: '', shiftType: '', shift: '',
         days: [], totalWeek: 0, rate: '', amt: '',
         notes: '', groupType: group, rowType: 'perDiemTotal'
       };
       var nonPerDiemTotalRow = {
-        employee: 'Total Less Per Diem', role: '', shiftType: '', shift: '',
+        employee: 'Total Hours', role: '', shiftType: '', shift: '',
         days: [], totalWeek: 0, rate: '', amt: '',
         notes: '', groupType: group, rowType: 'nonPerDiemTotal'
       };
@@ -752,7 +752,7 @@ define([
         }
         var nonPerDiemSum = dateSum - perDiemSum;
 
-        totalRow.days.push({ date: date, hours: dateSum });
+     //   totalRow.days.push({ date: date, hours: dateSum });
         perDiemTotalRow.days.push({ date: date, hours: perDiemSum });
         nonPerDiemTotalRow.days.push({ date: date, hours: nonPerDiemSum });
 
@@ -774,7 +774,7 @@ define([
         else nonPerDiemAmt += aVal;
       }
 
-      totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
+    //  totalRow.totalWeek = parseFloat(grandWeek).toFixed(2);
       perDiemTotalRow.totalWeek = parseFloat(perDiemWeek).toFixed(2);
       nonPerDiemTotalRow.totalWeek = parseFloat(nonPerDiemWeek).toFixed(2);
 
@@ -785,7 +785,7 @@ define([
       if (hasPerDiem) {
         groupedFinalArray[group] = [header].concat(sortedGroup).concat([perDiemTotalRow, nonPerDiemTotalRow, totalRow]);
       } else {
-        groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
+     //   groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
       }
     }
     
