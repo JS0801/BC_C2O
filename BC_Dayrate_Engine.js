@@ -82,9 +82,6 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             var r = JSON.parse(context.value);
             log.debug('r', r)
 
-
-          return;
-
             var v = {
                 tbId:      r.id,
                 employee:  r.values.employee.value,
