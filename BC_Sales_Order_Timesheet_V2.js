@@ -783,7 +783,7 @@ define([
       // totalRow.amt stays finalAmtByGroup (already perDiemAmt + nonPerDiemAmt)
 
       if (hasPerDiem) {
-        groupedFinalArray[group] = [header].concat(sortedGroup).concat([perDiemTotalRow, nonPerDiemTotalRow, totalRow]);
+        groupedFinalArray[group] = [header].concat(sortedGroup).concat([perDiemTotalRow, nonPerDiemTotalRow]);
       } else {
      //   groupedFinalArray[group] = [header].concat(sortedGroup).concat([totalRow]);
       }
