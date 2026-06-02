@@ -178,8 +178,8 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
     // ─── Stage 4: summarize ──────────────────────────────────────
     function summarize(summary) {
         log.audit('summarize', 'Map/Reduce complete.');
-        log.audit('summarize', 'Map keys:    ' + summary.mapSummary.keys);
-        log.audit('summarize', 'Reduce keys: ' + summary.reduceSummary.keys);
+        log.audit('summarize', 'Map keys:    ' + JSON.stringify(summary.mapSummary.keys));
+        log.audit('summarize', 'Reduce keys: ' + JSON.stringify(summary.reduceSummary.keys));
         log.audit('summarize', 'Usage units: ' + summary.usage);
 
         if (summary.inputSummary.error) {
