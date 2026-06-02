@@ -220,20 +220,20 @@ Object.keys(groupedFinalArray).forEach(group => {
   const hasPerDiem = sortedGroup.some(function (r) { return isPerDiem(r.shiftType); });
 
   // Grand total (stays as the single 'TOTAL' row -> highlighted "Total Hours:")
-  const totalRow = {
-    employee: "TOTAL", role: "", shiftType: "", shift: "",
-    days: [], totalWeek: 0, notes: "", groupType: group, rowType: "total"
-  };
+  // const totalRow = {
+  //   employee: "TOTAL", role: "", shiftType: "", shift: "",
+  //   days: [], totalWeek: 0, notes: "", groupType: group, rowType: "total"
+  // };
 
   // Per Diem hours only  (employee != 'TOTAL' -> renders via data branch, label shows in Name col)
   const perDiemTotalRow = {
-    employee: "Per Diem Total", role: "", shiftType: "", shift: "",
+    employee: "Total Per Diem", role: "", shiftType: "", shift: "",
     days: [], totalWeek: 0, notes: "", groupType: group, rowType: "perDiemTotal"
   };
 
   // Total hours minus Per Diem hours
   const nonPerDiemTotalRow = {
-    employee: "Total Less Per Diem", role: "", shiftType: "", shift: "",
+    employee: "Total Hours", role: "", shiftType: "", shift: "",
     days: [], totalWeek: 0, notes: "", groupType: group, rowType: "nonPerDiemTotal"
   };
 
@@ -252,7 +252,7 @@ Object.keys(groupedFinalArray).forEach(group => {
     });
     const nonPerDiemSum = dateSum - perDiemSum;
 
-    totalRow.days.push({ date: date, hours: dateSum });
+    //totalRow.days.push({ date: date, hours: dateSum });
     perDiemTotalRow.days.push({ date: date, hours: perDiemSum });
     nonPerDiemTotalRow.days.push({ date: date, hours: nonPerDiemSum });
 
@@ -261,7 +261,7 @@ Object.keys(groupedFinalArray).forEach(group => {
     nonPerDiemWeek += nonPerDiemSum;
   });
 
-  totalRow.totalWeek = parseFloat(grandWeek);            // number -> template total branch uses ?string["0.00"]
+  //totalRow.totalWeek = parseFloat(grandWeek);            // number -> template total branch uses ?string["0.00"]
   perDiemTotalRow.totalWeek = perDiemWeek.toFixed(2);    // string -> data branch prints ${labor.totalWeek} as-is
   nonPerDiemTotalRow.totalWeek = nonPerDiemWeek.toFixed(2);
 
@@ -269,7 +269,7 @@ Object.keys(groupedFinalArray).forEach(group => {
   if (hasPerDiem) {
     groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow, totalRow];
   } else {
-    groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
+   // groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
   }
 });
         
@@ -806,7 +806,7 @@ Object.keys(groupedFinalArray).forEach(group => {
   var lRow = labor[q];
 
   if (lRow.rowType === 'perDiemTotal' || lRow.rowType === 'nonPerDiemTotal') {
-    var subLabel = (lRow.rowType === 'perDiemTotal') ? 'Per Diem Total' : 'Total Less Per Diem';
+    var subLabel = (lRow.rowType === 'perDiemTotal') ? 'Total Per Diem' : 'Total Hours';
     html += `<tr>
     <td colspan="5" style="border:0px solid #000;"></td>
     <td align="center" style="background-color:#3a4b87; color:white; font-weight:bold; border:0px solid #000;">${subLabel}</td>`;
