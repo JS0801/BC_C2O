@@ -51,6 +51,8 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
 
         var projectIds = projects.map(function (p) { return p.projectId; });
 
+        log.debug('projectIds', projectIds)
+
         return search.create({
             type: 'timebill',
             filters: [
