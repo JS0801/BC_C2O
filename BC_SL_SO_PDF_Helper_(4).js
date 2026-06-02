@@ -774,34 +774,75 @@ Object.keys(groupedFinalArray).forEach(group => {
               html += `
               </tr>
               <!-- Loop through each labor entry -->`;
-              for (var q = 1; q < labor.length; q++) {
+              // for (var q = 1; q < labor.length; q++) {
                 
-                if (q == labor.length - 1) {
-                  html += `<tr>
-                  <td colspan="5" style = "border:0px solid #000;"></td>
-                  <td align = "center" style = "background-color:#3a4b87; color:white; font-weight:bold; border:0px solid #000;">Total</td>`;
-                  for (var w = 0; w < labor[q].days.length; w++) {
-                    var day = labor[q].days[w] || '';
-                    html += `<td align="center" style = "background-color:#3a4b87; color:white; font-weight:bold; ">${((Math.round((day.hours || 0) * 100) / 100) === 0 ? '-' : (Math.round(day.hours * 100) / 100))}</td>`
-                  }
-                  html += `<td align = "center" style = "background-color:#3a4b87; color:white; font-weight:bold;" > ${((Math.round((labor[q].totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(labor[q].totalWeek * 100) / 100))}</td>
-                  <td colspan="${12 - labor[q].days.length}" style = "border:0px solid #000;"></td>
-                  </tr>`
-                }else{
-                  html += `<tr>
-                  <td colspan="2">${labor[q].employee}</td>
-                  <td colspan="2">${labor[q].role}</td>
-                  <td align = "center">${labor[q].shiftType}</td>
-                  <td align = "center">${labor[q].shift}</td>`;
-                  for (var w = 0; w < labor[q].days.length; w++) {
-                    var day = labor[q].days[w] || '';
-                    html += `<td align="center">${((Math.round((day.hours || 0) * 10) / 10) === 0 ? '-' : (Math.round(day.hours * 10) / 10))}</td>`
-                  }
-                  html += `<td align = "center"> ${((Math.round((labor[q].totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(labor[q].totalWeek * 100) / 100))}</td>
-                  <td colspan="${12 - labor[q].days.length}">${labor[q].notes}</td>
-                  </tr>`
-                }
-              }
+              //   if (q == labor.length - 1) {
+              //     html += `<tr>
+              //     <td colspan="5" style = "border:0px solid #000;"></td>
+              //     <td align = "center" style = "background-color:#3a4b87; color:white; font-weight:bold; border:0px solid #000;">Total</td>`;
+              //     for (var w = 0; w < labor[q].days.length; w++) {
+              //       var day = labor[q].days[w] || '';
+              //       html += `<td align="center" style = "background-color:#3a4b87; color:white; font-weight:bold; ">${((Math.round((day.hours || 0) * 100) / 100) === 0 ? '-' : (Math.round(day.hours * 100) / 100))}</td>`
+              //     }
+              //     html += `<td align = "center" style = "background-color:#3a4b87; color:white; font-weight:bold;" > ${((Math.round((labor[q].totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(labor[q].totalWeek * 100) / 100))}</td>
+              //     <td colspan="${12 - labor[q].days.length}" style = "border:0px solid #000;"></td>
+              //     </tr>`
+              //   }else{
+              //     html += `<tr>
+              //     <td colspan="2">${labor[q].employee}</td>
+              //     <td colspan="2">${labor[q].role}</td>
+              //     <td align = "center">${labor[q].shiftType}</td>
+              //     <td align = "center">${labor[q].shift}</td>`;
+              //     for (var w = 0; w < labor[q].days.length; w++) {
+              //       var day = labor[q].days[w] || '';
+              //       html += `<td align="center">${((Math.round((day.hours || 0) * 10) / 10) === 0 ? '-' : (Math.round(day.hours * 10) / 10))}</td>`
+              //     }
+              //     html += `<td align = "center"> ${((Math.round((labor[q].totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(labor[q].totalWeek * 100) / 100))}</td>
+              //     <td colspan="${12 - labor[q].days.length}">${labor[q].notes}</td>
+              //     </tr>`
+              //   }
+              // }
+              for (var q = 1; q < labor.length; q++) {
+  var lRow = labor[q];
+
+  if (lRow.rowType === 'perDiemTotal' || lRow.rowType === 'nonPerDiemTotal') {
+    var subLabel = (lRow.rowType === 'perDiemTotal') ? 'Per Diem Total' : 'Total Less Per Diem';
+    html += `<tr>
+    <td colspan="5" style="border:0px solid #000;"></td>
+    <td align="center" style="background-color:#3a4b87; color:white; font-weight:bold; border:0px solid #000;">${subLabel}</td>`;
+    for (var w = 0; w < lRow.days.length; w++) {
+      var day = lRow.days[w] || '';
+      html += `<td align="center" style="background-color:#3a4b87; color:white; font-weight:bold;">${((Math.round((day.hours || 0) * 100) / 100) === 0 ? '-' : (Math.round(day.hours * 100) / 100))}</td>`
+    }
+    html += `<td align="center" style="background-color:#3a4b87; color:white; font-weight:bold;">${((Math.round((lRow.totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(lRow.totalWeek * 100) / 100))}</td>
+    <td colspan="${12 - lRow.days.length}" style="border:0px solid #000;"></td>
+    </tr>`
+  } else if (lRow.rowType === 'total' || q == labor.length - 1) {
+    html += `<tr>
+    <td colspan="5" style="border:0px solid #000;"></td>
+    <td align="center" style="background-color:#3a4b87; color:white; font-weight:bold; border:0px solid #000;">Total</td>`;
+    for (var w = 0; w < lRow.days.length; w++) {
+      var day = lRow.days[w] || '';
+      html += `<td align="center" style="background-color:#3a4b87; color:white; font-weight:bold;">${((Math.round((day.hours || 0) * 100) / 100) === 0 ? '-' : (Math.round(day.hours * 100) / 100))}</td>`
+    }
+    html += `<td align="center" style="background-color:#3a4b87; color:white; font-weight:bold;"> ${((Math.round((lRow.totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(lRow.totalWeek * 100) / 100))}</td>
+    <td colspan="${12 - lRow.days.length}" style="border:0px solid #000;"></td>
+    </tr>`
+  } else {
+    html += `<tr>
+    <td colspan="2">${lRow.employee}</td>
+    <td colspan="2">${lRow.role}</td>
+    <td align="center">${lRow.shiftType}</td>
+    <td align="center">${lRow.shift}</td>`;
+    for (var w = 0; w < lRow.days.length; w++) {
+      var day = lRow.days[w] || '';
+      html += `<td align="center">${((Math.round((day.hours || 0) * 10) / 10) === 0 ? '-' : (Math.round(day.hours * 10) / 10))}</td>`
+    }
+    html += `<td align="center"> ${((Math.round((lRow.totalWeek || 0) * 100) / 100) === 0 ? '-' : (Math.round(lRow.totalWeek * 100) / 100))}</td>
+    <td colspan="${12 - lRow.days.length}">${lRow.notes}</td>
+    </tr>`
+  }
+}
               html += `</table>`;
             }
             
