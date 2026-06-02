@@ -220,10 +220,10 @@ Object.keys(groupedFinalArray).forEach(group => {
   const hasPerDiem = sortedGroup.some(function (r) { return isPerDiem(r.shiftType); });
 
   // Grand total (stays as the single 'TOTAL' row -> highlighted "Total Hours:")
-  // const totalRow = {
-  //   employee: "TOTAL", role: "", shiftType: "", shift: "",
-  //   days: [], totalWeek: 0, notes: "", groupType: group, rowType: "total"
-  // };
+  const totalRow = {
+    employee: "TOTAL", role: "", shiftType: "", shift: "",
+    days: [], totalWeek: 0, notes: "", groupType: group, rowType: "total"
+  };
 
   // Per Diem hours only  (employee != 'TOTAL' -> renders via data branch, label shows in Name col)
   const perDiemTotalRow = {
@@ -252,7 +252,7 @@ Object.keys(groupedFinalArray).forEach(group => {
     });
     const nonPerDiemSum = dateSum - perDiemSum;
 
-    //totalRow.days.push({ date: date, hours: dateSum });
+    totalRow.days.push({ date: date, hours: dateSum });
     perDiemTotalRow.days.push({ date: date, hours: perDiemSum });
     nonPerDiemTotalRow.days.push({ date: date, hours: nonPerDiemSum });
 
@@ -261,15 +261,17 @@ Object.keys(groupedFinalArray).forEach(group => {
     nonPerDiemWeek += nonPerDiemSum;
   });
 
-  //totalRow.totalWeek = parseFloat(grandWeek);            // number -> template total branch uses ?string["0.00"]
+  totalRow.totalWeek = parseFloat(grandWeek);            // number -> template total branch uses ?string["0.00"]
   perDiemTotalRow.totalWeek = perDiemWeek.toFixed(2);    // string -> data branch prints ${labor.totalWeek} as-is
   nonPerDiemTotalRow.totalWeek = nonPerDiemWeek.toFixed(2);
 
+  if (perDiemWeek > 0) totalRow = null;
+
   // Insert the two subtotals just before the final total — only when Per Diem exists
   if (hasPerDiem) {
-    groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow];
+    groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow, totalRow];
   } else {
-   // groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
+    groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
   }
 });
         
