@@ -57,7 +57,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             type: 'timebill',
             filters: [
               //  ['internalid','anyof', '111381', '111492', '110951', '111004'], 'AND',
-                ['datecreated',  'on', 'yesterday'],                     'AND',
+                ['datecreated',  'on', 'today'],                     'AND',
                 ['line.cseg_bc_project','anyof',   projectIds],      'AND',
                 [TB_TIME_TYPE,   'anyof',   [TT_ST, TT_OT, TT_DT]],  'AND',
                 [TB_BILLED_TRAN, 'isempty', ''],                     'AND',
@@ -65,7 +65,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 [TB_SOURCE_IDS,  'isempty', ''],                     'AND', 
                 [TB_AGG_BY,      'isempty', '']
             ],
-            columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'durationdecimal',
+            columns: ['employee', 'date', 'line.cseg_bc_project', TB_TIME_TYPE, 'durationdecimal', 'custcol_bc_tm_labor_billing_class',
                        search.createColumn({name: "custrecord_bc_proj_customer",join: "line.cseg_bc_project"})
                      ]
         });
@@ -88,6 +88,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
                 tranDate:  r.values.date,
                 projectId: r.values['line.cseg_bc_project'].value,
                 timeType:  r.values[TB_TIME_TYPE].value,
+                billingClass: r.values['custcol_bc_tm_labor_billing_class'].value,
                 hours:     parseFloat(r.values.durationdecimal) || 0,
                 custId:    r.values['custrecord_bc_proj_customer.line.cseg_bc_project'].value
             };
@@ -155,7 +156,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
             var aggRef = newIds.join(',');
             sourceIds.forEach(function (id) {
                 try {
-                    var vals = { isbillable: false };
+                    var vals = { 'custcol_bc_tm_line_non_billable': true };
                     vals[TB_AGG_BY] = aggRef;
                     record.submitFields({
                         type: record.Type.TIME_BILL,
@@ -238,7 +239,7 @@ define(['N/search', 'N/record', 'N/log'], function (search, record, log) {
         copyIfPresent(template, rec, [
             'employee', 'trandate', 'item', 'memo',
             'class', 'department', 'location', 'subsidiary',
-            'custcol_bc_tm_billing_shift', 'cseg_bc_project', 'cseg_bc_cost_code'
+            'custcol_bc_tm_billing_shift', 'cseg_bc_project', 'cseg_bc_cost_code', 'custcol_bc_tm_labor_billing_class'
         ]);
         hours = Math.round(hours * 100) / 100;
       
