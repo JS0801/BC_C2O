@@ -265,11 +265,11 @@ Object.keys(groupedFinalArray).forEach(group => {
   perDiemTotalRow.totalWeek = perDiemWeek.toFixed(2);    // string -> data branch prints ${labor.totalWeek} as-is
   nonPerDiemTotalRow.totalWeek = nonPerDiemWeek.toFixed(2);
 
-  if (perDiemWeek > 0) totalRow = null;
+
 
   // Insert the two subtotals just before the final total — only when Per Diem exists
   if (hasPerDiem) {
-    groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow, totalRow];
+    groupedFinalArray[group] = [header, ...sortedGroup, perDiemTotalRow, nonPerDiemTotalRow];
   } else {
     groupedFinalArray[group] = [header, ...sortedGroup, totalRow];
   }
