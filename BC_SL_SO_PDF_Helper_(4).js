@@ -924,7 +924,7 @@ Object.keys(groupedFinalArray).forEach(group => {
                 if (m.documentNumber == 'TOTAL'){
                   html += `<tr>
                   <td colspan="5" style = "background-color:#3a4b87; color:white; font-weight:bold; border:0px solid #000;" align = "center">Total</td>
-                  <td colspan="13" ></td>
+                  <td colspan="10" ></td>
                   <td align="right" style = "background-color:#3a4b87; color:white; font-weight:bold; border:0px solid #000; mso-number-format:\\0022$\\0022\\#\\,\\#\\#0\\.00;" >${m.cost}</td>
                   </tr>`
                 }else {
