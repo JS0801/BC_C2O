@@ -4,6 +4,7 @@
  */
 define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   const ACTION_PARAM = 'custscript_bc_pobill_action'; // INIT or APPROVE
+  const SUMMARY_GROUP = search.Summary ? search.Summary.GROUP : 'GROUP';
 
   const RECORDS = {
     APPROVAL_ROUTING: 'customrecord_c2o_approval_routing',
@@ -426,7 +427,66 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   }
 
   function getTransactionAccounts(rec) {
+    const accountsFromSearch = getTransactionAccountsFromSearch(rec);
+
+    if (accountsFromSearch.length) {
+      return accountsFromSearch;
+    }
+
+    log.debug('No transaction GL accounts found by search; using current record lines as fallback', {
+      recordType: rec.type,
+      recordId: rec.id || ''
+    });
+
+    return getTransactionAccountsFromLines(rec);
+  }
+
+  function getTransactionAccountsFromSearch(rec) {
+    const transactionId = rec.id;
+    const transactionType = getTransactionSearchType(rec.type);
     const accountIds = {};
+
+    if (!transactionId || !transactionType) {
+      return [];
+    }
+
+    const accountColumn = search.createColumn({
+      name: 'account',
+      summary: SUMMARY_GROUP,
+      label: 'Account'
+    });
+
+    search.create({
+      type: rec.type,
+      settings: [{ name: 'consolidationtype', value: 'ACCTTYPE' }],
+      filters: [
+        ['type', 'anyof', transactionType],
+        'AND',
+        ['internalid', 'anyof', transactionId]
+      ],
+      columns: [accountColumn]
+    }).run().each((result) => {
+      const account = result.getValue(accountColumn)
+        || result.getValue({ name: 'account', summary: SUMMARY_GROUP });
+
+      if (account) accountIds[String(account)] = true;
+      return true;
+    });
+
+    const accounts = Object.keys(accountIds);
+
+    log.debug('Transaction GL accounts found by search', {
+      recordType: rec.type,
+      recordId: transactionId,
+      accounts
+    });
+
+    return accounts;
+  }
+
+  function getTransactionAccountsFromLines(rec) {
+    const accountIds = {};
+
     ['expense', 'item'].forEach((sublistId) => {
       const lineCount = safeLineCount(rec, sublistId);
       for (let i = 0; i < lineCount; i += 1) {
@@ -434,7 +494,15 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
         if (account) accountIds[String(account)] = true;
       }
     });
+
     return Object.keys(accountIds);
+  }
+
+  function getTransactionSearchType(recordType) {
+    const type = String(recordType || '').toLowerCase();
+    if (type === 'purchaseorder') return 'PurchOrd';
+    if (type === 'vendorbill') return 'VendBill';
+    return '';
   }
 
   function getRuleTypeText(recordType) {
