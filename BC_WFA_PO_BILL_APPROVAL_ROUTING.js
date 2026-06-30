@@ -130,7 +130,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
     const currentRule = loadRule(currentRuleId);
     const currentSequence = number(currentRule.sequence);
-    const candidates = findMatchingRules(txn);
+    const candidates = findNextApprovalRules(txn, currentRule);
     log.debug('Next approval candidates before route-group filter', {
       currentRule,
       currentSequence,
@@ -150,7 +150,6 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     });
 
     const nextRule = candidates
-      .filter((rule) => sameRouteGroup(rule, currentRule))
       .filter((rule) => number(rule.sequence) > currentSequence)
       .sort(sortRules)[0];
     log.debug('Next approval rule selected', nextRule || null);
@@ -238,6 +237,47 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     return results;
   }
 
+  function findNextApprovalRules(txn, currentRule) {
+    const columns = [
+      'name',
+      FIELDS.RULE_TYPE,
+      FIELDS.RULE_MIN,
+      FIELDS.RULE_MAX,
+      FIELDS.RULE_REGION,
+      FIELDS.RULE_DEPARTMENT,
+      FIELDS.RULE_APPROVER,
+      FIELDS.RULE_PROJECT,
+      FIELDS.RULE_BILLABLE,
+      FIELDS.RULE_VENDOR,
+      FIELDS.RULE_ACCOUNT,
+      FIELDS.RULE_SEQUENCE,
+      FIELDS.RULE_BACKUP_APPROVER
+    ];
+
+    const results = [];
+
+    search.create({
+      type: RECORDS.APPROVAL_ROUTING,
+      filters: [
+        ['isinactive', 'is', 'F'],
+        'AND',
+        [FIELDS.RULE_MIN, 'onorbefore', txn.amount]
+      ],
+      columns
+    }).run().each((result) => {
+      const rule = readRuleResult(result);
+
+      if (ruleMatchesApprovalPath(rule, txn, currentRule)) {
+        results.push(rule);
+      }
+
+      return true;
+    });
+
+    results.sort(sortRules);
+    return results;
+  }
+
   function readRuleResult(result) {
     return {
       id: result.id,
@@ -308,10 +348,19 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     return true;
   }
 
+  function ruleMatchesApprovalPath(rule, txn, currentRule) {
+    if (!ruleMatches(rule, txn)) return false;
+    return sameApprovalPath(rule, currentRule);
+  }
+
   function sameRouteGroup(a, b) {
     return number(a.min) === number(b.min)
       && number(a.max) === number(b.max)
-      && id(a.region) === id(b.region)
+      && sameApprovalPath(a, b);
+  }
+
+  function sameApprovalPath(a, b) {
+    return id(a.region) === id(b.region)
       && id(a.department) === id(b.department)
       && id(a.vendor) === id(b.vendor)
       && id(a.account) === id(b.account)
