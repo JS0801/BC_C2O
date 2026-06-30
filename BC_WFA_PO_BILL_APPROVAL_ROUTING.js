@@ -130,11 +130,14 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
     const currentRule = loadRule(currentRuleId);
     const currentSequence = number(currentRule.sequence) || number(value(rec, FIELDS.TXN_SEQUENCE));
+    const amountInCurrentRuleRange = number(txn.amount) <= number(currentRule.max);
     const candidates = findNextApprovalRules(txn, currentRule);
     log.debug('Next approval candidates', {
       currentRule,
       currentSequence,
       transactionSequence: value(rec, FIELDS.TXN_SEQUENCE),
+      transactionAmount: txn.amount,
+      amountInCurrentRuleRange,
       candidates: candidates.map((rule) => ({
         id: rule.id,
         name: rule.name,
@@ -153,6 +156,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     const nextRule = candidates
       .filter((rule) => id(rule.id) !== id(currentRuleId))
       .filter((rule) => number(rule.sequence) > currentSequence)
+      .filter((rule) => amountInCurrentRuleRange ? sameRouteGroup(rule, currentRule) : true)
       .sort(sortRules)[0];
     log.debug('Next approval rule selected', nextRule || null);
 
