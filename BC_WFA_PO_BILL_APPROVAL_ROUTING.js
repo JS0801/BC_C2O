@@ -86,8 +86,16 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   }
 
   function initRoute(rec, txn) {
+    if (hasExistingPendingRoute(rec)) {
+      log.audit('Existing pending PO/Bill route kept', {
+        routingRule: value(rec, FIELDS.TXN_ROUTING_RULE),
+        sequence: value(rec, FIELDS.TXN_SEQUENCE),
+        nextApprover: value(rec, FIELDS.NEXT_APPROVER)
+      });
+      return 'PENDING_APPROVAL';
+    }
+
     const rules = findMatchingRules(txn);
-    log.debug('rules', rules)
     const selected = rules[0];
 
     if (!selected) {
@@ -106,6 +114,12 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     return 'PENDING_APPROVAL';
   }
 
+  function hasExistingPendingRoute(rec) {
+    return String(value(rec, FIELDS.TXN_STATUS)) === String(STATUS.PENDING_APPROVAL)
+      && Boolean(value(rec, FIELDS.TXN_ROUTING_RULE))
+      && Boolean(value(rec, FIELDS.NEXT_APPROVER));
+  }
+
   function approveStep(rec, txn) {
     const currentRuleId = value(rec, FIELDS.TXN_ROUTING_RULE);
 
@@ -116,12 +130,30 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
     const currentRule = loadRule(currentRuleId);
     const currentSequence = number(currentRule.sequence);
-    const nextRule = findMatchingRules(txn)
+    const candidates = findMatchingRules(txn);
+    log.debug('Next approval candidates before route-group filter', {
+      currentRule,
+      currentSequence,
+      candidates: candidates.map((rule) => ({
+        id: rule.id,
+        name: rule.name,
+        sequence: rule.sequence,
+        min: rule.min,
+        max: rule.max,
+        region: rule.region,
+        department: rule.department,
+        vendor: rule.vendor,
+        account: rule.account,
+        project: rule.project,
+        billable: rule.billable
+      }))
+    });
+
+    const nextRule = candidates
       .filter((rule) => sameRouteGroup(rule, currentRule))
       .filter((rule) => number(rule.sequence) > currentSequence)
       .sort(sortRules)[0];
-        log.debug('nextRule', nextRule)
-
+    log.debug('Next approval rule selected', nextRule || null);
 
     if (nextRule) {
       applyRule(rec, nextRule);
@@ -216,8 +248,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       region: result.getValue({ name: FIELDS.RULE_REGION }) || '',
       department: result.getValue({ name: FIELDS.RULE_DEPARTMENT }) || '',
       approver: result.getValue({ name: FIELDS.RULE_APPROVER }) || '',
-      project: result.getValue({ name: FIELDS.RULE_PROJECT }) === true || result.getValue({ name: FIELDS.RULE_PROJECT }) === 'T',
-      billable: result.getValue({ name: FIELDS.RULE_BILLABLE }) === true || result.getValue({ name: FIELDS.RULE_BILLABLE }) === 'T',
+      project: boolValue(result.getValue({ name: FIELDS.RULE_PROJECT })),
+      billable: boolValue(result.getValue({ name: FIELDS.RULE_BILLABLE })),
       vendor: result.getValue({ name: FIELDS.RULE_VENDOR }) || '',
       account: result.getValue({ name: FIELDS.RULE_ACCOUNT }) || '',
       sequence: result.getValue({ name: FIELDS.RULE_SEQUENCE }) || '',
@@ -255,8 +287,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       region: idValue(lookup[FIELDS.RULE_REGION]),
       department: idValue(lookup[FIELDS.RULE_DEPARTMENT]),
       approver: idValue(lookup[FIELDS.RULE_APPROVER]),
-      project: lookup[FIELDS.RULE_PROJECT] === true,
-      billable: lookup[FIELDS.RULE_BILLABLE] === true,
+      project: boolValue(lookup[FIELDS.RULE_PROJECT]),
+      billable: boolValue(lookup[FIELDS.RULE_BILLABLE]),
       vendor: idValue(lookup[FIELDS.RULE_VENDOR]),
       account: idValue(lookup[FIELDS.RULE_ACCOUNT]),
       sequence: lookup[FIELDS.RULE_SEQUENCE] || '',
@@ -277,12 +309,12 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   }
 
   function sameRouteGroup(a, b) {
-    return String(a.min) === String(b.min)
-      && String(a.max) === String(b.max)
-      && String(a.region || '') === String(b.region || '')
-      && String(a.department || '') === String(b.department || '')
-      && String(a.vendor || '') === String(b.vendor || '')
-      && String(a.account || '') === String(b.account || '')
+    return number(a.min) === number(b.min)
+      && number(a.max) === number(b.max)
+      && id(a.region) === id(b.region)
+      && id(a.department) === id(b.department)
+      && id(a.vendor) === id(b.vendor)
+      && id(a.account) === id(b.account)
       && Boolean(a.project) === Boolean(b.project)
       && Boolean(a.billable) === Boolean(b.billable)
       && typeMatches(a.typeText, b.typeText);
@@ -419,6 +451,10 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     return value ? String(value) : '';
   }
 
+  function id(value) {
+    return String(value || '').trim();
+  }
+
   function textValue(value) {
     if (Array.isArray(value) && value.length) return String(value[0].text || '');
     return value ? String(value) : '';
@@ -427,6 +463,10 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   function number(value) {
     const parsed = parseFloat(value || 0);
     return Number.isFinite(parsed) ? parsed : 0;
+  }
+
+  function boolValue(value) {
+    return value === true || value === 'T' || value === 'true';
   }
 
   return { onAction };
