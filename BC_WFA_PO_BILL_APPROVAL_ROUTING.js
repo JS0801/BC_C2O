@@ -129,11 +129,12 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     }
 
     const currentRule = loadRule(currentRuleId);
-    const currentSequence = number(currentRule.sequence);
+    const currentSequence = number(currentRule.sequence) || number(value(rec, FIELDS.TXN_SEQUENCE));
     const candidates = findNextApprovalRules(txn, currentRule);
-    log.debug('Next approval candidates before route-group filter', {
+    log.debug('Next approval candidates', {
       currentRule,
       currentSequence,
+      transactionSequence: value(rec, FIELDS.TXN_SEQUENCE),
       candidates: candidates.map((rule) => ({
         id: rule.id,
         name: rule.name,
@@ -150,6 +151,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     });
 
     const nextRule = candidates
+      .filter((rule) => id(rule.id) !== id(currentRuleId))
       .filter((rule) => number(rule.sequence) > currentSequence)
       .sort(sortRules)[0];
     log.debug('Next approval rule selected', nextRule || null);
@@ -322,8 +324,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       id: String(ruleId),
       name: lookup.name || '',
       typeText: textValue(lookup[FIELDS.RULE_TYPE]),
-      min: lookup[FIELDS.RULE_MIN],
-      max: lookup[FIELDS.RULE_MAX],
+      min: plainValue(lookup[FIELDS.RULE_MIN]),
+      max: plainValue(lookup[FIELDS.RULE_MAX]),
       region: idValue(lookup[FIELDS.RULE_REGION]),
       department: idValue(lookup[FIELDS.RULE_DEPARTMENT]),
       approver: idValue(lookup[FIELDS.RULE_APPROVER]),
@@ -331,7 +333,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       billable: boolValue(lookup[FIELDS.RULE_BILLABLE]),
       vendor: idValue(lookup[FIELDS.RULE_VENDOR]),
       account: idValue(lookup[FIELDS.RULE_ACCOUNT]),
-      sequence: lookup[FIELDS.RULE_SEQUENCE] || '',
+      sequence: plainValue(lookup[FIELDS.RULE_SEQUENCE]),
       backupApprover: idValue(lookup[FIELDS.RULE_BACKUP_APPROVER])
     };
   }
@@ -507,6 +509,11 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   function textValue(value) {
     if (Array.isArray(value) && value.length) return String(value[0].text || '');
     return value ? String(value) : '';
+  }
+
+  function plainValue(value) {
+    if (Array.isArray(value) && value.length) return String(value[0].value || value[0].text || '');
+    return value || '';
   }
 
   function number(value) {
