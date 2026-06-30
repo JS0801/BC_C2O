@@ -87,6 +87,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
   function initRoute(rec, txn) {
     const rules = findMatchingRules(txn);
+    log.debug('rules', rules)
     const selected = rules[0];
 
     if (!selected) {
@@ -119,6 +120,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       .filter((rule) => sameRouteGroup(rule, currentRule))
       .filter((rule) => number(rule.sequence) > currentSequence)
       .sort(sortRules)[0];
+        log.debug('nextRule', nextRule)
+
 
     if (nextRule) {
       applyRule(rec, nextRule);
