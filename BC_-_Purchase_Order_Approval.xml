@@ -12,7 +12,7 @@
   <keephistory>ALWAYS</keephistory>
   <name>BC - Purchase Order Approval</name>
   <recordtypes>PURCHASEORDER</recordtypes>
-  <releasestatus>RELEASED</releasestatus>
+  <releasestatus>NOTINITIATING</releasestatus>
   <runasadmin>T</runasadmin>
   <initcondition>
     <formula></formula>
