@@ -60,7 +60,11 @@ function (serverWidget, search, record, render, url, log, format, file) {
             "ELSE '' END"
         }),
         search.createColumn({ name: "formulanumericrates", summary: "SUM", formula: "NVL({rate},0)" }),
-        search.createColumn({ name: "formulanumericratem", summary: "MAX", formula: "NVL({rate},0)" }),
+        search.createColumn({
+  name: "formulanumericratem",
+  summary: "GROUP",
+  formula: "CASE WHEN {custcol_invoicing_category} IN ('Equipment / Vehicle Rental', 'Labor') THEN ABS(NVL({rate},0)) ELSE 0 END"
+}),
 
         search.createColumn({ name: "quantity", summary: "SUM" }),
         search.createColumn({ name: "formulanumeric", summary: "SUM", formula: "CASE WHEN {custcol_invoicing_category} IN ('Equipment / Vehicle Rental', 'Labor') THEN ABS(NVL({amount},0)) + ABS(NVL({taxamount},0)) ELSE (NVL({amount},0)) + NVL({taxamount},0) END" }),
@@ -117,24 +121,39 @@ function (serverWidget, search, record, render, url, log, format, file) {
       if (projTxt && projectnumber.indexOf(projTxt) === -1) projectnumber.push(projTxt);
       projectmanager = result.getText(invoiceSearchObj.columns[10]) || projectmanager;
 
-      // match your PDF math (total = maxRate * qty for Labor/Equip; Materials/Expenses use source qty)
+      // // match your PDF math (total = maxRate * qty for Labor/Equip; Materials/Expenses use source qty)
+      // var qty = (category === 'Materials' || category === 'Expenses') ? (sourceqty || 1) : quantity;
+
+
+      //    var lineSubtotal, lineTax, lineTotal;
+
+      // if (category === 'Materials' || category === 'Expenses') {
+      //   // For Materials/Expenses, sumRate is already the pre-tax total
+      //   lineSubtotal =sumRate;
+      //   lineTotal = sumRate + taxAmountFromSearch;
+      //   lineTax = taxAmountFromSearch;
+      // }  else {
+      //   // For Labor/Equipment: calculate pre-tax as maxRate * quantity
+      //   lineSubtotal = Math.abs(parseFloat(maxRate) * parseFloat(qty));
+      //   lineTax = taxAmountFromSearch;
+      //   lineTotal = lineSubtotal + lineTax; 
+      // }
+
+
       var qty = (category === 'Materials' || category === 'Expenses') ? (sourceqty || 1) : quantity;
-      totalWithTax = parseFloat(maxRate) * parseFloat(qty || 0);
 
+var lineSubtotal, lineTax, lineTotal;
 
-         var lineSubtotal, lineTax, lineTotal;
-
-      if (category === 'Materials' || category === 'Expenses') {
-        // For Materials/Expenses, sumRate is already the pre-tax total
-        lineSubtotal =sumRate;
-        lineTotal = sumRate + taxAmountFromSearch;
-        lineTax = taxAmountFromSearch;
-      }  else {
-        // For Labor/Equipment: calculate pre-tax as maxRate * quantity
-        lineSubtotal = Math.abs(parseFloat(maxRate) * parseFloat(qty));
-        lineTax = taxAmountFromSearch;
-        lineTotal = lineSubtotal + lineTax; 
-      }
+if (category === 'Materials' || category === 'Expenses') {
+  lineSubtotal = sumRate;
+  lineTax = taxAmountFromSearch;
+  lineTotal = lineSubtotal + lineTax;
+} else {
+  // Labor/Equipment: use saved invoice amount instead of recalculating rate * quantity
+  lineTax = taxAmountFromSearch;
+  lineTotal = Math.abs(totalWithTax || 0);
+  lineSubtotal = Math.abs(lineTotal - lineTax);
+}
 
       // Round everything to 2 decimal places
       lineSubtotal = Math.round((lineSubtotal + Math.sign(lineSubtotal) * 1e-8) * 100) / 100;
