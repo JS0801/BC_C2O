@@ -59,7 +59,11 @@
             formula: "CASE WHEN {custcol_invoicing_category} IN ('Equipment / Vehicle Rental', 'Labor') THEN NVL({custcol_bc_tm_time_bill.custcol_bc_time_type}, 'ST') WHEN {custcol_invoicing_category} IN ('Materials', 'Expenses') THEN 'Each' ELSE '' END"
           }),
           search.createColumn({ name: "formulanumericrates", summary: "SUM", formula: "NVL({rate},0)" }),
-          search.createColumn({ name: "formulanumericratem", summary: "MAX", formula: "NVL({rate},0)" }),
+          search.createColumn({
+  name: "formulanumericratem",
+  summary: "GROUP",
+  formula: "CASE WHEN {custcol_invoicing_category} IN ('Equipment / Vehicle Rental', 'Labor') THEN ABS(NVL({rate},0)) ELSE 0 END"
+}),
           search.createColumn({
             name: "quantity",
             summary: "SUM"
@@ -169,9 +173,9 @@
           lineTaxCalc = taxAmountFromSearch;
         }  else {
            // For Labor/Equipment: derive subtotal from search totals instead of rate * qty
-           lineSubtotalCalc = Math.abs(parseFloat(maxRate) * parseFloat(qty));
            lineTaxCalc = taxAmountFromSearch;
-           total = lineSubtotalCalc + lineTaxCalc;
+lineSubtotalCalc = Math.abs(totalWithTax - lineTaxCalc);
+total = totalWithTax;
         }
         // else {
         //   // For Labor/Equipment: calculate pre-tax as maxRate * quantity
