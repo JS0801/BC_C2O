@@ -187,7 +187,7 @@
 
         log.debug('Tax Amount from Search', { category: category, taxAmountFromSearch: taxAmountFromSearch, total: total, lineSubtotalCalc: lineSubtotalCalc, lineTaxCalc: lineTaxCalc });
 
-        var finalRate = maincost;
+        var finalRate = (category === 'Materials' || category === 'Expenses') ? maincost : maxRate;
         
         var obj = {
           description: key.replace(/&/g, '&amp;'),
