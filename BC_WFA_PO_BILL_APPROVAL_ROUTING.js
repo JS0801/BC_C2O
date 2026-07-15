@@ -93,6 +93,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
   function previewRoute(rec, txn) {
   const rules = findMatchingRules(txn);
+  log.audit('rules', rules)
   const selected = rules[0];
 
   if (!selected) {
