@@ -74,6 +74,10 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
         return approveStep(rec, txn);
       }
 
+      if (action === 'PREVIEW') {
+        return previewRoute(rec, txn);
+      }
+
       return initRoute(rec, txn);
     } catch (e) {
       log.error('PO/Bill routing error', {
@@ -85,6 +89,27 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       return 'ERROR';
     }
   }
+
+
+  function previewRoute(rec, txn) {
+  const rules = findMatchingRules(txn);
+  const selected = rules[0];
+
+  if (!selected) {
+    clearApproval(rec);
+    safeSet(rec, FIELDS.TXN_STATUS, STATUS.NO_RULE_FOUND);
+    safeSet(rec, FIELDS.TXN_ERROR, buildNoRuleMessage(txn));
+    log.audit('Preview PO/Bill route has no matching rule', txn);
+    return 'NO_RULE_FOUND';
+  }
+
+  applyRule(rec, selected);
+  safeSet(rec, FIELDS.TXN_STATUS, '');
+  safeSet(rec, FIELDS.TXN_ERROR, '');
+
+  log.audit('Preview PO/Bill approver refreshed', selected);
+  return 'PREVIEW';
+}
 
   function initRoute(rec, txn) {
     if (hasExistingPendingRoute(rec)) {
