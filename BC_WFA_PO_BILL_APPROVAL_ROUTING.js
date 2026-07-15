@@ -248,7 +248,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
         'AND',
         [FIELDS.RULE_MIN, 'lessthanorequalto', txn.amount],
         'AND',
-        [FIELDS.RULE_MAX, 'greaterthanorequalto', txn.amount]
+        [FIELDS.RULE_MAX, 'lessthanorequalto', txn.amount]
       ],
       columns
     }).run().each((result) => {
