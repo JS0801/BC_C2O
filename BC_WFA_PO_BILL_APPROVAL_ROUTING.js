@@ -234,7 +234,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       FIELDS.RULE_BILLABLE,
       FIELDS.RULE_VENDOR,
       FIELDS.RULE_ACCOUNT,
-      FIELDS.RULE_SEQUENCE,
+      search.createColumn({name: FIELDS.RULE_SEQUENCE, label: "seq", sort: search.Sort.ASC}),
       FIELDS.RULE_BACKUP_APPROVER
     ];
 
