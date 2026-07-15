@@ -245,9 +245,9 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       filters: [
         ['isinactive', 'is', 'F'],
         'AND',
-        [FIELDS.RULE_MIN, 'onorbefore', txn.amount],
+        [FIELDS.RULE_MIN, 'lessthanorequalto', txn.amount],
         'AND',
-        [FIELDS.RULE_MAX, 'onorafter', txn.amount]
+        [FIELDS.RULE_MAX, 'greaterthanorequalto', txn.amount]
       ],
       columns
     }).run().each((result) => {
