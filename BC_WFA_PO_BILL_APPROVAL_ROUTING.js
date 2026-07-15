@@ -25,7 +25,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
     // Change these if the account uses different transaction/subsidiary fields.
     SUBSIDIARY_REGION: 'custrecord_c2o_region',
-    PROJECT_FLAG: 'custbody_bc_project',
+    PROJECT_FLAG: 'cseg_bc_project',
     BILLABLE_FLAG: 'custbody_bc_is_billable_po',
 
     RULE_REGION: 'custrecord_approval_region',
