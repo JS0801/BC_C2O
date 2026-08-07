@@ -285,6 +285,43 @@
           </parametersettings>
         </customaction>
       </workflowactions>
+      <workflowactions triggertype="AFTERSUBMIT">
+        <setfieldvalueaction scriptid="workflowaction1280">
+          <clienttriggerfields></clienttriggerfields>
+          <conditionsavedsearch></conditionsavedsearch>
+          <contexttypes>ACTION|BANKCONNECTIVITY|BANKSTATEMENTPARSER|BUNDLEINSTALLATION|CLIENT|CSVIMPORT|CUSTOMGLLINES|CUSTOMMASSUPDATE|RECORDACTION|CUSTOMTOOL|DATASETBUILDER|DEBUGGER|EMAILCAPTURE|FICONNECTIVITY|FIPARSER|MAPREDUCE|OCRPLUGIN|OFFLINECLIENT|OTHER|PAYMENTPOSTBACK|PAYMENTGATEWAY|PLATFORMEXTENSION|PORTLET|PROMOTIONS|CONSOLRATEADJUSTOR|RESTWEBSERVICES|RESTLET|ADVANCEDREVREC|SCHEDULED|SDFINSTALLATION|SHIPPINGPARTNERS|WEBSERVICES|SUITELET|TAXCALCULATION|USEREVENT|USERINTERFACE|WORKBOOKBUILDER|WORKFLOW</contexttypes>
+          <eventtypes></eventtypes>
+          <field>[scriptid=custbody_bc_is_billable_po]</field>
+          <isinactive>F</isinactive>
+          <scheduledelay></scheduledelay>
+          <schedulemode>DELAY</schedulemode>
+          <schedulerecurrence></schedulerecurrence>
+          <scheduletimeofday></scheduletimeofday>
+          <scheduletimeunit></scheduletimeunit>
+          <valuechecked>F</valuechecked>
+          <valuedate></valuedate>
+          <valuefield></valuefield>
+          <valueformula></valueformula>
+          <valuejoinfield></valuejoinfield>
+          <valueselect></valueselect>
+          <valuetext></valuetext>
+          <valuetype>STATIC</valuetype>
+          <initcondition>
+            <formula><![CDATA[isChecked("Is Billable") = 'T' AND isEmpty("Blue Collar Project") = 'T']]></formula>
+            <type>VISUAL_BUILDER</type>
+            <parameters>
+              <parameter>
+                <name>Is Billable</name>
+                <value>[scriptid=custbody_bc_is_billable_po]</value>
+              </parameter>
+              <parameter>
+                <name>Blue Collar Project</name>
+                <value>[type=transactionbodycustomfield, scriptid=cseg_bc_project]</value>
+              </parameter>
+            </parameters>
+          </initcondition>
+        </setfieldvalueaction>
+      </workflowactions>
       <workflowtransitions>
         <workflowtransition scriptid="workflowtransition497">
           <buttonaction>[scriptid=customworkflow_bc_pobill_approval.workflowstate191.workflowaction1252]</buttonaction>
@@ -419,32 +456,8 @@
           <label>Approve</label>
           <saverecordfirst>T</saverecordfirst>
           <initcondition>
-            <formula><![CDATA[( "Next Approver" IN ("Current User") OR "User Role" IN ("Role1") OR "PO/Bill Approval Routing:Backup Approver" IN ("Current User") )]]></formula>
-            <type>VISUAL_BUILDER</type>
-            <parameters>
-              <parameter>
-                <name>Next Approver</name>
-                <value>STDBODYNEXTAPPROVER</value>
-              </parameter>
-              <parameter>
-                <name>Current User</name>
-                <selectrecordtype>-4</selectrecordtype>
-                <value>@CURRENTUSER@</value>
-              </parameter>
-              <parameter>
-                <name>User Role</name>
-                <value>STDUSERROLE</value>
-              </parameter>
-              <parameter>
-                <name>Role1</name>
-                <selectrecordtype>-118</selectrecordtype>
-                <value>ADMINISTRATOR</value>
-              </parameter>
-              <parameter>
-                <name>PO/Bill Approval Routing:Backup Approver</name>
-                <value>[scriptid=custbody_c2o_pobill_approval_routing]:[scriptid=customrecord_c2o_approval_routing.custrecord_backup_approver]</value>
-              </parameter>
-            </parameters>
+            <formula><![CDATA[{nextapprover.id} is not -1 and ({nextapprover.id}={me} or {userrole.id}=3 or {custbody_c2o_pobill_approval_routing.custrecord_backup_approver.id}={me})]]></formula>
+            <type>FORMULA</type>
           </initcondition>
         </addbuttonaction>
         <addbuttonaction scriptid="workflowaction1254">
@@ -456,32 +469,8 @@
           <label>Reject</label>
           <saverecordfirst>T</saverecordfirst>
           <initcondition>
-            <formula><![CDATA[( "Next Approver" IN ("Current User") OR "User Role" IN ("Role1") OR "PO/Bill Approval Routing:Backup Approver" IN ("Current User") )]]></formula>
-            <type>VISUAL_BUILDER</type>
-            <parameters>
-              <parameter>
-                <name>Next Approver</name>
-                <value>STDBODYNEXTAPPROVER</value>
-              </parameter>
-              <parameter>
-                <name>Current User</name>
-                <selectrecordtype>-4</selectrecordtype>
-                <value>@CURRENTUSER@</value>
-              </parameter>
-              <parameter>
-                <name>User Role</name>
-                <value>STDUSERROLE</value>
-              </parameter>
-              <parameter>
-                <name>Role1</name>
-                <selectrecordtype>-118</selectrecordtype>
-                <value>ADMINISTRATOR</value>
-              </parameter>
-              <parameter>
-                <name>PO/Bill Approval Routing:Backup Approver</name>
-                <value>[scriptid=custbody_c2o_pobill_approval_routing]:[scriptid=customrecord_c2o_approval_routing.custrecord_backup_approver]</value>
-              </parameter>
-            </parameters>
+            <formula><![CDATA[{nextapprover.id} is not -1 and ({nextapprover.id}={me} or {userrole.id}=3 or {custbody_c2o_pobill_approval_routing.custrecord_backup_approver.id}={me})]]></formula>
+            <type>FORMULA</type>
           </initcondition>
         </addbuttonaction>
       </workflowactions>
