@@ -246,9 +246,9 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       filters: [
         ['isinactive', 'is', 'F'],
         'AND',
-        [FIELDS.RULE_MIN, 'lessthanorequalto', txn.amount],
-        'AND',
-        [FIELDS.RULE_MAX, 'lessthanorequalto', txn.amount]
+        [FIELDS.RULE_MIN, 'lessthanorequalto', txn.amount]
+        // 'AND',
+        // [FIELDS.RULE_MAX, 'lessthanorequalto', txn.amount]
       ],
       columns
     }).run().each((result) => {
@@ -528,6 +528,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     const type = String(recordType || '').toLowerCase();
     if (type === 'purchaseorder') return 'PurchOrd';
     if (type === 'vendorbill') return 'VendBill';
+    if (type === 'expensereport') return 'ExpRept';
     return '';
   }
 
@@ -535,6 +536,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     const type = String(recordType || '').toLowerCase();
     if (type === 'purchaseorder') return 'PO';
     if (type === 'vendorbill') return 'Bill';
+    if (type === 'expensereport') return 'Expense';
     throw new Error(`Unsupported transaction type: ${recordType}`);
   }
 
@@ -548,6 +550,10 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
     if (target === 'bill') {
       return rule === 'bill' || rule.indexOf('vendor bill') !== -1;
+    }
+
+    if (target === 'expense') {
+      return rule === 'expense report' || rule === 'expense';
     }
 
     return rule === target;
