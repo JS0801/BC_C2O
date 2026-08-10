@@ -11,7 +11,7 @@
   <islogenabled>T</islogenabled>
   <keephistory>ALWAYS</keephistory>
   <name>BC | PO/Bill Approval</name>
-  <recordtypes>PURCHASEORDER|VENDORBILL</recordtypes>
+  <recordtypes>EXPENSEREPORT|PURCHASEORDER|VENDORBILL</recordtypes>
   <releasestatus>RELEASED</releasestatus>
   <runasadmin>T</runasadmin>
   <initcondition>
@@ -367,7 +367,7 @@
           <waitforworkflow></waitforworkflow>
           <waitforworkflowstate></waitforworkflowstate>
           <initcondition>
-            <formula><![CDATA["Type" IN ("Transaction Type1")]]></formula>
+            <formula><![CDATA["Type" IN ("Transaction Type1","Transaction Type2")]]></formula>
             <type>VISUAL_BUILDER</type>
             <parameters>
               <parameter>
@@ -378,6 +378,11 @@
                 <name>Transaction Type1</name>
                 <selectrecordtype>-100</selectrecordtype>
                 <value>PURCHASEORDER</value>
+              </parameter>
+              <parameter>
+                <name>Transaction Type2</name>
+                <selectrecordtype>-100</selectrecordtype>
+                <value>EXPENSEREPORT</value>
               </parameter>
             </parameters>
           </initcondition>
