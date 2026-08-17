@@ -3,12 +3,13 @@
  * @NScriptType WorkflowActionScript
  */
 define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
-  const ACTION_PARAM = 'custscript_bc_pobill_action'; // INIT or APPROVE
+  const ACTION_PARAM = 'custscript_bc_pobill_action'; // PREVIEW, INIT, or APPROVE
   const SUMMARY_GROUP = search.Summary ? search.Summary.GROUP : 'GROUP';
 
   const RECORDS = {
     APPROVAL_ROUTING: 'customrecord_c2o_approval_routing',
-    SUBSIDIARY: 'subsidiary'
+    SUBSIDIARY: 'subsidiary',
+    PROJECT_SEGMENT: 'customrecord_cseg_bc_project'
   };
 
   const FIELDS = {
@@ -27,6 +28,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     SUBSIDIARY_REGION: 'custrecord_c2o_region',
     PROJECT_FLAG: 'cseg_bc_project',
     BILLABLE_FLAG: 'custbody_bc_is_billable_po',
+    PROJECT_MANAGER: 'custrecord_bc_proj_manager',
 
     RULE_REGION: 'custrecord_approval_region',
     RULE_DEPARTMENT: 'custrecord_approval_department',
@@ -39,7 +41,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     RULE_VENDOR: 'custrecord_approval_vendor',
     RULE_SEQUENCE: 'custrecord_approval_sequence',
     RULE_BACKUP_APPROVER: 'custrecord_backup_approver',
-    RULE_ACCOUNT: 'custrecord_approval_account'
+    RULE_ACCOUNT: 'custrecord_approval_account',
+    RULE_PROJECT_MANAGER_APPROVER: 'custrecord_project_manager_approver'
   };
 
   const STATUS = {
@@ -66,6 +69,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
         region: txn.region,
         vendor: txn.vendor,
         accounts: txn.accounts,
+        projectId: txn.projectId,
         project: txn.project,
         billable: txn.billable
       });
@@ -92,25 +96,28 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
 
 
   function previewRoute(rec, txn) {
-  const rules = findMatchingRules(txn);
-  log.audit('rules', rules)
-  const selected = rules[0];
+    const rules = findMatchingRules(txn);
+    log.debug('Preview matching PO/Bill rules', {
+      count: rules.length,
+      firstRule: rules[0] || null
+    });
+    const selected = rules[0];
 
-  if (!selected) {
-    clearApproval(rec);
-    safeSet(rec, FIELDS.TXN_STATUS, STATUS.NO_RULE_FOUND);
-    safeSet(rec, FIELDS.TXN_ERROR, buildNoRuleMessage(txn));
-    log.audit('Preview PO/Bill route has no matching rule', txn);
-    return 'NO_RULE_FOUND';
+    if (!selected) {
+      clearApproval(rec);
+      safeSet(rec, FIELDS.TXN_STATUS, STATUS.NO_RULE_FOUND);
+      safeSet(rec, FIELDS.TXN_ERROR, buildNoRuleMessage(txn));
+      log.audit('Preview PO/Bill route has no matching rule', txn);
+      return 'NO_RULE_FOUND';
+    }
+
+    applyRule(rec, selected, txn);
+    safeSet(rec, FIELDS.TXN_STATUS, '');
+    safeSet(rec, FIELDS.TXN_ERROR, '');
+
+    log.audit('Preview PO/Bill approver refreshed', selected);
+    return 'PREVIEW';
   }
-
-  applyRule(rec, selected);
-  safeSet(rec, FIELDS.TXN_STATUS, '');
-  safeSet(rec, FIELDS.TXN_ERROR, '');
-
-  log.audit('Preview PO/Bill approver refreshed', selected);
-  return 'PREVIEW';
-}
 
   function initRoute(rec, txn) {
     if (hasExistingPendingRoute(rec)) {
@@ -133,7 +140,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       return 'NO_RULE_FOUND';
     }
 
-    applyRule(rec, selected);
+    applyRule(rec, selected, txn);
     safeSet(rec, FIELDS.TXN_STATUS, STATUS.PENDING_APPROVAL);
     safeSet(rec, FIELDS.TXN_ERROR, '');
 
@@ -176,7 +183,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
         vendor: rule.vendor,
         account: rule.account,
         project: rule.project,
-        billable: rule.billable
+        billable: rule.billable,
+        projectManagerApprover: rule.projectManagerApprover
       }))
     });
 
@@ -188,7 +196,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     log.debug('Next approval rule selected', nextRule || null);
 
     if (nextRule) {
-      applyRule(rec, nextRule);
+      applyRule(rec, nextRule, txn);
       safeSet(rec, FIELDS.TXN_STATUS, STATUS.PENDING_APPROVAL);
       safeSet(rec, FIELDS.TXN_ERROR, '');
       log.audit('Next PO/Bill approver selected', {
@@ -210,10 +218,21 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     return 'APPROVED';
   }
 
-  function applyRule(rec, rule) {
-    safeSet(rec, FIELDS.NEXT_APPROVER, rule.approver);
+  function applyRule(rec, rule, txn) {
+    const approver = resolveRuleApprover(rule, txn);
+
+    safeSet(rec, FIELDS.NEXT_APPROVER, approver);
     safeSet(rec, FIELDS.TXN_ROUTING_RULE, rule.id);
     safeSet(rec, FIELDS.TXN_SEQUENCE, rule.sequence || 1);
+
+    log.audit('PO/Bill approval rule applied', {
+      ruleId: rule.id,
+      ruleName: rule.name,
+      sequence: rule.sequence,
+      approver,
+      projectManagerApprover: rule.projectManagerApprover,
+      projectId: txn.projectId || ''
+    });
   }
 
   function clearApproval(rec) {
@@ -236,7 +255,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       FIELDS.RULE_VENDOR,
       FIELDS.RULE_ACCOUNT,
       search.createColumn({name: FIELDS.RULE_SEQUENCE, label: "seq", sort: search.Sort.ASC}),
-      FIELDS.RULE_BACKUP_APPROVER
+      FIELDS.RULE_BACKUP_APPROVER,
+      FIELDS.RULE_PROJECT_MANAGER_APPROVER
     ];
 
     const results = [];
@@ -284,7 +304,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       FIELDS.RULE_VENDOR,
       FIELDS.RULE_ACCOUNT,
       FIELDS.RULE_SEQUENCE,
-      FIELDS.RULE_BACKUP_APPROVER
+      FIELDS.RULE_BACKUP_APPROVER,
+      FIELDS.RULE_PROJECT_MANAGER_APPROVER
     ];
 
     const results = [];
@@ -326,7 +347,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       vendor: result.getValue({ name: FIELDS.RULE_VENDOR }) || '',
       account: result.getValue({ name: FIELDS.RULE_ACCOUNT }) || '',
       sequence: result.getValue({ name: FIELDS.RULE_SEQUENCE }) || '',
-      backupApprover: result.getValue({ name: FIELDS.RULE_BACKUP_APPROVER }) || ''
+      backupApprover: result.getValue({ name: FIELDS.RULE_BACKUP_APPROVER }) || '',
+      projectManagerApprover: boolValue(result.getValue({ name: FIELDS.RULE_PROJECT_MANAGER_APPROVER }))
     };
   }
 
@@ -347,7 +369,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
         FIELDS.RULE_VENDOR,
         FIELDS.RULE_ACCOUNT,
         FIELDS.RULE_SEQUENCE,
-        FIELDS.RULE_BACKUP_APPROVER
+        FIELDS.RULE_BACKUP_APPROVER,
+        FIELDS.RULE_PROJECT_MANAGER_APPROVER
       ]
     });
 
@@ -365,13 +388,14 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       vendor: idValue(lookup[FIELDS.RULE_VENDOR]),
       account: idValue(lookup[FIELDS.RULE_ACCOUNT]),
       sequence: plainValue(lookup[FIELDS.RULE_SEQUENCE]),
-      backupApprover: idValue(lookup[FIELDS.RULE_BACKUP_APPROVER])
+      backupApprover: idValue(lookup[FIELDS.RULE_BACKUP_APPROVER]),
+      projectManagerApprover: boolValue(lookup[FIELDS.RULE_PROJECT_MANAGER_APPROVER])
     };
   }
 
   function ruleMatches(rule, txn) {
     if (!typeMatches(rule.typeText, txn.ruleTypeText)) return false;
-    if (!rule.approver) return false;
+    if (!resolveRuleApprover(rule, txn)) return false;
     if (rule.region && String(rule.region) !== String(txn.region)) return false;
     if (rule.department && String(rule.department) !== String(txn.department)) return false;
     if (rule.vendor && String(rule.vendor) !== String(txn.vendor)) return false;
@@ -429,6 +453,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     const subsidiary = value(rec, FIELDS.SUBSIDIARY);
     const region = subsidiary ? lookupSubsidiaryRegion(subsidiary) : '';
     const amount = number(value(rec, FIELDS.TOTAL));
+    const projectId = value(rec, FIELDS.PROJECT_FLAG);
 
     return {
       ruleTypeText: getRuleTypeText(rec.type),
@@ -437,7 +462,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       vendor: value(rec, FIELDS.VENDOR),
       subsidiary,
       region,
-      project: Boolean(value(rec, FIELDS.PROJECT_FLAG)),
+      projectId,
+      project: Boolean(projectId),
       billable: Boolean(value(rec, FIELDS.BILLABLE_FLAG)),
       accounts: getTransactionAccounts(rec)
     };
@@ -450,6 +476,52 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
       columns: [FIELDS.SUBSIDIARY_REGION]
     });
     return idValue(lookup[FIELDS.SUBSIDIARY_REGION]);
+  }
+
+  function resolveRuleApprover(rule, txn) {
+    if (rule.approver) return rule.approver;
+    if (rule.backupApprover) return rule.backupApprover;
+
+    if (rule.projectManagerApprover) {
+      if (!txn.projectManagerLookupDone) {
+        txn.projectManagerLookupDone = true;
+        txn.projectManagerApprover = getProjectManagerApprover(txn.projectId);
+      }
+
+      return txn.projectManagerApprover || '';
+    }
+
+    return '';
+  }
+
+  function getProjectManagerApprover(projectId) {
+    if (!projectId) {
+      log.debug('Project manager approver rule skipped because transaction has no project', {});
+      return '';
+    }
+
+    try {
+      const lookup = search.lookupFields({
+        type: RECORDS.PROJECT_SEGMENT,
+        id: projectId,
+        columns: [FIELDS.PROJECT_MANAGER]
+      });
+      const manager = idValue(lookup[FIELDS.PROJECT_MANAGER]);
+
+      log.debug('Project manager approver lookup', {
+        projectId,
+        manager
+      });
+
+      return manager;
+    } catch (e) {
+      log.error('Could not lookup project manager approver', {
+        projectId,
+        message: e.message,
+        stack: e.stack || ''
+      });
+      return '';
+    }
   }
 
   function getTransactionAccounts(rec) {
@@ -565,7 +637,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   }
 
   function buildNoRuleMessage(txn) {
-    return `No approval rule found. Type=${txn.ruleTypeText}, Amount=${txn.amount}, Department=${txn.department || ''}, Region=${txn.region || ''}, Vendor=${txn.vendor || ''}`;
+    return `No approval rule found. Type=${txn.ruleTypeText}, Amount=${txn.amount}, Department=${txn.department || ''}, Region=${txn.region || ''}, Vendor=${txn.vendor || ''}, Project=${txn.projectId || ''}`;
   }
 
   function value(rec, fieldId) {
@@ -621,7 +693,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   }
 
   function number(value) {
-    const parsed = parseFloat(value || 0);
+    const parsed = parseFloat(String(value || 0).replace(/,/g, ''));
     return Number.isFinite(parsed) ? parsed : 0;
   }
 
