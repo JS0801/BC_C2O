@@ -9,7 +9,8 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
   const RECORDS = {
     APPROVAL_ROUTING: 'customrecord_c2o_approval_routing',
     SUBSIDIARY: 'subsidiary',
-    PROJECT_SEGMENT: 'customrecord_cseg_bc_project'
+    PROJECT_SEGMENT: 'customrecord_cseg_bc_project',
+    EMPLOYEE: 'employee'
   };
 
   const FIELDS = {
@@ -29,6 +30,7 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     PROJECT_FLAG: 'cseg_bc_project',
     BILLABLE_FLAG: 'custbody_bc_is_billable_po',
     PROJECT_MANAGER: 'custrecord_bc_proj_manager',
+    EMPLOYEE_OUT_OF_OFFICE: 'custentity_bc_ooo_assign_approver',
 
     RULE_REGION: 'custrecord_approval_region',
     RULE_DEPARTMENT: 'custrecord_approval_department',
@@ -478,21 +480,73 @@ define(['N/search', 'N/runtime', 'N/log'], (search, runtime, log) => {
     return idValue(lookup[FIELDS.SUBSIDIARY_REGION]);
   }
 
-  function resolveRuleApprover(rule, txn) {
-    if (rule.approver) return rule.approver;
-    if (rule.backupApprover) return rule.backupApprover;
+function isEmployeeOutOfOffice(employeeId, txn) {
+  if (!employeeId) return false;
 
-    if (rule.projectManagerApprover) {
-      if (!txn.projectManagerLookupDone) {
-        txn.projectManagerLookupDone = true;
-        txn.projectManagerApprover = getProjectManagerApprover(txn.projectId);
-      }
+  if (!txn.outOfOfficeCache) {
+    txn.outOfOfficeCache = {};
+  }
 
-      return txn.projectManagerApprover || '';
+  const cacheKey = String(employeeId);
+
+  if (Object.prototype.hasOwnProperty.call(txn.outOfOfficeCache, cacheKey)) {
+    return txn.outOfOfficeCache[cacheKey];
+  }
+
+  try {
+    const lookup = search.lookupFields({
+      type: RECORDS.EMPLOYEE,
+      id: employeeId,
+      columns: [FIELDS.EMPLOYEE_OUT_OF_OFFICE]
+    });
+
+    const isOutOfOffice = boolValue(lookup[FIELDS.EMPLOYEE_OUT_OF_OFFICE]);
+
+    txn.outOfOfficeCache[cacheKey] = isOutOfOffice;
+
+    log.debug('Approver out-of-office lookup', {
+      employeeId,
+      isOutOfOffice
+    });
+
+    return isOutOfOffice;
+  } catch (e) {
+    log.error('Could not lookup approver out-of-office status', {
+      employeeId,
+      message: e.message,
+      stack: e.stack || ''
+    });
+
+    txn.outOfOfficeCache[cacheKey] = false;
+    return false;
+  }
+}
+
+function resolveRuleApprover(rule, txn) {
+  let approver = rule.approver || '';
+
+  if (!approver && rule.projectManagerApprover) {
+    if (!txn.projectManagerLookupDone) {
+      txn.projectManagerLookupDone = true;
+      txn.projectManagerApprover = getProjectManagerApprover(txn.projectId);
     }
 
-    return '';
+    approver = txn.projectManagerApprover || '';
   }
+
+  if (approver && rule.backupApprover && isEmployeeOutOfOffice(approver, txn)) {
+    log.audit('Primary approver is out of office; using backup approver', {
+      ruleId: rule.id,
+      ruleName: rule.name,
+      primaryApprover: approver,
+      backupApprover: rule.backupApprover
+    });
+
+    return rule.backupApprover;
+  }
+
+  return approver || rule.backupApprover || '';
+}
 
   function getProjectManagerApprover(projectId) {
     if (!projectId) {
