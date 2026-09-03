@@ -516,7 +516,7 @@ customerAddress + '<br/>' +
             var retentionLabel = 'Retention';
 
             if (retentionGroup.percent) {
-              retentionLabel += ' (less ' + retentionGroup.percent + ')';
+              retentionLabel += ' ' + retentionGroup.percent;
             }
 
             itemTableHTML +=
@@ -525,7 +525,7 @@ customerAddress + '<br/>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">&nbsp;</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">&nbsp;</td>' +
-'<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">&nbsp;</td>' +
+'<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
 '</tr>';
           }
 
