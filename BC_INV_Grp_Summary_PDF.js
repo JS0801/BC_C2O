@@ -95,7 +95,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
               label: "Retention Percent"
             }),
             search.createColumn({
-              name: "taxrate1",
+              name: "taxItem",
               summary: "MAX",
               label: "Line Tax Rate"
             }),
@@ -166,7 +166,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
           log.debug('result', result)
           var key = result.getValue({ name: 'formulatext', summary: 'GROUP' });
           var category = result.getText({ name: 'custcol_invoicing_category', summary: 'GROUP' });
-          var rate = result.getValue({ name: 'taxrate1', summary: 'MAX' }) || result.getValue({ name: 'rate', join: 'taxItem', summary: 'GROUP' });
+          var rate = result.getValue({ name: 'rate', join: 'taxItem', summary: 'GROUP' });
           var unitPrice = result.getValue({ name: 'formulanumericamt', summary: 'SUM' });
           var taxrate = result.getValue({ name: 'formulanumerictax', summary: 'SUM' });
           var total = result.getValue({ name: 'formulanumeric', summary: 'SUM' });
