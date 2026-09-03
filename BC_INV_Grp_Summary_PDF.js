@@ -10,7 +10,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
       try {
         var request = context.request;
         var recID = request.parameters.recid;
-        var subID = request.parameters.subid || 1;
+        var subID = request.parameters.subid;
         log.debug('recID', recID)
         var summaryObj = [];
         var invoiceGroupId = null;
@@ -24,6 +24,9 @@ function (serverWidget, search, record, render, url, log, format, file) {
         var totalRetention = 0;
         var retentionGroups = {};
         var retentionGroupOrder = [];
+        var fallbackRetentionGroups = {};
+        var fallbackRetentionGroupOrder = [];
+        var fallbackTotalRetention = 0;
 
         // Run search - ADD CUSTOMER FIELDS
         var invoiceSearch = search.create({
@@ -94,11 +97,6 @@ function (serverWidget, search, record, render, url, log, format, file) {
               summary: "MAX",
               label: "Retention Percent"
             }),
-            search.createColumn({
-              name: "taxItem",
-              summary: "MAX",
-              label: "Line Tax Rate"
-            }),
             // ADD CUSTOMER NAME AND ID FIELDS
             search.createColumn({
               name: "companyname",
@@ -134,6 +132,16 @@ function (serverWidget, search, record, render, url, log, format, file) {
           id: recID
         });
         log.debug('Loaded invoice group record');
+
+        if (!subID) {
+          try {
+            subID = invoiceGroupRec.getValue('subsidiary');
+          } catch (e) {
+            log.debug('Could not get subsidiary from invoice group', e);
+          }
+        }
+
+        subID = subID || 1;
 
         var subsidiaryRec = record.load({
           type: 'subsidiary',
@@ -171,6 +179,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
           var taxrate = result.getValue({ name: 'formulanumerictax', summary: 'SUM' });
           var total = result.getValue({ name: 'formulanumeric', summary: 'SUM' });
           var retentionRaw = result.getValue({ name: 'custcol_bc_sov_unbilled_retention', summary: 'SUM' });
+          var retentionPercentRaw = result.getValue({ name: 'custcol_bc_retentions_percentage', summary: 'MAX' }) || '';
           
           // Get PO Number and Customer Ref from search results as FALLBACK only
           var poNumRaw = result.getValue({name: "custrecord_cponum", join: "cseg_bc_project", summary: "MAX"}) || '';
@@ -192,16 +201,15 @@ function (serverWidget, search, record, render, url, log, format, file) {
           var lineAmount = parseAmount(unitPrice);
           var retentionAmount = isAustraliaSubsidiary ? Math.abs(parseAmount(retentionRaw)) : 0;
           var displayLineAmount = lineAmount + retentionAmount;
-          
-          // Calculate GST amount - try multiple approaches
-          var gstAmount = parseAmount(taxrate);
-          
-          // If GST amount is zero, calculate it from the net post-retention line amount.
-          // Retention is shown as a deduction line and does not carry GST itself.
-          if (gstAmount <= 0 && rate) {
-            var taxRate = parsePercentValue(rate) / 100;
-            gstAmount = lineAmount * taxRate;
+
+          if (retentionAmount > 0) {
+            addRetentionGroup(fallbackRetentionGroups, fallbackRetentionGroupOrder, formatPercent(retentionPercentRaw), retentionAmount);
+            fallbackTotalRetention += retentionAmount;
           }
+          
+          // Calculate GST from the tax item rate so the displayed line amount and GST stay in sync.
+          var taxRate = parsePercentValue(rate) / 100;
+          var gstAmount = rate ? displayLineAmount * taxRate : parseAmount(taxrate);
           
           log.debug('GST Calculation', {
             total: total,
@@ -220,9 +228,8 @@ function (serverWidget, search, record, render, url, log, format, file) {
             gstAmount: "$" + formatCurrency(Math.abs(gstAmount)), // Use Math.abs to ensure positive
             total: "$" + formatCurrency(displayLineAmount + gstAmount)
           })
-          subtotal += lineAmount;
+          subtotal += displayLineAmount;
           totalTax += gstAmount;
-          totalMain += lineAmount + gstAmount;
           return true;
         });
 
@@ -268,7 +275,19 @@ function (serverWidget, search, record, render, url, log, format, file) {
 
             return true;
           });
+
+          if (totalRetention <= 0 && fallbackTotalRetention > 0) {
+            retentionGroups = fallbackRetentionGroups;
+            retentionGroupOrder = fallbackRetentionGroupOrder;
+            totalRetention = fallbackTotalRetention;
+            log.debug('Used fallback retention totals from invoice summary search', {
+              totalRetention: totalRetention,
+              retentionGroupCount: retentionGroupOrder.length
+            });
+          }
         }
+
+        totalMain = subtotal - totalRetention + totalTax;
 
         // NOW LOAD CUSTOMER RECORD TO GET ADDRESS
         if (customerId) {
@@ -620,6 +639,19 @@ customerAddress + '<br/>' +
           log.debug('Added header after body tag');
         }
 
+        if (isAustraliaSubsidiary && totalRetention > 0) {
+          var retentionTotalLabel = getTotalRetentionLabel(retentionGroups, retentionGroupOrder);
+          var totalsBeforeRetentionInsert = xmlTemplateFile;
+          xmlTemplateFile = addRetentionToTotalsTable(xmlTemplateFile, retentionTotalLabel, totalRetention);
+
+          if (xmlTemplateFile === totalsBeforeRetentionInsert) {
+            xmlTemplateFile = xmlTemplateFile.replace(itemTableHTML, itemTableHTML + buildRetentionTotalsFallbackTable(retentionTotalLabel, totalRetention));
+            log.debug('Could not find totals placeholder row; added fallback retention totals table');
+          } else {
+            log.debug('Added retention row to totals table');
+          }
+        }
+
         // Add GST column info to template replacements
         xmlTemplateFile = xmlTemplateFile.replace('${itemtotal}', "$" + formatCurrency(subtotal));
         var taxtotal = totalTax;
@@ -700,6 +732,37 @@ customerAddress + '<br/>' +
     }
 
     retentionGroups[key].amount += amount;
+  }
+
+  function getTotalRetentionLabel(retentionGroups, retentionGroupOrder) {
+    if (retentionGroupOrder.length === 1) {
+      var retentionGroup = retentionGroups[retentionGroupOrder[0]];
+
+      if (retentionGroup && retentionGroup.percent) {
+        return 'Retention (less ' + retentionGroup.percent + ')';
+      }
+    }
+
+    return 'Retention';
+  }
+
+  function addRetentionToTotalsTable(xmlTemplateFile, retentionLabel, retentionAmount) {
+    var retentionRowHTML = buildRetentionTotalRow(retentionLabel, retentionAmount);
+
+    return xmlTemplateFile.replace(/(<tr[^>]*>[\s\S]*?\$\{itemtotal\}[\s\S]*?<\/tr>)/, '$1' + retentionRowHTML);
+  }
+
+  function buildRetentionTotalRow(retentionLabel, retentionAmount) {
+    return '<tr>' +
+      '<td colspan="4" align="right" style="font-weight: bold;">' + escapeXml(retentionLabel) + '</td>' +
+      '<td align="right" style="font-weight: bold;">' + formatCurrencyAccounting(retentionAmount) + '</td>' +
+      '</tr>';
+  }
+
+  function buildRetentionTotalsFallbackTable(retentionLabel, retentionAmount) {
+    return '<table class="total" style="width: 45%; margin-top: 8px; margin-left: 55%;">' +
+      buildRetentionTotalRow(retentionLabel, retentionAmount) +
+      '</table>';
   }
 
   function parseAmount(value) {
