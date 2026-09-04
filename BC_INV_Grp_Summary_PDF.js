@@ -24,6 +24,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
         var totalRetention = 0;
         var retentionGroups = {};
         var retentionGroupOrder = [];
+        var retentionRows = [];
         var fallbackRetentionGroups = {};
         var fallbackRetentionGroupOrder = [];
         var fallbackTotalRetention = 0;
@@ -289,6 +290,10 @@ function (serverWidget, search, record, render, url, log, format, file) {
 
         totalMain = subtotal - totalRetention + totalTax;
 
+        if (isAustraliaSubsidiary && totalRetention > 0) {
+          retentionRows = buildRetentionRows(retentionGroups, retentionGroupOrder);
+        }
+
         // NOW LOAD CUSTOMER RECORD TO GET ADDRESS
         if (customerId) {
           try {
@@ -508,35 +513,20 @@ customerAddress + '<br/>' +
 '</tr>';
         }
 
-        log.debug('isAustraliaSubsidiary', isAustraliaSubsidiary);
+        for (var retentionIndex = 0; retentionIndex < retentionRows.length; retentionIndex++) {
+          var retentionRow = retentionRows[retentionIndex];
+          var retentionRowColor = ((summaryObj.length + retentionIndex) % 2 === 0) ? '#ffffff' : '#e1e6ee';
 
-        log.debug('totalRetention', totalRetention);
-        if (isAustraliaSubsidiary && totalRetention > 0) {
-          for (var retentionIndex = 0; retentionIndex < retentionGroupOrder.length; retentionIndex++) {
-            var retentionKey = retentionGroupOrder[retentionIndex];
-            var retentionGroup = retentionGroups[retentionKey];
-            var retentionLabel = 'Retention';
-
-            if (retentionGroup.percent) {
-              retentionLabel += ' ' + retentionGroup.percent;
-            }
-
-            itemTableHTML +=
-'<tr style="background-color: ' + rowColor + ';">'  +
-'<td style="padding: 8px; border: 0.5px solid #657796;">' + escapeXml(retentionLabel) + '</td>' +
-'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
+          itemTableHTML +=
+'<tr style="background-color: ' + retentionRowColor + '; font-weight: bold;">' +
+'<td style="padding: 8px; border: 0.5px solid #657796;">' + retentionRow.category + '</td>' +
+'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + retentionRow.unitPrice + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">&nbsp;</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">&nbsp;</td>' +
-'<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
+'<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + retentionRow.total + '</td>' +
 '</tr>';
-          }
-
-          log.debug('Added retention summary rows', {
-            totalRetention: totalRetention,
-            retentionGroupCount: retentionGroupOrder.length
-          });
         }
-      
+
         itemTableHTML += '</tbody></table>';
         log.debug('Created custom item table with GST column');
         log.debug('itemTableHTML', itemTableHTML);
@@ -568,7 +558,14 @@ customerAddress + '<br/>' +
         xmlTemplateFile = xmlTemplateFile.replace(/Unit Price/g, 'Price');
         xmlTemplateFile = xmlTemplateFile.replace(/UNIT PRICE/g, 'PRICE');
         xmlTemplateFile = xmlTemplateFile.replace(/unit price/g, 'price');
+        xmlTemplateFile = xmlTemplateFile.replace(/\$\{item\.rate\}%/g, '${item.rate}');
         log.debug('Changed Unit Price to Price in template');
+
+        if (isAustraliaSubsidiary && retentionRows.length > 0) {
+          var itemListBeforeRetentionInsert = xmlTemplateFile;
+          xmlTemplateFile = addRetentionRowsToTemplateItemList(xmlTemplateFile);
+          log.debug('Added retention rows to template item list', xmlTemplateFile !== itemListBeforeRetentionInsert);
+        }
         
         // REMOVE "PLEASE NOTE CHANGE IN" TEXT
         xmlTemplateFile = xmlTemplateFile.replace(/PLEASE NOTE CHANGE IN/g, '');
@@ -688,6 +685,12 @@ customerAddress + '<br/>' +
           data: {result: summaryObj}
         });
 
+        renderer.addCustomDataSource({
+          format: render.DataSource.OBJECT,
+          alias: 'retention',
+          data: {result: retentionRows}
+        });
+
         renderer.addRecord('record', invoiceGroupRec);
         renderer.addRecord('subsidiary', subsidiaryRec);
 
@@ -733,6 +736,46 @@ customerAddress + '<br/>' +
     }
 
     retentionGroups[key].amount += amount;
+  }
+
+  function buildRetentionRows(retentionGroups, retentionGroupOrder) {
+    var retentionRows = [];
+
+    for (var i = 0; i < retentionGroupOrder.length; i++) {
+      var retentionKey = retentionGroupOrder[i];
+      var retentionGroup = retentionGroups[retentionKey];
+      var retentionLabel = 'Retention';
+
+      if (retentionGroup.percent) {
+        retentionLabel += ' ' + retentionGroup.percent;
+      }
+
+      retentionRows.push({
+        key: 'retention_' + retentionKey,
+        category: escapeXml(retentionLabel),
+        rate: '',
+        unitPrice: formatCurrencyAccounting(retentionGroup.amount),
+        gstAmount: '',
+        total: formatCurrencyAccounting(retentionGroup.amount)
+      });
+    }
+
+    return retentionRows;
+  }
+
+  function addRetentionRowsToTemplateItemList(xmlTemplateFile) {
+    var retentionListHTML =
+      '<#list retention.result as retention>' +
+      '<tr padding-top="10px">' +
+      '<td style="border-bottom: 1px solid #eee;">${retention.category}</td>' +
+      '<td style="border-bottom: 1px solid #eee;" align="right">${retention.unitPrice}</td>' +
+      '<td style="border-bottom: 1px solid #eee;" align="center">${retention.rate}</td>' +
+      '<td style="border-bottom: 1px solid #eee;" align="right">${retention.gstAmount}</td>' +
+      '<td style="border-bottom: 1px solid #eee;" align="right">${retention.total}</td>' +
+      '</tr>' +
+      '</#list>';
+
+    return xmlTemplateFile.replace(/(<\/#list>\s*)(<tr>\s*<td colspan="5">\s*<br\s*\/>\s*<\/td>\s*<\/tr>)/, '$1' + retentionListHTML + '$2');
   }
 
   function getTotalRetentionLabel(retentionGroups, retentionGroupOrder) {
