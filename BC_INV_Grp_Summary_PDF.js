@@ -223,7 +223,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
           summaryObj.push({
             key: escapeXml(key || ''),
             category: escapeXml(category || ''),
-            rate: rate ? formatPercent(rate) : '10.00%',
+            rate: rate ? formatPercent(rate),
             unitPrice: "$" + formatCurrency(displayLineAmount),
             gstAmount: "$" + formatCurrency(Math.abs(gstAmount)), // Use Math.abs to ensure positive
             total: "$" + formatCurrency(displayLineAmount + gstAmount)
@@ -502,7 +502,7 @@ customerAddress + '<br/>' +
 '<tr style="background-color: ' + rowColor + ';">' +
 '<td style="padding: 8px; border: 0.5px solid #657796;">' + item.category + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + item.unitPrice + '</td>' +
-'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + (item.rate || '10.00%') + '</td>' +
+'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + item.rate + '</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + item.gstAmount + '</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + item.total + '</td>' +
 '</tr>';
@@ -782,7 +782,7 @@ customerAddress + '<br/>' +
   function formatPercent(value) {
     var number = parsePercentValue(value);
     if (!number) return '';
-
+    return value;
     return (number % 1 === 0 ? number.toFixed(0) : number.toFixed(2).replace(/0+$/, '').replace(/\.$/, '')) + '%';
   }
 
