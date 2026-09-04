@@ -536,9 +536,10 @@ customerAddress + '<br/>' +
             retentionGroupCount: retentionGroupOrder.length
           });
         }
-
+      
         itemTableHTML += '</tbody></table>';
         log.debug('Created custom item table with GST column');
+        log.debug('itemTableHTML', itemTableHTML);
 
         // Check if we need to add the disclaimer based on subsidiary ID
         var currentSubsidiaryId = subsidiaryRec.getValue('internalid') || subID.toString();
