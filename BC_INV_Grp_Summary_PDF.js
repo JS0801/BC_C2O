@@ -523,7 +523,7 @@ customerAddress + '<br/>' +
 
             itemTableHTML +=
 '<tr style="background-color: ' + rowColor + ';">'  +
-'<td style="padding: 8px; border: 0.5px solid #657796;">Retention' + escapeXml(retentionLabel) + '</td>' +
+'<td style="padding: 8px; border: 0.5px solid #657796;">' + escapeXml(retentionLabel) + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">&nbsp;</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">&nbsp;</td>' +
@@ -580,7 +580,7 @@ customerAddress + '<br/>' +
         var originalLength = xmlTemplateFile.length;
         
         // Add spacer before item table
-        var spacedItemTableHTML = '<div style="height: 60px; clear: both;"></div>' + itemTableHTML;
+        var spacedItemTableHTML = '<div style="height: 160px; clear: both;"></div>' + itemTableHTML;
         
         // Approach 1: Replace itemtable
         xmlTemplateFile = xmlTemplateFile.replace(/<table class="itemtable"[^>]*>.*?<\/table>/gs, spacedItemTableHTML);
@@ -600,8 +600,6 @@ customerAddress + '<br/>' +
           log.debug('No existing item table found, adding after header');
           xmlTemplateFile = xmlTemplateFile.replace(newHeaderHTML, newHeaderHTML + '<br/><br/><br/><br/>' + itemTableHTML + '<br/>');
         }
-        
-        log.debug('Item table replacement result', xmlTemplateFile.length !== originalLength ? 'SUCCESS' : 'FAILED');
 
         // Add the disclaimer in a safe location
         if (needsDisclaimer) {
