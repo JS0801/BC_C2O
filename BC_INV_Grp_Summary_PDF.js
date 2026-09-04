@@ -10,7 +10,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
       try {
         var request = context.request;
         var recID = request.parameters.recid;
-        var subID = request.parameters.subid || 1;
+        var subID = request.parameters.subid;
         log.debug('recID', recID)
         var summaryObj = [];
         var invoiceGroupId = null;
@@ -20,6 +20,13 @@ function (serverWidget, search, record, render, url, log, format, file) {
         var projectMan = '';
         var subtotal = 0;
         var totalMain = 0;
+        var totalTax = 0;
+        var totalRetention = 0;
+        var retentionGroups = {};
+        var retentionGroupOrder = [];
+        var fallbackRetentionGroups = {};
+        var fallbackRetentionGroupOrder = [];
+        var fallbackTotalRetention = 0;
 
         // Run search - ADD CUSTOMER FIELDS
         var invoiceSearch = search.create({
@@ -80,6 +87,16 @@ function (serverWidget, search, record, render, url, log, format, file) {
               formula: "NVL({taxamount},0)",
               label: "Total Amount"
             }),
+            search.createColumn({
+              name: "custcol_bc_sov_unbilled_retention",
+              summary: "SUM",
+              label: "Retention Amount"
+            }),
+            search.createColumn({
+              name: "custcol_bc_retentions_percentage",
+              summary: "MAX",
+              label: "Retention Percent"
+            }),
             // ADD CUSTOMER NAME AND ID FIELDS
             search.createColumn({
               name: "companyname",
@@ -115,6 +132,26 @@ function (serverWidget, search, record, render, url, log, format, file) {
           id: recID
         });
         log.debug('Loaded invoice group record');
+
+        if (!subID) {
+          try {
+            subID = invoiceGroupRec.getValue('subsidiary');
+          } catch (e) {
+            log.debug('Could not get subsidiary from invoice group', e);
+          }
+        }
+
+        subID = subID || 1;
+
+        var subsidiaryRec = record.load({
+          type: 'subsidiary',
+          id: subID
+        });
+        var isAustraliaSubsidiary = subsidiaryRec.getText('country') == 'Australia';
+        log.debug('Loaded subsidiary record', {
+          subID: subID,
+          isAustraliaSubsidiary: isAustraliaSubsidiary
+        });
         
         // Get PO Number and Customer Ref directly from Invoice Group FIRST (these take priority)
         try {
@@ -141,6 +178,8 @@ function (serverWidget, search, record, render, url, log, format, file) {
           var unitPrice = result.getValue({ name: 'formulanumericamt', summary: 'SUM' });
           var taxrate = result.getValue({ name: 'formulanumerictax', summary: 'SUM' });
           var total = result.getValue({ name: 'formulanumeric', summary: 'SUM' });
+          var retentionRaw = result.getValue({ name: 'custcol_bc_sov_unbilled_retention', summary: 'SUM' });
+          var retentionPercentRaw = result.getValue({ name: 'custcol_bc_retentions_percentage', summary: 'MAX' }) || '';
           
           // Get PO Number and Customer Ref from search results as FALLBACK only
           var poNumRaw = result.getValue({name: "custrecord_cponum", join: "cseg_bc_project", summary: "MAX"}) || '';
@@ -158,35 +197,97 @@ function (serverWidget, search, record, render, url, log, format, file) {
           
           if (custName) customerName = custName;
           if (custId && !customerId) customerId = custId;
-          
-          // Calculate GST amount - try multiple approaches
-          var gstAmount = parseFloat(taxrate);
-          
-          // If GST amount is zero or negative, try calculating from rate
-          if (gstAmount <= 0 && rate) {
-            var taxRate = parseFloat(rate) / 100;
-            gstAmount = parseFloat(unitPrice) * taxRate;
+
+          var lineAmount = parseAmount(unitPrice);
+          var retentionAmount = isAustraliaSubsidiary ? Math.abs(parseAmount(retentionRaw)) : 0;
+          var displayLineAmount = lineAmount + retentionAmount;
+
+          if (retentionAmount > 0) {
+            addRetentionGroup(fallbackRetentionGroups, fallbackRetentionGroupOrder, formatPercent(retentionPercentRaw), retentionAmount);
+            fallbackTotalRetention += retentionAmount;
           }
+          
+          // Calculate GST from the tax item rate so the displayed line amount and GST stay in sync.
+          var taxRate = parsePercentValue(rate) / 100;
+          var gstAmount = rate ? displayLineAmount * taxRate : parseAmount(taxrate);
           
           log.debug('GST Calculation', {
             total: total,
             unitPrice: unitPrice, 
+            retentionAmount: retentionAmount,
+            displayLineAmount: displayLineAmount,
             gstAmount: gstAmount,
             rate: rate
           });
           
           summaryObj.push({
-            key: key.replace(/&/g, '&amp;'),
-            category: category.replace(/&/g, '&amp;'),
-            rate: rate ? (rate) : '10.00',
-            unitPrice: "$" + formatCurrency(unitPrice),
+            key: escapeXml(key || ''),
+            category: escapeXml(category || ''),
+            rate: rate ? formatPercent(rate) : '10.00%',
+            unitPrice: "$" + formatCurrency(displayLineAmount),
             gstAmount: "$" + formatCurrency(Math.abs(gstAmount)), // Use Math.abs to ensure positive
-            total: "$" + formatCurrency(total)
+            total: "$" + formatCurrency(displayLineAmount + gstAmount)
           })
-          subtotal += parseFloat(unitPrice);
-          totalMain += parseFloat(total) + parseFloat(gstAmount);
+          subtotal += displayLineAmount;
+          totalTax += gstAmount;
           return true;
         });
+
+        if (isAustraliaSubsidiary) {
+          var retentionSearch = search.create({
+            type: "invoice",
+            settings: [{ name: "consolidationtype", value: "NONE" }],
+            filters: [
+              ["type", "anyof", "CustInvc"],
+              "AND",
+              ["groupedto", "anyof", recID],
+              "AND",
+              ["custcol_invoicing_category", "noneof", "@NONE@"]
+            ],
+            columns: [
+              search.createColumn({
+                name: "custcol_bc_retentions_percentage",
+                summary: "GROUP",
+                label: "Retention Percent"
+              }),
+              search.createColumn({
+                name: "custcol_bc_sov_unbilled_retention",
+                summary: "SUM",
+                label: "Retention Amount"
+              })
+            ]
+          });
+
+          retentionSearch.run().each(function (result) {
+            var retentionAmount = Math.abs(parseAmount(result.getValue({
+              name: "custcol_bc_sov_unbilled_retention",
+              summary: "SUM"
+            })));
+            var retentionPercent = formatPercent(result.getValue({
+              name: "custcol_bc_retentions_percentage",
+              summary: "GROUP"
+            }));
+
+            if (retentionAmount > 0) {
+              addRetentionGroup(retentionGroups, retentionGroupOrder, retentionPercent, retentionAmount);
+              totalRetention += retentionAmount;
+            }
+
+            return true;
+          });
+
+          if (totalRetention <= 0 && fallbackTotalRetention > 0) {
+            retentionGroups = fallbackRetentionGroups;
+            retentionGroupOrder = fallbackRetentionGroupOrder;
+            totalRetention = fallbackTotalRetention;
+            log.debug('Used fallback retention totals from invoice summary search', {
+              totalRetention: totalRetention,
+              retentionGroupCount: retentionGroupOrder.length
+            });
+          }
+        }
+
+        totalMain = subtotal - totalRetention + totalTax;
 
         // NOW LOAD CUSTOMER RECORD TO GET ADDRESS
         if (customerId) {
@@ -230,14 +331,6 @@ function (serverWidget, search, record, render, url, log, format, file) {
         log.debug('summaryObj', summaryObj)
         
         log.debug('Final PO and Customer Ref values', {poNum: poNum, customerRef: customerRef});
-         
-        // Load Subsidiary (if needed)
-        var subsidiaryRec = record.load({
-          type: 'subsidiary',
-          id: subID
-        });
-        log.debug('Loaded subsidiary record');
-
         // Render PDF
         var renderer = render.create();
         renderer.setTemplateByScriptId('CUSTTMPL_203_9873410_SB1_835');
@@ -310,6 +403,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
         var currentSubsidiaryId = subsidiaryRec.getValue('internalid') || subID.toString();
         var logoStyle = 'width: 100%; height: 100%; object-fit: contain;'; // default style
         var logoContainerStyle = 'width: 60px; height: 20px; overflow: hidden; position: relative; top: -15px; right: -0px;'; // default container
+        var logoCSS = '';
 
         // Adjust logo positioning based on subsidiary
         if (currentSubsidiaryId === "6") {
@@ -365,8 +459,21 @@ customerAddress + '<br/>' +
 '<span style="font-size: 9pt;">' +
 '<strong>Memo:</strong><br />' + memoField + '<br/><br/><br/>' +
 '</span></td>' +
-'</tr></table>' +
-'<div style="height: 40px; clear: both;"></div>';
+        '</tr></table>' +
+        '<div style="height: 40px; clear: both;"></div>';
+
+        var replaceLabor = isAustraliaSubsidiary;
+        log.debug('replaceLabor', replaceLabor)
+        
+        if (replaceLabor) {
+          summaryObj.forEach(function (entry) {
+            for (var key in entry) {
+              if (typeof entry[key] === 'string') {
+                entry[key] = entry[key].replace(/\bLabor\b/g, 'Labour');
+              }
+            }
+          });
+        }
 
         // Create custom item table with GST Amount column - with large top spacing
         var itemTableHTML = 
@@ -379,7 +486,7 @@ customerAddress + '<br/>' +
 '<th style="width: 15%; text-align: center; background-color: #657796; color: #ffffff; padding: 8px; font-weight: bold;">PRICE</th>' +
 '<th style="width: 15%; text-align: center; background-color: #657796; color: #ffffff; padding: 8px; font-weight: bold;">GST RATE</th>' +
 '<th style="width: 15%; text-align: right; background-color: #657796; color: #ffffff; padding: 8px; font-weight: bold;">GST AMOUNT</th>' +
-'<th style="width: 15%; text-align: right; background-color: #657796; color: #ffffff; padding: 8px; font-weight: bold;">TOTAL</th>' +
+'<th style="width: 15%; text-align: right; background-color: #657796; color: #ffffff; padding: 8px; font-weight: bold;">AMOUNT AUD</th>' +
 '</tr>' +
 '</thead>' +
 '<tbody>';
@@ -395,10 +502,37 @@ customerAddress + '<br/>' +
 '<tr style="background-color: ' + rowColor + ';">' +
 '<td style="padding: 8px; border: 0.5px solid #657796;">' + item.category + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + item.unitPrice + '</td>' +
-'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + (item.rate || '10.00') + '%</td>' +
+'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + (item.rate || '10.00%') + '</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + item.gstAmount + '</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + item.total + '</td>' +
 '</tr>';
+        }
+
+        if (isAustraliaSubsidiary && totalRetention > 0) {
+          for (var retentionIndex = 0; retentionIndex < retentionGroupOrder.length; retentionIndex++) {
+            var retentionKey = retentionGroupOrder[retentionIndex];
+            var retentionGroup = retentionGroups[retentionKey];
+            var retentionRowColor = ((summaryObj.length + retentionIndex) % 2 === 0) ? '#ffffff' : '#e1e6ee';
+            var retentionLabel = 'Retention';
+
+            if (retentionGroup.percent) {
+              retentionLabel += ' ' + retentionGroup.percent;
+            }
+
+            itemTableHTML +=
+'<tr style="background-color: ' + retentionRowColor + '; font-weight: bold;">' +
+'<td style="padding: 8px; border: 0.5px solid #657796;">' + escapeXml(retentionLabel) + '</td>' +
+'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
+'<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">&nbsp;</td>' +
+'<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">&nbsp;</td>' +
+'<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
+'</tr>';
+          }
+
+          log.debug('Added retention summary rows', {
+            totalRetention: totalRetention,
+            retentionGroupCount: retentionGroupOrder.length
+          });
         }
 
         itemTableHTML += '</tbody></table>';
@@ -505,9 +639,22 @@ customerAddress + '<br/>' +
           log.debug('Added header after body tag');
         }
 
+        if (isAustraliaSubsidiary && totalRetention > 0) {
+          var retentionTotalLabel = getTotalRetentionLabel(retentionGroups, retentionGroupOrder);
+          var totalsBeforeRetentionInsert = xmlTemplateFile;
+          xmlTemplateFile = addRetentionToTotalsTable(xmlTemplateFile, retentionTotalLabel, totalRetention);
+
+          if (xmlTemplateFile === totalsBeforeRetentionInsert) {
+            xmlTemplateFile = xmlTemplateFile.replace(itemTableHTML, itemTableHTML + buildRetentionTotalsFallbackTable(retentionTotalLabel, totalRetention));
+            log.debug('Could not find totals placeholder row; added fallback retention totals table');
+          } else {
+            log.debug('Added retention row to totals table');
+          }
+        }
+
         // Add GST column info to template replacements
         xmlTemplateFile = xmlTemplateFile.replace('${itemtotal}', "$" + formatCurrency(subtotal));
-        var taxtotal = parseFloat(totalMain) - parseFloat(subtotal);
+        var taxtotal = totalTax;
         xmlTemplateFile = xmlTemplateFile.replace('${taxtotal}', "$" + formatCurrency(taxtotal));
         xmlTemplateFile = xmlTemplateFile.replace('${total}', "$" + formatCurrency(totalMain));
         xmlTemplateFile = xmlTemplateFile.replace('${ponum}', poNum);
@@ -523,19 +670,6 @@ customerAddress + '<br/>' +
         
         log.debug('Applied template replacements including GST column modifications');
 
-        var replaceLabor = subsidiaryRec.getText('country') == 'Australia';
-        log.debug('replaceLabor', replaceLabor)
-        
-        if (replaceLabor) {
-          summaryObj.forEach(function (entry) {
-            for (var key in entry) {
-              if (typeof entry[key] === 'string') {
-                entry[key] = entry[key].replace(/\bLabor\b/g, 'Labour');
-              }
-            }
-          });
-        }
-        
         log.debug('About to set template content and add data sources');
         renderer.templateContent = xmlTemplateFile;
 
@@ -574,12 +708,106 @@ customerAddress + '<br/>' +
   }
 
   function formatCurrency(value) {
-    if(!value) value = 0;
-    const number = parseFloat(value);
-    const currencyString = number.toFixed(2);
+    const number = parseAmount(value);
+    const sign = number < 0 ? '-' : '';
+    const currencyString = Math.abs(number).toFixed(2);
     const [integerPart, decimalPart] = currencyString.split('.');
     const withCommas = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-    return withCommas + '.' + decimalPart;
+    return sign + withCommas + '.' + decimalPart;
+  }
+
+  function formatCurrencyAccounting(value) {
+    return '($' + formatCurrency(Math.abs(parseAmount(value))) + ')';
+  }
+
+  function addRetentionGroup(retentionGroups, retentionGroupOrder, percent, amount) {
+    var key = percent || '__blank__';
+
+    if (!retentionGroups[key]) {
+      retentionGroups[key] = {
+        percent: percent,
+        amount: 0
+      };
+      retentionGroupOrder.push(key);
+    }
+
+    retentionGroups[key].amount += amount;
+  }
+
+  function getTotalRetentionLabel(retentionGroups, retentionGroupOrder) {
+    if (retentionGroupOrder.length === 1) {
+      var retentionGroup = retentionGroups[retentionGroupOrder[0]];
+
+      if (retentionGroup && retentionGroup.percent) {
+        return 'Retention (less ' + retentionGroup.percent + ')';
+      }
+    }
+
+    return 'Retention';
+  }
+
+  function addRetentionToTotalsTable(xmlTemplateFile, retentionLabel, retentionAmount) {
+    var retentionRowHTML = buildRetentionTotalRow(retentionLabel, retentionAmount);
+
+    return xmlTemplateFile.replace(/(<tr[^>]*>[\s\S]*?\$\{itemtotal\}[\s\S]*?<\/tr>)/, '$1' + retentionRowHTML);
+  }
+
+  function buildRetentionTotalRow(retentionLabel, retentionAmount) {
+    return '<tr>' +
+      '<td colspan="4" align="right" style="font-weight: bold;">' + escapeXml(retentionLabel) + '</td>' +
+      '<td align="right" style="font-weight: bold;">' + formatCurrencyAccounting(retentionAmount) + '</td>' +
+      '</tr>';
+  }
+
+  function buildRetentionTotalsFallbackTable(retentionLabel, retentionAmount) {
+    return '<table class="total" style="width: 45%; margin-top: 8px; margin-left: 55%;">' +
+      buildRetentionTotalRow(retentionLabel, retentionAmount) +
+      '</table>';
+  }
+
+  function parseAmount(value) {
+    if (value === null || value === undefined || value === '') return 0;
+
+    var cleanValue = value.toString().trim();
+    var isAccountingNegative = cleanValue.charAt(0) === '(' && cleanValue.charAt(cleanValue.length - 1) === ')';
+
+    cleanValue = cleanValue.replace(/[,$%\s]/g, '').replace(/[()]/g, '');
+
+    var number = parseFloat(cleanValue);
+    if (isNaN(number)) return 0;
+
+    return isAccountingNegative ? -number : number;
+  }
+
+  function formatPercent(value) {
+    var number = parsePercentValue(value);
+    if (!number) return '';
+
+    return (number % 1 === 0 ? number.toFixed(0) : number.toFixed(2).replace(/0+$/, '').replace(/\.$/, '')) + '%';
+  }
+
+  function parsePercentValue(value) {
+    if (value === null || value === undefined || value === '') return 0;
+
+    var stringValue = value.toString();
+    var number = parseAmount(value);
+
+    if (number > 0 && number <= 1 && stringValue.indexOf('%') === -1) {
+      number = number * 100;
+    }
+
+    return number;
+  }
+
+  function escapeXml(value) {
+    if (value === null || value === undefined) return '';
+
+    return value.toString()
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&apos;');
   }
 
   return { onRequest };
