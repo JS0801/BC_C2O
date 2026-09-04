@@ -223,7 +223,7 @@ function (serverWidget, search, record, render, url, log, format, file) {
           summaryObj.push({
             key: escapeXml(key || ''),
             category: escapeXml(category || ''),
-            rate: rate ? formatPercent(rate),
+            rate: formatPercent(rate),
             unitPrice: "$" + formatCurrency(displayLineAmount),
             gstAmount: "$" + formatCurrency(Math.abs(gstAmount)), // Use Math.abs to ensure positive
             total: "$" + formatCurrency(displayLineAmount + gstAmount)
