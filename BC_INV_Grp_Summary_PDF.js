@@ -744,7 +744,7 @@ customerAddress + '<br/>' +
     for (var i = 0; i < retentionGroupOrder.length; i++) {
       var retentionKey = retentionGroupOrder[i];
       var retentionGroup = retentionGroups[retentionKey];
-      var retentionLabel = 'Retention';
+      var retentionLabel = 'DDT Retention';
 
       if (retentionGroup.percent) {
         retentionLabel += ' ' + retentionGroup.percent;
@@ -799,7 +799,7 @@ customerAddress + '<br/>' +
   function buildRetentionTotalRow(retentionLabel, retentionAmount) {
     return '<tr>' +
       '<td colspan="4" align="right">' + escapeXml(retentionLabel) + '</td>' +
-      '<td align="right" style="font-weight: bold;">' + formatCurrencyAccounting(retentionAmount) + '</td>' +
+      '<td align="right">' + formatCurrencyAccounting(retentionAmount) + '</td>' +
       '</tr>';
   }
 
