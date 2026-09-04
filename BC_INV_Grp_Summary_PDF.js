@@ -515,7 +515,6 @@ customerAddress + '<br/>' +
           for (var retentionIndex = 0; retentionIndex < retentionGroupOrder.length; retentionIndex++) {
             var retentionKey = retentionGroupOrder[retentionIndex];
             var retentionGroup = retentionGroups[retentionKey];
-            var retentionRowColor = ((summaryObj.length + retentionIndex) % 2 === 0) ? '#ffffff' : '#e1e6ee';
             var retentionLabel = 'Retention';
 
             if (retentionGroup.percent) {
@@ -524,7 +523,7 @@ customerAddress + '<br/>' +
 
             itemTableHTML +=
 '<tr style="background-color: ' + rowColor + ';">'  +
-'<td style="padding: 8px; border: 0.5px solid #657796;">' + escapeXml(retentionLabel) + '</td>' +
+'<td style="padding: 8px; border: 0.5px solid #657796;">Retention' + escapeXml(retentionLabel) + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">&nbsp;</td>' +
 '<td style="padding: 8px; text-align: right; border: 0.5px solid #657796;">&nbsp;</td>' +
