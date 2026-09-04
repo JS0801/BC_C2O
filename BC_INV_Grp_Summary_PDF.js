@@ -580,7 +580,7 @@ customerAddress + '<br/>' +
         var originalLength = xmlTemplateFile.length;
         
         // Add spacer before item table
-        var spacedItemTableHTML = '<div style="height: 160px; clear: both;"></div>' + itemTableHTML;
+        var spacedItemTableHTML = '<div style="height: 60px; clear: both;"></div>' + itemTableHTML;
         
         // Approach 1: Replace itemtable
         xmlTemplateFile = xmlTemplateFile.replace(/<table class="itemtable"[^>]*>.*?<\/table>/gs, spacedItemTableHTML);
