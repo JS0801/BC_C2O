@@ -508,6 +508,9 @@ customerAddress + '<br/>' +
 '</tr>';
         }
 
+        log.debug('isAustraliaSubsidiary', isAustraliaSubsidiary);
+
+        log.debug('totalRetention', totalRetention);
         if (isAustraliaSubsidiary && totalRetention > 0) {
           for (var retentionIndex = 0; retentionIndex < retentionGroupOrder.length; retentionIndex++) {
             var retentionKey = retentionGroupOrder[retentionIndex];
@@ -520,7 +523,7 @@ customerAddress + '<br/>' +
             }
 
             itemTableHTML +=
-'<tr style="background-color: ' + retentionRowColor + '; font-weight: bold;">' +
+'<tr style="background-color: ' + rowColor + ';">'  +
 '<td style="padding: 8px; border: 0.5px solid #657796;">' + escapeXml(retentionLabel) + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">' + formatCurrencyAccounting(retentionGroup.amount) + '</td>' +
 '<td style="padding: 8px; text-align: center; border: 0.5px solid #657796;">&nbsp;</td>' +
@@ -739,7 +742,7 @@ customerAddress + '<br/>' +
       var retentionGroup = retentionGroups[retentionGroupOrder[0]];
 
       if (retentionGroup && retentionGroup.percent) {
-        return 'Retention (less ' + retentionGroup.percent + ')';
+        return 'Retention (' + retentionGroup.percent + ')';
       }
     }
 
@@ -754,7 +757,7 @@ customerAddress + '<br/>' +
 
   function buildRetentionTotalRow(retentionLabel, retentionAmount) {
     return '<tr>' +
-      '<td colspan="4" align="right" style="font-weight: bold;">' + escapeXml(retentionLabel) + '</td>' +
+      '<td colspan="4" align="right">' + escapeXml(retentionLabel) + '</td>' +
       '<td align="right" style="font-weight: bold;">' + formatCurrencyAccounting(retentionAmount) + '</td>' +
       '</tr>';
   }
