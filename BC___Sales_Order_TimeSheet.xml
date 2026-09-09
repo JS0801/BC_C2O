@@ -359,7 +359,7 @@
 <#assign LEGEND_ORDER = ["ST", "OT", "DT", "PT", "PTO", "Per Diem", "DR1", "DR2", "DR3", "DR1-OT", "DR2-OT"] />
 <#assign seenTypes = {} />
 <#assign legendEntries = [] />
-<#list x.Labor as labor>
+<#list (x.Labor)![] as labor>
   <#if labor.employee != 'TOTAL' && labor?index != 0>
     <#assign st = labor.shiftType?trim />
     <#if st?has_content && !seenTypes[st]??>
