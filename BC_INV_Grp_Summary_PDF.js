@@ -22,12 +22,14 @@ function (serverWidget, search, record, render, url, log, format, file) {
         var totalMain = 0;
         var totalTax = 0;
         var totalRetention = 0;
+        var totalRetentionTax = 0;
         var retentionGroups = {};
         var retentionGroupOrder = [];
         var retentionRows = [];
         var fallbackRetentionGroups = {};
         var fallbackRetentionGroupOrder = [];
         var fallbackTotalRetention = 0;
+        var fallbackTotalRetentionTax = 0;
 
         // Run search - ADD CUSTOMER FIELDS
         var invoiceSearch = search.create({
@@ -204,8 +206,9 @@ function (serverWidget, search, record, render, url, log, format, file) {
           var displayLineAmount = lineAmount + retentionAmount;
 
           if (retentionAmount > 0) {
-            addRetentionGroup(fallbackRetentionGroups, fallbackRetentionGroupOrder, formatPercent(retentionPercentRaw), retentionAmount);
+            addRetentionGroup(fallbackRetentionGroups, fallbackRetentionGroupOrder, formatPercent(retentionPercentRaw), rate, retentionAmount);
             fallbackTotalRetention += retentionAmount;
+            fallbackTotalRetentionTax += calculateRetentionTax(retentionAmount, rate);
           }
           
           // Calculate GST from the tax item rate so the displayed line amount and GST stay in sync.
@@ -255,6 +258,12 @@ function (serverWidget, search, record, render, url, log, format, file) {
                 name: "custcol_bc_sov_unbilled_retention",
                 summary: "SUM",
                 label: "Retention Amount"
+              }),
+              search.createColumn({
+                name: "rate",
+                join: "taxItem",
+                summary: "GROUP",
+                label: "Tax Rate"
               })
             ]
           });
@@ -268,10 +277,16 @@ function (serverWidget, search, record, render, url, log, format, file) {
               name: "custcol_bc_retentions_percentage",
               summary: "GROUP"
             }));
+            var retentionTaxRate = result.getValue({
+              name: "rate",
+              join: "taxItem",
+              summary: "GROUP"
+            });
 
             if (retentionAmount > 0) {
-              addRetentionGroup(retentionGroups, retentionGroupOrder, retentionPercent, retentionAmount);
+              addRetentionGroup(retentionGroups, retentionGroupOrder, retentionPercent, retentionTaxRate, retentionAmount);
               totalRetention += retentionAmount;
+              totalRetentionTax += calculateRetentionTax(retentionAmount, retentionTaxRate);
             }
 
             return true;
@@ -281,14 +296,17 @@ function (serverWidget, search, record, render, url, log, format, file) {
             retentionGroups = fallbackRetentionGroups;
             retentionGroupOrder = fallbackRetentionGroupOrder;
             totalRetention = fallbackTotalRetention;
+            totalRetentionTax = fallbackTotalRetentionTax;
             log.debug('Used fallback retention totals from invoice summary search', {
               totalRetention: totalRetention,
+              totalRetentionTax: totalRetentionTax,
               retentionGroupCount: retentionGroupOrder.length
             });
           }
         }
 
-        totalMain = subtotal - totalRetention + totalTax;
+        var netTaxTotal = totalTax - totalRetentionTax;
+        totalMain = subtotal - totalRetention + netTaxTotal;
 
         if (isAustraliaSubsidiary && totalRetention > 0) {
           retentionRows = buildRetentionRows(retentionGroups, retentionGroupOrder);
@@ -652,7 +670,7 @@ customerAddress + '<br/>' +
 
         // Add GST column info to template replacements
         xmlTemplateFile = xmlTemplateFile.replace('${itemtotal}', "$" + formatCurrency(subtotal));
-        var taxtotal = totalTax;
+        var taxtotal = netTaxTotal;
         xmlTemplateFile = xmlTemplateFile.replace('${taxtotal}', "$" + formatCurrency(taxtotal));
         xmlTemplateFile = xmlTemplateFile.replace('${total}', "$" + formatCurrency(totalMain));
         xmlTemplateFile = xmlTemplateFile.replace('${ponum}', poNum);
@@ -724,18 +742,29 @@ customerAddress + '<br/>' +
     return '($' + formatCurrency(Math.abs(parseAmount(value))) + ')';
   }
 
-  function addRetentionGroup(retentionGroups, retentionGroupOrder, percent, amount) {
-    var key = percent || '__blank__';
+  function addRetentionGroup(retentionGroups, retentionGroupOrder, percent, taxRate, amount) {
+    var formattedTaxRate = formatPercent(taxRate);
+    var key = (percent || '__blank__') + '_' + (formattedTaxRate || '__notax__');
+    var taxAmount = calculateRetentionTax(amount, taxRate);
 
     if (!retentionGroups[key]) {
       retentionGroups[key] = {
         percent: percent,
-        amount: 0
+        taxRate: formattedTaxRate,
+        amount: 0,
+        taxAmount: 0
       };
       retentionGroupOrder.push(key);
     }
 
     retentionGroups[key].amount += amount;
+    retentionGroups[key].taxAmount += taxAmount;
+  }
+
+  function calculateRetentionTax(amount, taxRate) {
+    if (!taxRate) return 0;
+
+    return Math.abs(parseAmount(amount)) * (parsePercentValue(taxRate) / 100);
   }
 
   function buildRetentionRows(retentionGroups, retentionGroupOrder) {
@@ -744,7 +773,7 @@ customerAddress + '<br/>' +
     for (var i = 0; i < retentionGroupOrder.length; i++) {
       var retentionKey = retentionGroupOrder[i];
       var retentionGroup = retentionGroups[retentionKey];
-      var retentionLabel = 'Retention';
+      var retentionLabel = 'DDT Retention';
 
       if (retentionGroup.percent) {
         retentionLabel += ' ' + retentionGroup.percent;
@@ -753,10 +782,10 @@ customerAddress + '<br/>' +
       retentionRows.push({
         key: 'retention_' + retentionKey,
         category: escapeXml(retentionLabel),
-        rate: '',
+        rate: retentionGroup.taxRate || '',
         unitPrice: formatCurrencyAccounting(retentionGroup.amount),
-        gstAmount: '',
-        total: formatCurrencyAccounting(retentionGroup.amount)
+        gstAmount: retentionGroup.taxAmount ? formatCurrencyAccounting(retentionGroup.taxAmount) : '',
+        total: formatCurrencyAccounting(retentionGroup.amount + retentionGroup.taxAmount)
       });
     }
 
@@ -799,7 +828,7 @@ customerAddress + '<br/>' +
   function buildRetentionTotalRow(retentionLabel, retentionAmount) {
     return '<tr>' +
       '<td colspan="4" align="right">' + escapeXml(retentionLabel) + '</td>' +
-      '<td align="right" style="font-weight: bold;">' + formatCurrencyAccounting(retentionAmount) + '</td>' +
+      '<td align="right">' + formatCurrencyAccounting(retentionAmount) + '</td>' +
       '</tr>';
   }
 
