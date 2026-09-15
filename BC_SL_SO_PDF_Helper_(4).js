@@ -18,6 +18,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
         const shiftSortOrder = ['ST', 'OT', 'OT1.5', 'DT', 'NT', 'RDO'];
         const salesorderSearchObj = search.create({
           type: "salesorder",
+          title: 'Test JS',
           settings: [{ name: "consolidationtype", value: "NONE" }],
           filters: [
             ["type", "anyof", "SalesOrd"],
