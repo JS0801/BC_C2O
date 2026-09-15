@@ -78,7 +78,6 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
             })
           ]
         });
-        salesorderSearchObj.save();
         
         const employeeMap = {};
         const uniqueDates = new Set();
