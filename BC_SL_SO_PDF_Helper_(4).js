@@ -113,7 +113,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           log.debug('hours', hours)
           log.debug('empKey Map', employeeMap[empKey])
           
-          employeeMap[empKey].dateMap[dateStr] = hours;
+          employeeMap[empKey].dateMap[dateStr] += hours;
           employeeMap[empKey].totalWeek += hours;
           
           if (note && note != '- None -') {
