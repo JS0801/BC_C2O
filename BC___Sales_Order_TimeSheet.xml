@@ -2,54 +2,28 @@
 <!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
 <pdf>
 <head>
-    <!-- Embedded PDF JavaScript. Use Adobe Acrobat Reader desktop with JavaScript enabled. -->
+    <!-- Chrome version: a real PDF pushbutton invokes a simple PDF alert. -->
     <script><![CDATA[
       function bcShowTimeNotes(encodedText) {
         var text = decodeURIComponent(encodedText);
         if (!text) return;
-        var dialogInitialized = false;
-        try {
-          app.execDialog({
-            initialize: function(dialog) {
-              dialogInitialized = true;
-              dialog.load({ nts1: text });
-            },
-            description: {
-              name: "Time Entry Notes",
-              elements: [
-                { type: "view", align_children: "align_left", elements: [
-                  { type: "edit_text", item_id: "nts1", multiline: true,
-                    readonly: true, width: 620, height: 360 },
-                  { type: "ok", ok_name: "Close" }
-                ] }
-              ]
-            }
-          });
-          // PDFium can expose execDialog as a silent no-op. In that case the
-          // initialize callback never runs, so use the alert fallback below.
-          if (!dialogInitialized) throw new Error("Custom PDF dialog not supported");
-        } catch (dialogError) {
-          // Some PDF viewers implement alerts but not custom dialogs. Page the
-          // text rather than silently cutting off long notes in a single alert.
-          var lines = text.split(/\r\n|\r|\n/);
-          var wrapped = [];
-          for (var i = 0; i < lines.length; i++) {
-            var line = lines[i];
-            if (!line.length) wrapped.push("");
-            while (line.length) {
-              wrapped.push(line.slice(0, 85));
-              line = line.slice(85);
-            }
+        var lines = text.split(/\r\n|\r|\n/);
+        var wrapped = [];
+        for (var i = 0; i < lines.length; i++) {
+          var line = lines[i];
+          if (!line.length) wrapped.push("");
+          while (line.length) {
+            wrapped.push(line.slice(0, 85));
+            line = line.slice(85);
           }
-          var pageCount = Math.ceil(wrapped.length / 22);
-          for (var page = 0; page < pageCount; page++) {
-            var message = wrapped.slice(page * 22, (page + 1) * 22).join("\n");
-            message += "\n\nPage " + (page + 1) + " of " + pageCount;
-            if (page + 1 < pageCount) message += " - OK: next page; Cancel: close";
-            var answer = app.alert({ cMsg: message, cTitle: "Time Entry Notes",
-              nIcon: 3, nType: page + 1 < pageCount ? 1 : 0 });
-            if (answer === 2) break;
-          }
+        }
+        var pageCount = Math.ceil(wrapped.length / 22);
+        for (var page = 0; page < pageCount; page++) {
+          var message = wrapped.slice(page * 22, (page + 1) * 22).join("\n");
+          message += "\n\nPage " + (page + 1) + " of " + pageCount;
+          if (page + 1 < pageCount) message += " - OK: next page; Cancel: close";
+          var answer = app.alert(message, 3, page + 1 < pageCount ? 1 : 0, "Time Entry Notes");
+          if (answer === 2) break;
         }
       }
     ]]></script>
@@ -268,7 +242,7 @@
 </#list>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.totalWeek}</td>
 <td style="border-top:0px solid #000; border-bottom:1px solid #000; border-left:1px solid #000; border-right:1px solid #000; padding:2px;"
-    colspan="${14 - labor.days?size}">${labor.notes!""}<#if (labor.notesPopupData!"")?has_content>&#160;<a href="javascript:bcShowTimeNotes('${labor.notesPopupData?xml}');" style="color:#0066cc; text-decoration:underline;">View notes (${labor.noteCount!0})</a></#if>
+    colspan="${14 - labor.days?size}">${labor.notes!""}<#if (labor.notesPopupData!"")?has_content>&#160;<input type="button" name="bc_notes_${labor?index}" value="View notes (${labor.noteCount!0})" onClick="javascript:bcShowTimeNotes('${labor.notesPopupData?xml}');" style="display:inline; width:58pt; height:10pt; font-size:5pt; color:#0066cc; background-color:#eef4ff; border:0.5pt solid #0066cc; padding:1pt;" /></#if>
 </td>
 </tr>
 <#elseif labor?index != 0>
