@@ -29,6 +29,8 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           ],
           columns: [
             search.createColumn({ name: "custcol_invoicing_category", summary: "GROUP", label: "Invoicing Category" }),
+            // Preserve the source time entry when otherwise identical rows are grouped.
+            search.createColumn({ name: "custcol_bc_tm_time_bill", summary: "GROUP", label: "Time Entry ID" }),
             search.createColumn({ name: "employee", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP", label: "Employee" }),
             search.createColumn({ name: "durationdecimal", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "SUM", label: "Duration (Decimal)" }),
             search.createColumn({ name: "item", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP", label: "Item" }),
@@ -89,7 +91,10 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           const role = result.getValue({ name: "formulatext1", summary: "GROUP" }) == '- None -'?'': result.getValue({ name: "formulatext1", summary: "GROUP" });
           const shiftType = result.getText({ name: "custcol_bc_time_type", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP" }) || '';
           const dateStr = result.getValue({ name: "formulatext123", summary: "GROUP" }) || result.getValue({ name: "formulatext111", summary: "GROUP" });
-          const hours = parseFloat(result.getValue({ name: "durationdecimal", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "SUM" })) || parseFloat(result.getValue({ name: "quantity", join: "CUSTCOL_BC_TM_SOURCE_TRANSACTION", summary: "SUM" }));
+          const timeEntryId = result.getValue({ name: "custcol_bc_tm_time_bill", summary: "GROUP" }) || '';
+          const timeHours = parseFloat(result.getValue({ name: "durationdecimal", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "SUM" }));
+          const sourceHours = parseFloat(result.getValue({ name: "quantity", join: "CUSTCOL_BC_TM_SOURCE_TRANSACTION", summary: "SUM" }));
+          const hours = isFinite(timeHours) ? timeHours : (isFinite(sourceHours) ? sourceHours : 0);
           const note = result.getValue({ name: "memo", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP" }) || '';
           const groupType = result.getText({ name: "custcol_invoicing_category", summary: "GROUP" }) || '';
           const shift = result.getText({ name: "custcol_bc_tm_billing_shift", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP" }) || '';
@@ -107,18 +112,27 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
               dateMap: {},
               totalWeek: 0,
               notes: '',
+              noteEntries: [],
               groupType: groupType
             };
           }
           log.debug('hours', hours)
           log.debug('empKey Map', employeeMap[empKey])
           
-          employeeMap[empKey].dateMap[dateStr] = hours;
+          // Several time entries can contribute to the same day in this printed row.
+          employeeMap[empKey].dateMap[dateStr] = (employeeMap[empKey].dateMap[dateStr] || 0) + hours;
           employeeMap[empKey].totalWeek += hours;
           
-          if (note && note != '- None -') {
-           // employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
+          if (note && note.trim() && note != '- None -') {
+            // Keep the existing last-note preview, plus every source entry's memo.
             employeeMap[empKey].notes = note;
+            const entries = employeeMap[empKey].noteEntries;
+            const existingNote = entries.find(entry => entry.timeEntryId === String(timeEntryId) && entry.date === dateStr && entry.note === note);
+            if (existingNote) {
+              existingNote.hours += hours;
+            } else {
+              entries.push({ timeEntryId: String(timeEntryId), date: dateStr, hours: hours, note: note });
+            }
           }
           
           return true;
@@ -182,7 +196,11 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
             shift: emp.shift.replace(/&/g, '&amp;'),
             days: [],
             totalWeek: emp.totalWeek.toFixed(2),
-            notes: emp.notes.replace(/&/g, '&amp;'),
+            notes: escapePdfXml(emp.notes),
+            notesPreview: escapePdfXml(compactNotePreview(emp.notes)),
+            noteCount: emp.noteEntries.length,
+            // URI encoding keeps notes out of JavaScript/XML/FreeMarker syntax.
+            notesPopupData: encodePopupText(buildNotesPopupText(emp, tranid)),
             groupType: emp.groupType.replace(/&/g, '&amp;')
           };
           
@@ -938,7 +956,10 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
               context.response.write('Error generating Excel: ' + e.message);
             }
           }
-          var strReturn = "<#assign ObjDetail=" + JSON.stringify(groupedFinalArray) + " />";
+          // The response is FreeMarker source, not JSON: literal interpolation markers
+          // in a memo must not become expressions when the template imports this file.
+          var detailLiteral = JSON.stringify(groupedFinalArray).replace(/([$#])\{/g, '$1\\{');
+          var strReturn = "<#assign ObjDetail=" + detailLiteral + " />";
           log.debug('strReturn', strReturn);
           
           context.response.writeLine(strReturn);
@@ -950,6 +971,42 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
       }
     }
     
+
+    function escapePdfXml(value) {
+      return String(value || '').replace(/[\x00-\x08\x0B\x0C\x0E-\x1F]/g, '')
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&apos;');
+    }
+
+    function compactNotePreview(value) {
+      var text = String(value || '').replace(/\s+/g, ' ').trim();
+      return text.length > 52 ? text.slice(0, 49) + '...' : text;
+    }
+
+    function buildNotesPopupText(emp, salesOrderId) {
+      if (!emp.noteEntries.length) return '';
+      var lines = [
+        'Sales Order internal ID: ' + salesOrderId,
+        'Employee: ' + (emp.employee || ''),
+        'Role: ' + (emp.role || ''),
+        'Time type: ' + (emp.shiftType || '') + ' | Shift: ' + (emp.shift || ''),
+        ''
+      ];
+      emp.noteEntries.forEach(function(entry, index) {
+        lines.push((index + 1) + '. Time Entry ID: ' + (entry.timeEntryId || '(not available)'));
+        lines.push('Date: ' + entry.date + ' | Hours: ' + entry.hours.toFixed(2));
+        lines.push('Notes:');
+        lines.push(entry.note);
+        lines.push('');
+      });
+      return lines.join('\n');
+    }
+
+    function encodePopupText(value) {
+      // encodeURIComponent leaves apostrophes untouched; escape them for href's JS string.
+      return encodeURIComponent(value).replace(/'/g, '%27');
+    }
+
     function formatDateMMDDYYYY(dateStr) {
       log.debug('dateStr', dateStr);
       
