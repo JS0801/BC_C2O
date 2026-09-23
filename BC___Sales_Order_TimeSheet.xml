@@ -138,7 +138,7 @@
 </tr>
 <tr style="line-height: 0.7px;">
 <td class="header-label" style="border-bottom: 0px; border-right: 0px;">Week-Ending:</td>
-<td class="value-cell" style="border-bottom: 0px;">${record.trandate}</td>
+<td class="value-cell" style="border-bottom: 0px;">${record.trandate?string("dd-MMM-yyyy")}</td>
 </tr>
 <tr style="line-height: 0.7px;">
 <td class="header-label" style="border-bottom: 0px; border-right: 0px;">C2O Project Manager:</td>
@@ -158,7 +158,7 @@
 <td style="width: 49%; vertical-align: top;">
 <table class="bordered-table"><tr style="line-height: 0.7px;">
 <td class="header-label" style="border-bottom: 0px; border-right: 0px;">Project:</td>
-<td class="value-cell" style="border-bottom: 0px;" colspan="3">${record.cseg_bc_project.custrecord_bc_reporting_project}</td>
+<td class="value-cell" style="border-bottom: 0px;" colspan="3">${record.cseg_bc_project.cseg_c2o_rep_proj}</td>
 </tr>
 <tr style="line-height: 0.7px;">
 <td class="header-label" style="border-bottom: 0px; border-right: 0px;">C2O Job:</td>
@@ -182,7 +182,7 @@
 </tr></table>
 </td>
 </tr></table>
-<#import 'https://9873410-sb1.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1399&deploy=1&compid=9873410_SB1&ns-at=AAEJ7tMQ3ynL6W4Omndxs5dge6jTuUKEk5fBmI4olpZs_s_pwGM&tranid=' + record.id as linedetails> <#assign labelLabor = "Labor"> <#if subsidiary.country?string == "Australia"> <#assign labelLabor = "Labour"> </#if> <#if linedetails.ObjDetail?has_content> <#assign x = linedetails.ObjDetail /> <#if x.Labor?has_content>
+<#import 'https://9873410.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1399&deploy=1&compid=9873410&ns-at=AAEJ7tMQLzoXccJr5-at-Nv0SD7IEJcX924rzoVfdIdceUoBowM&tranid=' + record.id as linedetails> <#assign labelLabor = "Labor"> <#if subsidiary.country?string == "Australia"> <#assign labelLabor = "Labour"> </#if> <#if linedetails.ObjDetail?has_content> <#assign x = linedetails.ObjDetail /> <#if x.Labor?has_content>
 <table class="timesheet-table"><#list x.Labor as labor> <!-- Header Row 1 --> <#if labor?index == 0>
 <thead>
 <tr style="line-height: 0.7px;">
@@ -195,14 +195,14 @@
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Time<br />Type</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Shift<br />Type</th>
 <#list labor.days as datelist>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="1" align="center">${datelist.date?date('MM/dd/yyyy')?string('E')}</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; " colspan = "1" align="center">${datelist.date?date('MM/dd/yyyy')?string('E')}</th>
 </#list>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">TOTAL<br />WEEK</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Total<br />Week</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}" rowspan="2">${labor.notes}</th>
 </tr>
 <!-- Header Row 2 (Dates) -->
 <tr style="line-height: 0.7px;"><#list labor.days as datelist>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; font-size: 4pt;" align="center">${datelist.date?date('MM/dd/yyyy')?string('MM/dd/yy')}</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; font-size: 3pt;" colspan = "1" align="center">${datelist.date?date('MM/dd/yyyy')?string('dd-MMM-yyyy')}</th>
 </#list></tr>
 </thead>
 </#if> </#list><#list x.Labor as labor> <#if labor.employee != 'TOTAL' && labor?index != 0> <!-- Data Row -->
@@ -212,21 +212,29 @@
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center"><#if labor.shiftType == 'Per Diem'> <span style="font-size: 4.8pt;">${labor.shiftType}</span><#else>${labor.shiftType}</#if></td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.shift}</td>
 <#list labor.days as datelist>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${datelist.hours}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.0"]}</#if></td>
 </#list>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.totalWeek}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}">&nbsp;</td>
+<td style="border-top:0px solid #000; border-bottom:1px solid #000; border-left:1px solid #000; border-right:1px solid #000; padding:2px;"
+    colspan="${14 - labor.days?size}">${labor.notes}
+  <!-- <input
+    type="text"
+    id="notes_${labor?index}"
+    name="notes_${labor?index}"
+    style="width:${((14 - labor.days?size) * 28) - 7}pt; border:0; background-color:#ffffff; color:#000000; padding:2px; font-size:5pt; font-family:NotoSans, sans-serif;"
+  /> -->
+</td>
 </tr>
 <#elseif labor?index != 0>
 <tr style="line-height: 0.7px;">
 <td style="border-right: 1px solid #000;" colspan="12" align="right"><strong>Total Hours:</strong></td>
 <#list labor.days as datelist>
-<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="center">${datelist.hours}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.00"]}</#if></td>
 </#list>
-<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="center">${labor.totalWeek}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;"  align="center">${(labor.totalWeek!0)?string["0.00"]}</td>
 </tr>
 </#if> </#list><!-- Totals Row --></table>
-</#if> <#if x["Equipment / Vehicle Rental"]?has_content>
+</#if> <#if x["Equipment / Vehicle Rental"]?has_content> 
 <table class="timesheet-table" style="padding-top: 20px;"><#list x["Equipment / Vehicle Rental"] as labor> <!-- Header Row 1 --> <#if labor?index == 0>
 <thead>
 <tr style="line-height: 0.7px;">
@@ -237,27 +245,36 @@
 <#list labor.days as datelist>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="1" align="center">${datelist.date?date('MM/dd/yyyy')?string('E')}</th>
 </#list>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">TOTAL<br />WEEK</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" rowspan="2" align="center">Total<br />Week</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}" rowspan="2">${labor.notes}</th>
 </tr>
 <!-- Header Row 2 (Dates) -->
 <tr style="line-height: 0.7px;"><#list labor.days as datelist>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${datelist.date?date('MM/dd/yyyy')?string('MM/dd/yy')}</th>
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000; font-size: 3.5pt;"colspan="1"  align="center">${datelist.date?date('MM/dd/yyyy')?string('dd-MMM-yyyy')}</th>
 </#list></tr>
 </thead>
 <#else> <#if labor.employee != 'TOTAL'> <!-- Data Row --><tr style="line-height: 0.7px;">
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="6">${labor.role}</td>
 <#list labor.days as datelist>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${datelist.hours}</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.0"]}</#if></td>
 </#list>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.totalWeek}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" colspan="${14 - labor.days?size}">&nbsp;</td>
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;"  align="center">${labor.totalWeek}</td>
+<td style="border-top:0px solid #000; border-bottom:1px solid #000; border-left:1px solid #000; border-right:1px solid #000; padding:0px;"
+    colspan="${14 - labor.days?size}">
+  <input
+    type="text"
+    id="eq_notes_${labor?index}"
+    name="eq_notes_${labor?index}"
+    style="width:${((14 - labor.days?size) * 36) - 3}pt; border:none; background-color:#ffffff; color:#000000; padding:1px 2px; font-size:5pt; font-family:NotoSans, sans-serif;"
+  />
+</td>
+
 </tr>
 <#else>
 <tr style="line-height: 0.7px;">
 <td style="border-right: 1px solid #000;" colspan="6" align="right"><strong>Total Hours:</strong></td>
 <#list labor.days as datelist>
-<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="center">${datelist.hours}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" colspan = "1" align="center"><#if datelist.hours?number == 0>-<#else>${(datelist.hours!0)?string["0.00"]}</#if></td>
 </#list>
 <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="center">${labor.totalWeek}</td>
 </tr>
@@ -273,8 +290,8 @@
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2">Supplier</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">C2O PO#</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4" align="center">Description</th>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">Total Cost</th>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="center">Rate (ex GST)</th>
+<!-- <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">Total Cost</th> -->
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="center">Total Cost excl. Tax</th>
 </tr>
 </thead>
 </#if> <#if material.documentNumber != 'TOTAL'> <!-- Data Row --><tr style="line-height: 0.7px;">
@@ -282,15 +299,25 @@
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2">${material.mainName}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${material.cleanedPO}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4">${material.memo}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="right">${material.cost}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.amount}</td>
+<!-- <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="right">${material.cost}</td> -->
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
 </tr>
 <#else>
 <tr style="line-height: 0.7px;">
-<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Totals:</strong></td>
-<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
-<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.amount}</td>
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Total:</strong></td>
+<!-- <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td> -->
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.cost}</td>
 </tr>
+  <!-- <tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Tax:</strong></td>
+ <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.tax}</td> 
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.tax}</td>
+</tr>
+  <tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Total:</strong></td>
+ <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.total}</td>
+</tr> -->
 </#if> </#list></table>
 </#if> <#if x.Expenses?has_content>
 <table class="timesheet-table" style="padding-top: 20px;"><#list x.Expenses as material> <!-- Header Row 1 --> <#if material?index == 0>
@@ -302,40 +329,49 @@
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">Supplier / Expense Category</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">C2O PO#</th>
 <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4" align="center">Description</th>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">Total Cost</th>
-<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="center">Rate (ex GST)</th>
+<!-- <th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">Total Cost</th> -->
+<th style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="center">Total Cost excl. Tax</th>
 </tr>
 </thead>
 </#if> <#if material.documentNumber != 'TOTAL'> <!-- Data Row --><tr style="line-height: 0.7px;">
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">${material.expCat}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="2" align="center">${material.cleanedPO}</td>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" colspan="4">${material.memo}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="right">${material.cost}</td>
-<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.amount}</td>
+<!-- <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="right">${material.cost}</td> -->
+<td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
 </tr>
 <#else>
 <tr style="line-height: 0.7px;">
-<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Totals:</strong></td>
-<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
-<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.amount}</td>
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Total:</strong></td>
+<!-- <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td> -->
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.cost}</td>
 </tr>
+   <!-- <tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Tax:</strong></td>
+ <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.tax}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.tax}</td>
+</tr>
+  <tr style="line-height: 0.7px;">
+<td style="border-right: 1px solid #000;" colspan="8" align="right"><strong>Total:</strong></td>
+ <td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000;" align="right">${material.cost}</td>
+<td class="row-label" style="border-bottom: 1px solid #000; border-right: 1px solid #000; border-top: 0px solid #000; border-left: 0px solid #000;" align="right">${material.total}</td>
+</tr> -->
 </#if> </#list></table>
 </#if>
 
 <#-- ==================== TIME TYPE LEGEND ==================== -->
-<#assign TIME_LEGEND_MAP = {"ST": "Standard Time", "OT": "Overtime", "DT": "Double Time", "PT": "Premium Time", "PTO": "Paid Time Off", "Per Diem": "Per Diem Allowance", "DR1": "Day Time 1", "DR2": "Day Time 2", "DR3": "Day Time 3", "DR1-OT": "Day Rate 1 Overtime", "DR2-OT": "Day Rate 2 Overtime"} />
+<#assign TIME_LEGEND_MAP = {"ST": "Standard Time", "OT": "Overtime", "DT": "Double Time", "PT": "Premium Time", "PTO": "Paid Time Off", "Per Diem": "Per Diem Allowance", "DR1": "Day Rate 1", "DR2": "Day Rate 2", "DR3": "Day Rate 3", "DR1-OT": "Day Rate 1 Overtime", "DR2-OT": "Day Rate 2 Overtime"} />
 <#assign LEGEND_ORDER = ["ST", "OT", "DT", "PT", "PTO", "Per Diem", "DR1", "DR2", "DR3", "DR1-OT", "DR2-OT"] />
 <#assign seenTypes = {} />
 <#assign legendEntries = [] />
-<#if x.Labor?has_content>
-  <#list x.Labor as labor>
-    <#if labor.employee != 'TOTAL' && labor?index != 0 && labor.shiftType?has_content && labor.shiftType != ''>
-      <#if !seenTypes[labor.shiftType]??>
-        <#assign seenTypes = seenTypes + {labor.shiftType: true} />
-      </#if>
+<#list x.Labor as labor>
+  <#if labor.employee != 'TOTAL' && labor?index != 0>
+    <#assign st = labor.shiftType?trim />
+    <#if st?has_content && !seenTypes[st]??>
+      <#assign seenTypes = seenTypes + {st: true} />
     </#if>
-  </#list>
-</#if>
+  </#if>
+</#list>
 <#list LEGEND_ORDER as key>
   <#if seenTypes[key]??>
     <#assign legendEntries = legendEntries + [{"abbr": key, "label": TIME_LEGEND_MAP[key]!key}] />
