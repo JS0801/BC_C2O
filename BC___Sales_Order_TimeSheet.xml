@@ -2,6 +2,51 @@
 <!DOCTYPE pdf PUBLIC "-//big.faceless.org//report" "report-1.1.dtd">
 <pdf>
 <head>
+    <!-- Embedded PDF JavaScript. Use Adobe Acrobat Reader desktop with JavaScript enabled. -->
+    <script type="text/javascript"><![CDATA[
+      function bcShowTimeNotes(encodedText) {
+        var text = decodeURIComponent(encodedText);
+        if (!text) return;
+        try {
+          app.execDialog({
+            initialize: function(dialog) { dialog.load({ nts1: text }); },
+            description: {
+              name: "Time Entry Notes",
+              elements: [
+                { type: "view", align_children: "align_left", elements: [
+                  { type: "edit_text", item_id: "nts1", multiline: true,
+                    readonly: true, width: 620, height: 360 },
+                  { type: "ok", ok_name: "Close" }
+                ] }
+              ]
+            }
+          });
+        } catch (dialogError) {
+          // Some PDF viewers implement alerts but not custom dialogs. Page the
+          // text rather than silently cutting off long notes in a single alert.
+          var lines = text.split(/\r\n|\r|\n/);
+          var wrapped = [];
+          for (var i = 0; i < lines.length; i++) {
+            var line = lines[i];
+            if (!line.length) wrapped.push("");
+            while (line.length) {
+              wrapped.push(line.slice(0, 85));
+              line = line.slice(85);
+            }
+          }
+          var pageCount = Math.ceil(wrapped.length / 22);
+          for (var page = 0; page < pageCount; page++) {
+            var message = wrapped.slice(page * 22, (page + 1) * 22).join("\n");
+            message += "\n\nPage " + (page + 1) + " of " + pageCount;
+            if (page + 1 < pageCount) message += " - OK: next page; Cancel: close";
+            var answer = app.alert({ cMsg: message, cTitle: "Time Entry Notes",
+              nIcon: 3, nType: page + 1 < pageCount ? 1 : 0 });
+            if (answer === 2) break;
+          }
+        }
+      }
+    ]]></script>
+
 	<link name="NotoSans" type="font" subtype="truetype" src="${nsfont.NotoSans_Regular}" src-bold="${nsfont.NotoSans_Bold}" src-italic="${nsfont.NotoSans_Italic}" src-bolditalic="${nsfont.NotoSans_BoldItalic}" bytes="2" />
 	<#if .locale == "zh_CN">
 		<link name="NotoSansCJKsc" type="font" subtype="opentype" src="${nsfont.NotoSansCJKsc_Regular}" src-bold="${nsfont.NotoSansCJKsc_Bold}" bytes="2" />
@@ -216,13 +261,7 @@
 </#list>
 <td style="border-top: 0px solid #000; border-bottom: 1px solid #000; border-left: 1px solid #000; border-right: 0px solid #000;" align="center">${labor.totalWeek}</td>
 <td style="border-top:0px solid #000; border-bottom:1px solid #000; border-left:1px solid #000; border-right:1px solid #000; padding:2px;"
-    colspan="${14 - labor.days?size}">${labor.notes}
-  <!-- <input
-    type="text"
-    id="notes_${labor?index}"
-    name="notes_${labor?index}"
-    style="width:${((14 - labor.days?size) * 28) - 7}pt; border:0; background-color:#ffffff; color:#000000; padding:2px; font-size:5pt; font-family:NotoSans, sans-serif;"
-  /> -->
+    colspan="${14 - labor.days?size}"><#if labor.notesPopupData?has_content>${labor.notesPreview!labor.notes}&#160;<a href="javascript:bcShowTimeNotes('${labor.notesPopupData?xml}');" style="color:#0066cc; text-decoration:underline;">View notes (${labor.noteCount})</a><#else>${labor.notes}</#if>
 </td>
 </tr>
 <#elseif labor?index != 0>
