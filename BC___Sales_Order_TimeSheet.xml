@@ -7,9 +7,13 @@
       function bcShowTimeNotes(encodedText) {
         var text = decodeURIComponent(encodedText);
         if (!text) return;
+        var dialogInitialized = false;
         try {
           app.execDialog({
-            initialize: function(dialog) { dialog.load({ nts1: text }); },
+            initialize: function(dialog) {
+              dialogInitialized = true;
+              dialog.load({ nts1: text });
+            },
             description: {
               name: "Time Entry Notes",
               elements: [
@@ -21,6 +25,9 @@
               ]
             }
           });
+          // PDFium can expose execDialog as a silent no-op. In that case the
+          // initialize callback never runs, so use the alert fallback below.
+          if (!dialogInitialized) throw new Error("Custom PDF dialog not supported");
         } catch (dialogError) {
           // Some PDF viewers implement alerts but not custom dialogs. Page the
           // text rather than silently cutting off long notes in a single alert.
@@ -227,7 +234,7 @@
 </tr></table>
 </td>
 </tr></table>
-<#import 'https://9873410-sb1.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1399&deploy=1&compid=9873410_SB1&ns-at=AAEJ7tMQ3ynL6W4Omndxs5dge6jTuUKEk5fBmI4olpZs_s_pwGM&tranid=' + record.id as linedetails> <#assign labelLabor = "Labor"> <#if subsidiary.country?string == "Australia"> <#assign labelLabor = "Labour"> </#if> <#if linedetails.ObjDetail?has_content> <#assign x = linedetails.ObjDetail /> <#if x.Labor?has_content>
+<#import 'https://9873410.extforms.netsuite.com/app/site/hosting/scriptlet.nl?script=1399&deploy=1&compid=9873410&ns-at=AAEJ7tMQLzoXccJr5-at-Nv0SD7IEJcX924rzoVfdIdceUoBowM&tranid=' + record.id as linedetails> <#assign labelLabor = "Labor"> <#if subsidiary.country?string == "Australia"> <#assign labelLabor = "Labour"> </#if> <#if linedetails.ObjDetail?has_content> <#assign x = linedetails.ObjDetail /> <#if x.Labor?has_content>
 <table class="timesheet-table"><#list x.Labor as labor> <!-- Header Row 1 --> <#if labor?index == 0>
 <thead>
 <tr style="line-height: 0.7px;">
