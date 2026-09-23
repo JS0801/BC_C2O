@@ -29,8 +29,8 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           ],
           columns: [
             search.createColumn({ name: "custcol_invoicing_category", summary: "GROUP", label: "Invoicing Category" }),
-            // Preserve the source time entry when otherwise identical rows are grouped.
-            search.createColumn({ name: "custcol_bc_tm_time_bill", summary: "GROUP", label: "Time Entry ID" }),
+            // Group by the joined record ID, not the transaction custom-field value.
+            search.createColumn({ name: "internalid", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP", label: "Time Entry ID" }),
             search.createColumn({ name: "employee", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP", label: "Employee" }),
             search.createColumn({ name: "durationdecimal", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "SUM", label: "Duration (Decimal)" }),
             search.createColumn({ name: "item", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP", label: "Item" }),
@@ -91,7 +91,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           const role = result.getValue({ name: "formulatext1", summary: "GROUP" }) == '- None -'?'': result.getValue({ name: "formulatext1", summary: "GROUP" });
           const shiftType = result.getText({ name: "custcol_bc_time_type", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP" }) || '';
           const dateStr = result.getValue({ name: "formulatext123", summary: "GROUP" }) || result.getValue({ name: "formulatext111", summary: "GROUP" });
-          const timeEntryId = result.getValue({ name: "custcol_bc_tm_time_bill", summary: "GROUP" }) || '';
+          const timeEntryId = result.getValue({ name: "internalid", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "GROUP" }) || '';
           const timeHours = parseFloat(result.getValue({ name: "durationdecimal", join: "CUSTCOL_BC_TM_TIME_BILL", summary: "SUM" }));
           const sourceHours = parseFloat(result.getValue({ name: "quantity", join: "CUSTCOL_BC_TM_SOURCE_TRANSACTION", summary: "SUM" }));
           const hours = isFinite(timeHours) ? timeHours : (isFinite(sourceHours) ? sourceHours : 0);
