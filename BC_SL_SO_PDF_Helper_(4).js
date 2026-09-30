@@ -117,10 +117,20 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
     (employeeMap[empKey].dateMap[dateStr] || 0) + hours;
           employeeMap[empKey].totalWeek += hours;
           
-          if (note && note != '- None -') {
-           // employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
-            employeeMap[empKey].notes = note;
-          }
+          // if (note && note != '- None -') {
+          //  // employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
+          //   employeeMap[empKey].notes = note;
+          // }
+
+
+          if (note && note !== '- None -') {
+  const cleanNote = note.split('|')[0].trim();
+
+  if (cleanNote) {
+    employeeMap[empKey].notes +=
+      (employeeMap[empKey].notes ? ', ' : '') + cleanNote;
+  }
+}
           
           return true;
         });
