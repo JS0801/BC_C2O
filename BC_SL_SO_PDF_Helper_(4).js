@@ -18,7 +18,6 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
         const shiftSortOrder = ['ST', 'OT', 'OT1.5', 'DT', 'NT', 'RDO'];
         const salesorderSearchObj = search.create({
           type: "salesorder",
-          title: 'Test JS',
           settings: [{ name: "consolidationtype", value: "NONE" }],
           filters: [
             ["type", "anyof", "SalesOrd"],
@@ -79,7 +78,6 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
             })
           ]
         });
-        salesorderSearchObj.save()
         
         const employeeMap = {};
         const uniqueDates = new Set();
@@ -115,7 +113,8 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
           log.debug('hours', hours)
           log.debug('empKey Map', employeeMap[empKey])
           
-          employeeMap[empKey].dateMap[dateStr] = hours;
+          employeeMap[empKey].dateMap[dateStr] =
+    (employeeMap[empKey].dateMap[dateStr] || 0) + hours;
           employeeMap[empKey].totalWeek += hours;
           
           if (note && note != '- None -') {
