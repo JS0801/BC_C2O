@@ -106,21 +106,36 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
               shift: (shift == "- None -")? '': shift.replace(" Time", ""), 
               dateMap: {},
               totalWeek: 0,
-              notes: '',
+              notesByDate: {},
               groupType: groupType
             };
           }
           log.debug('hours', hours)
           log.debug('empKey Map', employeeMap[empKey])
           
-          employeeMap[empKey].dateMap[dateStr] =
-    (employeeMap[empKey].dateMap[dateStr] || 0) + hours;
+          employeeMap[empKey].dateMap[dateStr] =  (employeeMap[empKey].dateMap[dateStr] || 0) + hours;
           employeeMap[empKey].totalWeek += hours;
+
+
+
+          const cleanNote = note && note !== '- None -'
+  ? note.split('|')[0].trim()
+  : '';
+
+if (cleanNote) {
+  const notesForDate =
+    employeeMap[empKey].notesByDate[dateStr] ||
+    (employeeMap[empKey].notesByDate[dateStr] = []);
+
+  if (!notesForDate.includes(cleanNote)) {
+    notesForDate.push(cleanNote);
+  }
+}
           
-          if (note && note != '- None -') {
-           // employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
-            employeeMap[empKey].notes = note;
-          }
+          // if (note && note != '- None -') {
+          //  // employeeMap[empKey].notes += (employeeMap[empKey].notes ? ' | ' : '') + note;
+          //   employeeMap[empKey].notes = note;
+          // }
 
 
 //           if (note && note !== '- None -') {
@@ -193,7 +208,7 @@ define(['N/ui/serverWidget', 'N/search', 'N/log', 'N/file', 'N/encode', 'N/runti
             shift: emp.shift.replace(/&/g, '&amp;'),
             days: [],
             totalWeek: emp.totalWeek.toFixed(2),
-            notes: emp.notes.replace(/&/g, '&amp;'),
+            notes: formatNotesByDate(emp.notesByDate).replace(/&/g, '&amp;'),
             groupType: emp.groupType.replace(/&/g, '&amp;')
           };
           
@@ -1133,6 +1148,59 @@ Object.keys(groupedFinalArray).forEach(group => {
       var days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
       return days[date.getDay()];
     }
+
+
+function formatNotesByDate(notesByDate) {
+  const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+  const oneDay = 24 * 60 * 60 * 1000;
+
+  const entries = Object.keys(notesByDate).map(function (dateStr) {
+    const parts = dateStr.split('/');
+    const timestamp = Date.UTC(
+      Number(parts[2]),
+      Number(parts[0]) - 1,
+      Number(parts[1])
+    );
+
+    return {
+      timestamp: timestamp,
+      notes: notesByDate[dateStr].slice().sort().join('; ')
+    };
+  }).sort(function (a, b) {
+    return a.timestamp - b.timestamp;
+  });
+
+  const ranges = [];
+
+  entries.forEach(function (entry) {
+    const previous = ranges[ranges.length - 1];
+
+    if (
+      previous &&
+      previous.notes === entry.notes &&
+      entry.timestamp - previous.end === oneDay
+    ) {
+      previous.end = entry.timestamp;
+    } else {
+      ranges.push({
+        start: entry.timestamp,
+        end: entry.timestamp,
+        notes: entry.notes
+      });
+    }
+  });
+
+  return ranges.map(function (range) {
+    const startDay = dayNames[new Date(range.start).getUTCDay()];
+    const endDay = dayNames[new Date(range.end).getUTCDay()];
+
+    const label = range.start === range.end
+      ? startDay
+      : startDay + ' to ' + endDay;
+
+    return label + ' - ' + range.notes;
+  }).join(', ');
+}
     
     return { onRequest };
   });
